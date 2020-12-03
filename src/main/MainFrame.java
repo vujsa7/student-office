@@ -1,5 +1,6 @@
 package main;
 
+
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -7,6 +8,9 @@ import java.awt.Toolkit;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import view.MenuBar;
+
 
 public class MainFrame extends JFrame {
 	
@@ -28,6 +32,9 @@ public class MainFrame extends JFrame {
 		rightPanel.setBackground(Color.orange);
 		mainPanel.add(leftPanel);
 		mainPanel.add(rightPanel);
+		
+		MenuBar menuBar = new MenuBar();
+		this.setJMenuBar(menuBar);
 	}
 
 	/**
