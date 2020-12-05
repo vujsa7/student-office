@@ -19,10 +19,10 @@ public class StatusBarPanel extends JPanel{
 		setMaximumSize(new Dimension(1920, 35));
 		setMinimumSize(new Dimension(0, 35));
 		setLayout(new GridLayout(0,1));
-		JPanel bar = new JPanel();
-		bar.setBackground(Color.gray);
-		bar.setBorder(javax.swing.BorderFactory.createEmptyBorder());
-		add(bar);
+		JPanel status = new StatusBar(this.getWidth());
+		status.setBackground(Color.gray);
+		status.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		add(status);
 	}
 
 }

@@ -19,6 +19,8 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 
+
+
 public class StatusBar extends JPanel {
 	
 	public StatusBar(int panelWidth) {
@@ -34,36 +36,41 @@ public class StatusBar extends JPanel {
 		
 		SimpleDateFormat formatter= new SimpleDateFormat("HH:mm    dd.MM.yyyy.");
 		
-		//Date date = new Date(System.currentTimeMillis());
+		Date date = new Date(System.currentTimeMillis());
 		
-		//JLabel vreme = new JLabel(formatter.format(date));
+		JLabel vreme = new JLabel(formatter.format(date));
 		
 		ime.setBackground(new Color(179,179,179));
-		//vreme.setBackground(new Color(179,179,179));
-		
-		
-		
+		vreme.setBackground(new Color(179,179,179));
 		
 		this.add(ime);
 		this.add(Box.createGlue());
-		//this.add(vreme);
-		}
-	   
-	  
-		/*
-		  getContentPane().setLayout(
-			    new BoxLayout(getContentPane(), BoxLayout.Y_AXIS)
-		  	    
-		  na pocetak maina ovo dodam pa onda dole
-		  
-		      StatusBar status = new StatusBar(this.getWidth());
-		add(status);
-			
-			);
-		 
-		  */
+		this.add(vreme);
+		
+		updateTime(vreme);
+	}
 	
+	public void updateTime(JLabel vreme) {
 		
+		Thread t = new Thread() {
+			
+			public void run() {
+				
+				try {
+					while(true) {
+						SimpleDateFormat formatter= new SimpleDateFormat("HH:mm    dd.MM.yyyy.");
+						Date date = new Date(System.currentTimeMillis());
+						vreme.setText(formatter.format(date));
+						
+						Thread.sleep(1000);
+					}	
+				} catch (Exception e) {
+					e.printStackTrace();
+				}	
+			}
+		};
+		t.start();
 		
+	}
 }
 
