@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.InputEvent;
 
@@ -10,6 +11,7 @@ import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
 import com.sun.glass.events.KeyEvent;
+
 
 public class MenuBar extends JMenuBar{
 	
@@ -78,7 +80,7 @@ public class MenuBar extends JMenuBar{
 		add(edit);
 		add(help);
 		
-		
+		this.setBackground(new Color(179,179,179));
 	}
 	
 	public ImageIcon getResizedIcon(ImageIcon icon) {

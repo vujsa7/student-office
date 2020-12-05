@@ -10,11 +10,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import view.MenuBar;
-
+import view.StatusBar;
 
 public class MainFrame extends JFrame {
 	
 	public MainFrame() {
+		
+			    
+			    
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("Studentska služba");
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -35,6 +38,8 @@ public class MainFrame extends JFrame {
 		
 		MenuBar menuBar = new MenuBar();
 		this.setJMenuBar(menuBar);
+		
+		
 	}
 
 	/**
