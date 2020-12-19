@@ -3,23 +3,16 @@ package view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Event;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
@@ -51,6 +44,7 @@ public class MyToolBar extends JToolBar{
 											Thread.sleep(1000);
 											newBtn.setAlpha(0.7f);
 										} catch (Exception e) {
+											
 										}
 									
 								}
@@ -74,6 +68,7 @@ public class MyToolBar extends JToolBar{
 											Thread.sleep(1000);
 											editBtn.setAlpha(0.7f);
 										} catch (Exception e) {
+											
 										}
 									
 								}
@@ -97,6 +92,7 @@ public class MyToolBar extends JToolBar{
 											Thread.sleep(1000);
 											deleteBtn.setAlpha(0.7f);
 										} catch (Exception e) {
+											
 										}
 									
 								}

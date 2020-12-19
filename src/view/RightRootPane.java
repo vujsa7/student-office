@@ -1,7 +1,5 @@
 package view;
 
-import java.awt.GridLayout;
-
 import javax.swing.JRootPane;
 
 public class RightRootPane extends JRootPane {
@@ -14,10 +12,8 @@ public class RightRootPane extends JRootPane {
 	public RightRootPane() {
 		RightPanel rightPanel = new RightPanel();
 		MenuBar menuBar = new MenuBar();
-		GridLayout layout = new GridLayout(0,1);
-		this.getContentPane().setLayout(layout);
-		this.setJMenuBar(menuBar);
-		this.getContentPane().add(rightPanel);
+		setJMenuBar(menuBar);
+		getContentPane().add(rightPanel);
 	}
 
 }
