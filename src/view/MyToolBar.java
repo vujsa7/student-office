@@ -1,9 +1,7 @@
 package view;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Event;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
@@ -12,10 +10,11 @@ import javax.swing.Action;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
-import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 public class MyToolBar extends JToolBar{
 	/**
@@ -35,7 +34,12 @@ public class MyToolBar extends JToolBar{
 		HoverButton newBtn = new HoverButton("assets/icons/new_white.png", "New");
 		KeyStroke keyNew = KeyStroke.getKeyStroke(KeyEvent.VK_1, Event.CTRL_MASK); 
 		Action performNew = new AbstractAction("New") {  
-		    public void actionPerformed(ActionEvent e) {     
+		    /**
+			 * 
+			 */
+			private static final long serialVersionUID = -1236190707680017271L;
+
+			public void actionPerformed(ActionEvent e) {     
 		         new Thread(
 							new Runnable() {
 								public void run() {
@@ -59,7 +63,12 @@ public class MyToolBar extends JToolBar{
 		HoverButton editBtn = new HoverButton("assets/icons/edit_white.png", "Edit");
 		KeyStroke keyEdit = KeyStroke.getKeyStroke(KeyEvent.VK_2, Event.CTRL_MASK); 
 		Action performEdit = new AbstractAction("Edit") {  
-		    public void actionPerformed(ActionEvent e) {     
+		    /**
+			 * 
+			 */
+			private static final long serialVersionUID = -4039649347818021451L;
+
+			public void actionPerformed(ActionEvent e) {     
 		         new Thread(
 							new Runnable() {
 								public void run() {
@@ -83,7 +92,12 @@ public class MyToolBar extends JToolBar{
 		HoverButton deleteBtn = new HoverButton("assets/icons/delete_white1.png", "Delete");
 		KeyStroke keyDelete = KeyStroke.getKeyStroke(KeyEvent.VK_3, Event.CTRL_MASK); 
 		Action performDelete = new AbstractAction("Delete") {  
-		    public void actionPerformed(ActionEvent e) {     
+		    /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1384798606031478310L;
+
+			public void actionPerformed(ActionEvent e) {     
 		         new Thread(
 							new Runnable() {
 								public void run() {
@@ -110,15 +124,38 @@ public class MyToolBar extends JToolBar{
 		SearchIconPanel searchIconPanel = new SearchIconPanel();
 		add(searchIconPanel);
 		
-		JPanel searchPanel = new JPanel();
-		searchPanel.setMaximumSize(new Dimension(214,25));
-		searchPanel.setLayout(new GridLayout(0,1));
-		searchPanel.add(new SearchBar());
-		add(searchPanel);
+		SearchBarPanel searchBarPanel = new SearchBarPanel();
+		
+		SearchBar searchBar = new SearchBar();
+		SearchButton searchButton = new SearchButton();
+		searchBar.getDocument().addDocumentListener(new DocumentListener() {
+			  public void changedUpdate(DocumentEvent e) {
+			    changed();
+			  }
+			  public void removeUpdate(DocumentEvent e) {
+			    changed();
+			  }
+			  public void insertUpdate(DocumentEvent e) {
+			    changed();
+			  }
+
+			  public void changed() {
+			     if (searchBar.getText().equals("")){
+			       searchButton.setEnabled(false);
+			       searchButton.setForeground(Color.black);
+			       searchButton.resetIcon();
+			     }
+			     else {
+			       searchButton.setEnabled(true);
+			    }
+
+			  }
+			});
+		
+		searchBarPanel.add(searchBar);
+		add(searchBarPanel);
 		
 		add(Box.createHorizontalStrut(12));
-		
-		SearchButton searchButton = new SearchButton();
 		add(searchButton);
 		
 		add(Box.createHorizontalStrut(12));

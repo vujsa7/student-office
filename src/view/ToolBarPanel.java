@@ -18,6 +18,7 @@ public class ToolBarPanel extends JPanel{
 		setMaximumSize(new Dimension(1920, 50)); 
 		MyToolBar myToolBar = new MyToolBar();
 		add(myToolBar);
+		
 	}
 
 }

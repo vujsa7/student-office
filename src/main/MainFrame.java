@@ -24,7 +24,7 @@ public class MainFrame extends JFrame {
 		setAppFont(sizedFont);
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setTitle("Studentska sluûba");
+		setTitle("Studentska slu≈æba");
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		setSize(toolkit.getScreenSize().width*3/4, toolkit.getScreenSize().height*3/4);
 		setLocationRelativeTo(null);
