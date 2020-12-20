@@ -14,7 +14,7 @@ public class RightPanel extends JPanel {
 		setLayout(box);
 		JPanel toolBarPanel = new ToolBarPanel();
 		add(toolBarPanel);
-		JPanel tablePanel = new JPanel(); // ovde nemamo preffered, zbog toga box layout ce da prosiri toolbarpanel ako toolbarpanel nema maximum size
+		TablePanel tablePanel = new TablePanel(); // ovde nemamo preffered, zbog toga box layout ce da prosiri toolbarpanel ako toolbarpanel nema maximum size
 		add(tablePanel);
 		StatusBarPanel statusBarPanel = new StatusBarPanel();
 		add(statusBarPanel);
