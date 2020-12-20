@@ -23,7 +23,7 @@ public class MyToolBar extends JToolBar{
 	private static final long serialVersionUID = -7607547575772558529L;
 
 	public MyToolBar() {
-		
+		//moj toolbar
 		super(SwingConstants.HORIZONTAL);
 		setFloatable(false);
 		setBackground(new Color(90, 90, 90));
