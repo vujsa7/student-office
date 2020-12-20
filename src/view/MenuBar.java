@@ -3,13 +3,18 @@ package view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
  
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.KeyStroke;
  
  
@@ -20,7 +25,7 @@ public class MenuBar extends JMenuBar{
          */
         private static final long serialVersionUID = 5667853204203527406L;
  
-        public MenuBar() {
+        public MenuBar(JFrame parent) {
                
                 JMenu file = new JMenu("File");
                 file.setMnemonic(KeyEvent.VK_F);
@@ -32,7 +37,7 @@ public class MenuBar extends JMenuBar{
                 minew.setMnemonic(KeyEvent.VK_N);
                
                 JMenuItem close = new JMenuItem("Close");
-                close.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_MASK));
+                close.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, InputEvent.CTRL_MASK));
                 ImageIcon closeIcon = getResizedIcon(new ImageIcon("assets/icons/close.png"));
                 close.setIcon(closeIcon);
                 close.setMnemonic(KeyEvent.VK_C);
@@ -69,12 +74,30 @@ public class MenuBar extends JMenuBar{
                 ImageIcon helpIcon = getResizedIcon(new ImageIcon("assets/icons/help.png"));
                 mihelp.setIcon(helpIcon);
                 mihelp.setMnemonic(KeyEvent.VK_H);
+                mihelp.addActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						SimpleDialog dialog = new SimpleDialog(parent, "Help");
+						JPanel message = new JPanel();
+						dialog.setContentPane(message);
+						dialog.setVisible(true);
+					}
+                });
                
                 JMenuItem about = new JMenuItem("About");
                 about.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_MASK));
                 ImageIcon aboutIcon = getResizedIcon(new ImageIcon("assets/icons/about.png"));
                 about.setIcon(aboutIcon);
                 about.setMnemonic(KeyEvent.VK_A);
+                about.addActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						SimpleDialog dialog = new SimpleDialog(parent, "About");
+						dialog.setVisible(true);
+					}
+                });
                
                
                 help.add(mihelp);

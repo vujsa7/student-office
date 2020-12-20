@@ -32,7 +32,7 @@ public class MainFrame extends JFrame {
 		setIconImage(titleBarLogo);
 		
 		TabPanel tabPanel = new TabPanel();
-		RightRootPane rightRootPane = new RightRootPane();
+		RightRootPane rightRootPane = new RightRootPane(this);
 	
 		add(rightRootPane, BorderLayout.CENTER);
 		add(tabPanel, BorderLayout.WEST);
