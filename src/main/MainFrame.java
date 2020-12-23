@@ -17,8 +17,19 @@ import view.TabPanel;
 import view.TablePanel;
 
 public class MainFrame extends JFrame {
-
+	
+	private static MainFrame instance = null;
+	
+	public static MainFrame getInstance() throws FontFormatException, IOException {
+		if(instance == null) {
+			instance = new MainFrame(); 
+		}
+		
+		return instance;
+	}
+	
 	public MainFrame() throws FontFormatException, IOException {
+		
 		
 		File font_file = new File("assets/fonts/Montserrat-Regular.ttf");
 		Font font = Font.createFont(Font.TRUETYPE_FONT, font_file);

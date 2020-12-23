@@ -2,11 +2,13 @@ package view;
  
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FontFormatException;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
- 
+import java.io.IOException;
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -14,6 +16,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
+
+import controller.StudentController;
  
  
 public class MenuBar extends JMenuBar{
@@ -33,12 +37,42 @@ public class MenuBar extends JMenuBar{
                 minew.setIcon(newIcon);
                 minew.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
                 minew.setMnemonic(KeyEvent.VK_N);
+                minew.addActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						if(TabBarButton.getActiveButton() == "Studenti") {
+							try {
+								StudentDialog studentDialog = new StudentDialog();
+							} catch (FontFormatException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							
+						} else if(TabBarButton.getActiveButton() == "Profesori") {
+							
+						} else {
+							
+						}
+					}     	
+                });
                
                 JMenuItem close = new JMenuItem("Close");
                 close.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, ActionEvent.CTRL_MASK));
                 ImageIcon closeIcon = getResizedIcon(new ImageIcon("assets/icons/close.png"));
                 close.setIcon(closeIcon);
                 close.setMnemonic(KeyEvent.VK_C);
+                close.addActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						System.exit(0);
+					}
+                });
+                
                
                 file.add(minew);
                 file.addSeparator();
@@ -92,6 +126,9 @@ public class MenuBar extends JMenuBar{
 								+ "Aplikaciju je moguće zatvoriti pritiskom na X u gornjem desnom uglu, ili putem miša File->Close, odnosno Alt+F->Alt+C/Ctrl+W putem tastature.<br/>"
 								+ "Ukoliko vam zatreba pomoć, odlaskom na Help->Help, tj. Alt+P->Alt+H/Ctrl+H, otvoriće se prozor u kom pišu sve neophodne informacije o rukovanju aplikacijom.<br/>"
 								+ "Za više informacija o autorima ili realizaciji same aplikacije, možete pritisnuti mišem na Help->About, ili Alt+P->Alt+A/Ctrl+A putem tastature.<br/>"
+								+ "Pored svega opisanog, dodavanje, izmena i brisanje studenta je moguće postići pritiskom na dugmad toolbar-a, <br/>"
+								+ "odnosno na ikonice koje se nalaze ispod menu bara.<br/>"
+								+ "Informacije o nazivu aplikacije, kao i o trenutnom vremenu, mogu se naći na dnu aplikacije.<br/>"
 								+ "Takođe, u aplikaciji se nalaze informacije i o profesorima, predmetima i ocenama.<br/>"
 								+ "Za profesora su vezane osnovne informacije kao što su ime, prezime, datum rođenja, kontakt, broj telefona i e-mail adresa,"
 								+ "kao i broj lične karte, adresa kancelarije, titula, zvanje i spisak predmeta koje predaje.<br/>"
@@ -115,7 +152,7 @@ public class MenuBar extends JMenuBar{
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						
-						String text = "<html> STUDENTSKA SLUŽBA <br/><br/>"
+						String text = "<html> STUDENTSKA SLUŽBA v1.0<br/><br/>"
 								+ "Aplikacija služi referentu studentske službe fakulteta tehničkih nauka<br/> "
 								+ "za unos svih podataka o studentima i zaposlenima na fakultetu.<br/>"
 								+ "Godina proizvodnje: 2020.<br/>"
@@ -150,5 +187,6 @@ public class MenuBar extends JMenuBar{
                 icon = new ImageIcon(resizedImage);
                 return icon;
         }
+        
        
 }

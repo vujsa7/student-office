@@ -32,11 +32,13 @@ public class StatusBar extends JPanel {
                 Date date = new Date(System.currentTimeMillis());
                
                 JLabel vreme = new JLabel(formatter.format(date));
-               
+                
+                add(Box.createHorizontalStrut(15));
                 add(ime);
                 add(Box.createGlue());
                 add(vreme);
-               
+                add(Box.createHorizontalStrut(15));
+                
                 updateTime(vreme);
         }
        

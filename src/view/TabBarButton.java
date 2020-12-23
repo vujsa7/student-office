@@ -137,5 +137,9 @@ public class TabBarButton extends JButton{
 			setAlpha(1f);
 		}
 	}
+	
+	public static String getActiveButton() {
+		return activeButton;
+	}
 
 }
