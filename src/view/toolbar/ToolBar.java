@@ -1,7 +1,6 @@
-package view;
+package view.toolbar;
 
 import java.awt.Color;
-import java.awt.Event;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
@@ -16,13 +15,13 @@ import javax.swing.SwingConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-public class MyToolBar extends JToolBar{
+public class ToolBar extends JToolBar{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -7607547575772558529L;
 
-	public MyToolBar() {
+	public ToolBar() {
 		super(SwingConstants.HORIZONTAL);
 		setFloatable(false);
 		setBackground(new Color(90, 90, 90));
@@ -31,7 +30,7 @@ public class MyToolBar extends JToolBar{
 		setLayout(box);
 		
 		HoverButton newBtn = new HoverButton("assets/icons/new_white.png", "New");
-		KeyStroke keyNew = KeyStroke.getKeyStroke(KeyEvent.VK_1, Event.CTRL_MASK); 
+		KeyStroke keyNew = KeyStroke.getKeyStroke(KeyEvent.VK_1, ActionEvent.CTRL_MASK); 
 		Action performNew = new AbstractAction("New") {  
 		    /**
 			 * 
@@ -60,7 +59,7 @@ public class MyToolBar extends JToolBar{
 		add(newBtn);
 		
 		HoverButton editBtn = new HoverButton("assets/icons/edit_white.png", "Edit");
-		KeyStroke keyEdit = KeyStroke.getKeyStroke(KeyEvent.VK_2, Event.CTRL_MASK); 
+		KeyStroke keyEdit = KeyStroke.getKeyStroke(KeyEvent.VK_2, ActionEvent.CTRL_MASK); 
 		Action performEdit = new AbstractAction("Edit") {  
 		    /**
 			 * 
@@ -89,7 +88,7 @@ public class MyToolBar extends JToolBar{
 		add(editBtn);
 		
 		HoverButton deleteBtn = new HoverButton("assets/icons/delete_white1.png", "Delete");
-		KeyStroke keyDelete = KeyStroke.getKeyStroke(KeyEvent.VK_3, Event.CTRL_MASK); 
+		KeyStroke keyDelete = KeyStroke.getKeyStroke(KeyEvent.VK_3, ActionEvent.CTRL_MASK); 
 		Action performDelete = new AbstractAction("Delete") {  
 		    /**
 			 * 

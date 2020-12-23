@@ -1,4 +1,4 @@
-package view;
+package view.toolbar;
 
 import javax.swing.*;
 import java.awt.*;

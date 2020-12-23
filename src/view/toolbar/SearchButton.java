@@ -1,4 +1,4 @@
-package view;
+package view.toolbar;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;

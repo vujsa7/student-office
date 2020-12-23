@@ -1,4 +1,4 @@
-package view;
+package view.listeners;
 
 import java.awt.Color;
 import java.awt.event.FocusEvent;

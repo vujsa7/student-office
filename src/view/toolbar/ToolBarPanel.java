@@ -1,4 +1,4 @@
-package view;
+package view.toolbar;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -16,7 +16,7 @@ public class ToolBarPanel extends JPanel{
 		setLayout(new GridLayout(0,1));
 		setPreferredSize(new Dimension(1920, 50));
 		setMaximumSize(new Dimension(1920, 50)); 
-		MyToolBar myToolBar = new MyToolBar();
+		ToolBar myToolBar = new ToolBar();
 		add(myToolBar);
 		
 	}

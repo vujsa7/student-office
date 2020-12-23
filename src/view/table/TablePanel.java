@@ -1,4 +1,4 @@
-package view;
+package view.table;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;

@@ -1,4 +1,4 @@
-package view;
+package view.tab;
 
 import java.awt.AlphaComposite;
 import java.awt.Cursor;

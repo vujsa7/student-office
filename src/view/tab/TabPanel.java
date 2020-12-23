@@ -1,14 +1,15 @@
-package view;
+package view.tab;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+
+import view.table.TablePanel;
 
 public class TabPanel  extends JPanel{
 	/**

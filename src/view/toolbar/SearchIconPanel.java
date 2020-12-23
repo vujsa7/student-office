@@ -1,4 +1,4 @@
-package view;
+package view.toolbar;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;

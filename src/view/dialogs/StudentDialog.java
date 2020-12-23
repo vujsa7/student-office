@@ -1,4 +1,4 @@
-package view;
+package view.dialogs;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import main.MainFrame;
+import view.listeners.MyFocusListener;
 
 public class StudentDialog extends JDialog{
 	

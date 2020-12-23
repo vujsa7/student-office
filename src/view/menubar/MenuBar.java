@@ -1,4 +1,4 @@
-package view;
+package view.menubar;
  
 import java.awt.Color;
 import java.awt.Dimension;
@@ -18,6 +18,8 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
 import controller.StudentController;
+import view.dialogs.StudentDialog;
+import view.tab.TabBarButton;
  
  
 public class MenuBar extends JMenuBar{

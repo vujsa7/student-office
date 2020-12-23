@@ -9,22 +9,30 @@ import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JRootPane;
 import javax.swing.UIManager;
 
-import view.RightRootPane;
-import view.TabPanel;
-import view.TablePanel;
+import view.menubar.MenuBar;
+import view.statusbar.StatusBarPanel;
+import view.tab.TabPanel;
+import view.table.TablePanel;
+import view.toolbar.ToolBarPanel;
 
 public class MainFrame extends JFrame {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6370020036393900504L;
 	private static MainFrame instance = null;
 	
-	public static MainFrame getInstance() throws FontFormatException, IOException {
+	public static MainFrame getInstance() throws FontFormatException, IOException {	
 		if(instance == null) {
 			instance = new MainFrame(); 
 		}
-		
 		return instance;
 	}
 	
@@ -49,7 +57,7 @@ public class MainFrame extends JFrame {
 		
 		TabPanel tabPanel = new TabPanel();
 		tabPanel.setTablePanel(tablePanel);
-		RightRootPane rightRootPane = new RightRootPane(this, tablePanel);
+		JRootPane rightRootPane = getRightRootPane(this, tablePanel);
 	
 		add(rightRootPane, BorderLayout.CENTER);
 		add(tabPanel, BorderLayout.WEST);
@@ -57,11 +65,6 @@ public class MainFrame extends JFrame {
 
 	}
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6370020036393900504L;
-	
 	private void setAppFont(Font myFont) {
 	    UIManager.put("CheckBoxMenuItem.acceleratorFont", myFont);
 	    UIManager.put("Button.font", myFont);
@@ -108,6 +111,23 @@ public class MainFrame extends JFrame {
 	    UIManager.put("InternalFrame.optionDialogTitleFont", myFont);
 	    UIManager.put("InternalFrame.paletteTitleFont", myFont);
 	    UIManager.put("InternalFrame.titleFont", myFont);
+	}
+	
+	private JRootPane getRightRootPane(JFrame parent, TablePanel tp) {
+		JRootPane jRootPane = new JRootPane();
+		JPanel rightPanel = new JPanel();
+		BoxLayout box = new BoxLayout(rightPanel, BoxLayout.Y_AXIS);
+		rightPanel.setLayout(box);
+		ToolBarPanel toolBarPanel = new ToolBarPanel();
+		rightPanel.add(toolBarPanel);
+		TablePanel tablePanel = tp;
+		rightPanel.add(tablePanel);
+		StatusBarPanel statusBarPanel = new StatusBarPanel();
+		rightPanel.add(statusBarPanel);
+		MenuBar menuBar = new MenuBar(parent);
+		jRootPane.setJMenuBar(menuBar);
+		jRootPane.getContentPane().add(rightPanel);
+		return jRootPane;
 	}
 
 	public static void main(String[] args) throws FontFormatException, IOException {

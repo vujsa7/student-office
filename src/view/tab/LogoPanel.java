@@ -1,4 +1,4 @@
-package view;
+package view.tab;
 
 import java.awt.Color;
 import java.awt.Dimension;

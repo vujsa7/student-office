@@ -3,7 +3,7 @@ package controller;
 import java.awt.FontFormatException;
 import java.io.IOException;
 
-import view.StudentDialog;
+import view.dialogs.StudentDialog;
 
 public class StudentController {
 	
