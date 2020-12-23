@@ -8,17 +8,19 @@ public class Predmet {
 	private String nazivPredmeta;
 	private String semestar;
 	private String godinaStudija;
+	private Profesor predmetniProfesor;
 	private List<Student> listaStudentataPol;
 	private List<Student> listaStudenataNepol;
 	
 	
 	public Predmet(String sifraPredmeta, String nazivPredmeta, String semestar, String godinaStudija,
-			List<Student> listaStudentataPol, List<Student> listaStudenataNepol) {
+			Profesor predmetniProfesor, List<Student> listaStudentataPol, List<Student> listaStudenataNepol) {
 		super();
 		this.sifraPredmeta = sifraPredmeta;
 		this.nazivPredmeta = nazivPredmeta;
 		this.semestar = semestar;
 		this.godinaStudija = godinaStudija;
+		this.predmetniProfesor = predmetniProfesor;
 		this.listaStudentataPol = listaStudentataPol;
 		this.listaStudenataNepol = listaStudenataNepol;
 	}
@@ -63,6 +65,15 @@ public class Predmet {
 		this.godinaStudija = godinaStudija;
 	}
 
+
+	public Profesor getPredmetniProfesor() {
+		return predmetniProfesor;
+	}
+
+
+	public void setPredmetniProfesor(Profesor predmetniProfesor) {
+		this.predmetniProfesor = predmetniProfesor;
+	}
 
 
 	public List<Student> getListaStudentataPol() {
