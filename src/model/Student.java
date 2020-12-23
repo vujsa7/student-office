@@ -6,30 +6,32 @@ public class Student {
 	private String prezime;
 	private String datumRodjenja;
 	private String adresaStanovanja;
-	private String broj_telefona;
+	private String brojTelefona;
 	private String email;
-	private String broj_indeksa;
-	private String god_upisa;
+	private String brojIndeksa;
+	private String godUpisa;
 	private String trenutnaGodStrudija;
 	private String status;
 	private String prosek;
 	
-	public Student(String ime, String prezime, String datumRodjenja, String adresaStanovanja, String broj_telefona,
-			String email, String broj_indeksa, String god_upisa, String trenutnaGodStrudija, String status,
-			String prosek) {
+	Student() {}
+	
+	Student(String ime, String prezime, String datumRodjenja, String adresaStanovanja, String brojTelefona,
+			String email, String brojIndeksa, String godUpisa, String trenutnaGodStrudija, String status, String prosek) {
 		super();
 		this.ime = ime;
 		this.prezime = prezime;
 		this.datumRodjenja = datumRodjenja;
 		this.adresaStanovanja = adresaStanovanja;
-		this.broj_telefona = broj_telefona;
+		this.brojTelefona = brojTelefona;
 		this.email = email;
-		this.broj_indeksa = broj_indeksa;
-		this.god_upisa = god_upisa;
+		this.brojIndeksa = brojIndeksa;
+		this.godUpisa = godUpisa;
 		this.trenutnaGodStrudija = trenutnaGodStrudija;
 		this.status = status;
 		this.prosek = prosek;
 	}
+	
 	public String getProsek() {
 		return prosek;
 	}
@@ -61,10 +63,10 @@ public class Student {
 		this.adresaStanovanja = adresaStanovanja;
 	}
 	public String getBroj_telefona() {
-		return broj_telefona;
+		return brojTelefona;
 	}
-	public void setBroj_telefona(String broj_telefona) {
-		this.broj_telefona = broj_telefona;
+	public void setBroj_telefona(String brojTelefona) {
+		this.brojTelefona = brojTelefona;
 	}
 	public String getEmail() {
 		return email;
@@ -72,17 +74,17 @@ public class Student {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getBroj_indeksa() {
-		return broj_indeksa;
+	public String getBrojIndeksa() {
+		return brojIndeksa;
 	}
-	public void setBroj_indeksa(String broj_indeksa) {
-		this.broj_indeksa = broj_indeksa;
+	public void setBroj_indeksa(String brojIndeksa) {
+		this.brojIndeksa = brojIndeksa;
 	}
 	public String getGod_upisa() {
-		return god_upisa;
+		return godUpisa;
 	}
-	public void setGod_upisa(String god_upisa) {
-		this.god_upisa = god_upisa;
+	public void setGod_upisa(String godUpisa) {
+		this.godUpisa = godUpisa;
 	}
 	public String getTrenutnaGodStrudija() {
 		return trenutnaGodStrudija;
@@ -96,6 +98,5 @@ public class Student {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
 	
 }
