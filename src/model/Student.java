@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 public class Student {
 	
 	private String ime;
@@ -13,11 +15,14 @@ public class Student {
 	private String trenutnaGodStrudija;
 	private String status;
 	private String prosek;
+	private List<PolozenIspit> polozeniIspiti;
+	private List<NepolozenIspit> nepolozeniIspiti;
 	
 	Student() {}
 	
-	Student(String ime, String prezime, String datumRodjenja, String adresaStanovanja, String brojTelefona,
-			String email, String brojIndeksa, String godUpisa, String trenutnaGodStrudija, String status, String prosek) {
+	public Student(String ime, String prezime, String datumRodjenja, String adresaStanovanja, String brojTelefona,
+			String email, String brojIndeksa, String godUpisa, String trenutnaGodStrudija, String status, String prosek,
+			List<PolozenIspit> polozeniIspiti, List<NepolozenIspit> nepolozeniIspiti) {
 		super();
 		this.ime = ime;
 		this.prezime = prezime;
@@ -30,8 +35,11 @@ public class Student {
 		this.trenutnaGodStrudija = trenutnaGodStrudija;
 		this.status = status;
 		this.prosek = prosek;
+		this.polozeniIspiti = polozeniIspiti;
+		this.nepolozeniIspiti = nepolozeniIspiti;
 	}
-	
+
+
 	public String getProsek() {
 		return prosek;
 	}
@@ -98,5 +106,22 @@ public class Student {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
+	public List<PolozenIspit> getPolozeniIspiti() {
+		return polozeniIspiti;
+	}
+
+	public void setPolozeniIspiti(List<PolozenIspit> polozeniIspiti) {
+		this.polozeniIspiti = polozeniIspiti;
+	}
+
+	public List<NepolozenIspit> getNepolozeniIspiti() {
+		return nepolozeniIspiti;
+	}
+
+	public void setNepolozeniIspiti(List<NepolozenIspit> nepolozeniIspiti) {
+		this.nepolozeniIspiti = nepolozeniIspiti;
+	}
+	
 	
 }
