@@ -15,7 +15,6 @@ public class SearchBar extends JTextField{
 	SearchBar(){
 		setBorder(new EmptyBorder(0,0,0,10));
 		setPreferredSize(new Dimension(170,35));
-
 	}
 	
 }

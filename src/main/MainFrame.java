@@ -1,6 +1,7 @@
 package main;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Image;
@@ -13,6 +14,7 @@ import javax.swing.UIManager;
 
 import view.RightRootPane;
 import view.TabPanel;
+import view.TablePanel;
 
 public class MainFrame extends JFrame {
 
@@ -28,11 +30,15 @@ public class MainFrame extends JFrame {
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		setSize(toolkit.getScreenSize().width*3/4, toolkit.getScreenSize().height*3/4);
 		setLocationRelativeTo(null);
+		setMinimumSize(new Dimension(977, 530));
 		Image titleBarLogo = toolkit.getImage("assets/icons/titleBarLogo.png");
 		setIconImage(titleBarLogo);
 		
+		TablePanel tablePanel = new TablePanel();
+		
 		TabPanel tabPanel = new TabPanel();
-		RightRootPane rightRootPane = new RightRootPane(this);
+		tabPanel.setTablePanel(tablePanel);
+		RightRootPane rightRootPane = new RightRootPane(this, tablePanel);
 	
 		add(rightRootPane, BorderLayout.CENTER);
 		add(tabPanel, BorderLayout.WEST);
@@ -94,7 +100,6 @@ public class MainFrame extends JFrame {
 	}
 
 	public static void main(String[] args) throws FontFormatException, IOException {
-		//JFrame frame = createFrame();
 		new MainFrame().setVisible(true);
 	}
 
