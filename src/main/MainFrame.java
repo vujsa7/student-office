@@ -41,7 +41,7 @@ public class MainFrame extends JFrame {
 		
 		File font_file = new File("assets/fonts/Montserrat-Regular.ttf");
 		Font font = Font.createFont(Font.TRUETYPE_FONT, font_file);
-		Font sizedFont = font.deriveFont(12f);
+		Font sizedFont = font.deriveFont(16f);
 		setAppFont(sizedFont);
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);

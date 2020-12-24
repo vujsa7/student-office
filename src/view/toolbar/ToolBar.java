@@ -1,8 +1,10 @@
 package view.toolbar;
 
 import java.awt.Color;
+import java.awt.FontFormatException;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -14,6 +16,9 @@ import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+
+import view.dialogs.StudentDialog;
+import view.tab.TabBarButton;
 
 public class ToolBar extends JToolBar{
 	/**
@@ -51,7 +56,23 @@ public class ToolBar extends JToolBar{
 									
 								}
 							}).start();
-		         
+		         if(TabBarButton.getActiveButton() == "Studenti") {
+		        	 try {
+						StudentDialog studentDialog = new StudentDialog();
+						studentDialog.setVisible(true);
+					} catch (FontFormatException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+		        	 
+		         } else if(TabBarButton.getActiveButton() == "Profesori") {
+		        	 
+		         } else {
+		        	 
+		         }
 		    }
 		}; 
 		newBtn.getActionMap().put("performNew", performNew);

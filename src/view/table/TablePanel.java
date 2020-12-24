@@ -3,8 +3,11 @@ package view.table;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.GridLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 public class TablePanel extends JPanel{
 
@@ -20,15 +23,19 @@ public class TablePanel extends JPanel{
 	private JPanel cards = new JPanel(cardlayout);
 
 	public TablePanel() {
-		
 		JPanel studentPanel = new JPanel();
 		studentPanel.setBackground(Color.black);
-		JPanel professorPanel = new JPanel();
-		professorPanel.setBackground(Color.yellow);
+		studentPanel.setLayout(new GridLayout(0,1));
+		
+		ProfessorTable professorTable = new ProfessorTable();
+		JScrollPane professorScrollPane = new JScrollPane(professorTable);
+		professorScrollPane.setBorder(BorderFactory.createEmptyBorder());
+		add(professorScrollPane, BorderLayout.CENTER);
 		JPanel gradePanel = new JPanel();
 		gradePanel.setBackground(Color.pink);
+		gradePanel.setLayout(new GridLayout(0,1));
 		cards.add(studentPanel, STUDENT_PANEL);
-		cards.add(professorPanel, PROFESSOR_PANEL);
+		cards.add(professorScrollPane, PROFESSOR_PANEL);
 		cards.add(gradePanel, GRADE_PANEL);
 		setLayout(new BorderLayout());
 		add(cards, BorderLayout.CENTER);

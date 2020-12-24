@@ -1,9 +1,14 @@
 package view.toolbar;
 
 import javax.swing.*;
+
+import view.dialogs.StudentDialog;
+import view.tab.TabBarButton;
+
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 
 public class HoverButton extends JButton{
   /**
@@ -94,6 +99,23 @@ public class HoverButton extends JButton{
 							}
 						}
 					}).start();
+			if(TabBarButton.getActiveButton() == "Studenti") {
+	        	 try {
+					StudentDialog studentDialog = new StudentDialog();
+					studentDialog.setVisible(true);
+				} catch (FontFormatException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+	        	 
+	         } else if(TabBarButton.getActiveButton() == "Profesori") {
+	        	 
+	         } else {
+	        	 
+	         }
 		}
 	}
 	
