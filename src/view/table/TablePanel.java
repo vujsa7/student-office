@@ -23,9 +23,10 @@ public class TablePanel extends JPanel{
 	private JPanel cards = new JPanel(cardlayout);
 
 	public TablePanel() {
-		JPanel studentPanel = new JPanel();
-		studentPanel.setBackground(Color.black);
-		studentPanel.setLayout(new GridLayout(0,1));
+		StudentTable studentTable = new StudentTable();
+		JScrollPane studentScrollPane = new JScrollPane(studentTable);
+		studentScrollPane.setBorder(BorderFactory.createEmptyBorder());
+		add(studentScrollPane, BorderLayout.CENTER);
 		
 		ProfessorTable professorTable = new ProfessorTable();
 		JScrollPane professorScrollPane = new JScrollPane(professorTable);
@@ -34,7 +35,7 @@ public class TablePanel extends JPanel{
 		JPanel gradePanel = new JPanel();
 		gradePanel.setBackground(Color.pink);
 		gradePanel.setLayout(new GridLayout(0,1));
-		cards.add(studentPanel, STUDENT_PANEL);
+		cards.add(studentScrollPane, STUDENT_PANEL);
 		cards.add(professorScrollPane, PROFESSOR_PANEL);
 		cards.add(gradePanel, GRADE_PANEL);
 		setLayout(new BorderLayout());

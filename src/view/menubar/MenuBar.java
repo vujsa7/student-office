@@ -17,7 +17,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
-import controller.StudentController;
+import main.MainFrame;
 import view.dialogs.StudentDialog;
 import view.tab.TabBarButton;
  
@@ -44,15 +44,17 @@ public class MenuBar extends JMenuBar{
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						if(TabBarButton.getActiveButton() == "Studenti") {
-							try {
-								StudentDialog studentDialog = new StudentDialog();
-							} catch (FontFormatException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							} catch (IOException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
+					
+								try {
+									StudentDialog studentDialog = new StudentDialog(MainFrame.getInstance());
+									studentDialog.setVisible(true);
+								} catch (FontFormatException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								} catch (IOException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
 							
 						} else if(TabBarButton.getActiveButton() == "Profesori") {
 							

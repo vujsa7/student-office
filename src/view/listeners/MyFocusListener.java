@@ -22,6 +22,7 @@ public class MyFocusListener implements FocusListener{
 		txt.setBackground(Color.GRAY);
 		
 		
+		
 	}
 	
 }

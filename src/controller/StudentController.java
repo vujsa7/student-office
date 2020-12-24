@@ -3,8 +3,6 @@ package controller;
 import java.awt.FontFormatException;
 import java.io.IOException;
 
-import view.dialogs.StudentDialog;
-
 public class StudentController {
 	
 private static StudentController instance = null;
