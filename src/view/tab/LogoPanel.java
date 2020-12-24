@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics;
+import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.io.File;
@@ -128,10 +129,11 @@ public class LogoPanel extends JPanel{
 			setPreferredSize(new Dimension(207, 106));
 			setForeground(Color.white);
 			File font_file = new File("assets/fonts/PlayfairDisplay-Black.ttf");
-			Font font;
 			try {
-				font = Font.createFont(Font.TRUETYPE_FONT, font_file);
+				Font font = Font.createFont(Font.TRUETYPE_FONT, font_file);
 				Font sizedFont = font.deriveFont(40f);
+				GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+				ge.registerFont(sizedFont);
 				setFont(sizedFont);
 			} catch (FontFormatException e) {
 				e.printStackTrace();

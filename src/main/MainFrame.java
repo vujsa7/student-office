@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.File;
@@ -42,6 +43,8 @@ public class MainFrame extends JFrame {
 		File font_file = new File("assets/fonts/Montserrat-Regular.ttf");
 		Font font = Font.createFont(Font.TRUETYPE_FONT, font_file);
 		Font sizedFont = font.deriveFont(16f);
+		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		ge.registerFont(sizedFont);
 		setAppFont(sizedFont);
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -130,8 +133,15 @@ public class MainFrame extends JFrame {
 		return jRootPane;
 	}
 
-	public static void main(String[] args) throws FontFormatException, IOException {
-		new MainFrame().setVisible(true);
+	public static void main(String[] args) {
+		try {
+			new MainFrame().setVisible(true);
+		} catch (FontFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 }
