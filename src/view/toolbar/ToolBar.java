@@ -17,6 +17,7 @@ import javax.swing.SwingConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import main.MainFrame;
 import view.dialogs.StudentDialog;
 import view.tab.TabBarButton;
 
@@ -58,7 +59,7 @@ public class ToolBar extends JToolBar{
 							}).start();
 		         if(TabBarButton.getActiveButton() == "Studenti") {
 		        	 try {
-						StudentDialog studentDialog = new StudentDialog();
+						StudentDialog studentDialog = new StudentDialog(MainFrame.getInstance());
 						studentDialog.setVisible(true);
 					} catch (FontFormatException e1) {
 						// TODO Auto-generated catch block
