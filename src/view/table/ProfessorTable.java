@@ -34,11 +34,10 @@ public class ProfessorTable extends JTable{
 		
 		JTableHeader tableHeader = this.getTableHeader();
 		UIManager.put("TableHeader.cellBorder", BorderFactory.createMatteBorder(1, 1, 1, 1, new Color(58, 39, 93)));
-		tableHeader.setBorder(null);
 		tableHeader.setPreferredSize(new Dimension(170, 25));
 	    tableHeader.setBackground(new Color(141, 102,217));
 	    tableHeader.setForeground(Color.white);    
-	    UIManager.put("Table.gridColor", new Color(58, 39, 93));
+	    setGridColor(new Color(196,190,206));
 		UIManager.put("Table.focusCellHighlightBorder", BorderFactory.createMatteBorder(1, 1, 1, 1, Color.white));
 	   
 		// Sama JTable komponenta je implementirana postujuci MVC arhitekturu.

@@ -1,6 +1,7 @@
 package view.toolbar;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FontFormatException;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -11,13 +12,16 @@ import javax.swing.Action;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
+import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import main.MainFrame;
+import view.dialogs.ProfessorDialog;
 import view.dialogs.StudentDialog;
 import view.tab.TabBarButton;
 
@@ -70,7 +74,16 @@ public class ToolBar extends JToolBar{
 					}
 		        	 
 		         } else if(TabBarButton.getActiveButton() == "Profesori") {
-		        	 
+		        	 try {
+						ProfessorDialog professorDialog = new ProfessorDialog(MainFrame.getInstance());
+						professorDialog.setVisible(true);
+					} catch (FontFormatException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 		         } else {
 		        	 
 		         }
@@ -144,11 +157,14 @@ public class ToolBar extends JToolBar{
 		SearchIconPanel searchIconPanel = new SearchIconPanel();
 		add(searchIconPanel);
 		
-		SearchBarPanel searchBarPanel = new SearchBarPanel();
+		SearchBarTextField searchBarTextField = new SearchBarTextField();
 		
-		SearchBar searchBar = new SearchBar();
+		JTextField searchTextField = new JTextField();
+		searchTextField.setBorder(new EmptyBorder(0,0,0,10));
+		searchTextField.setMinimumSize(new Dimension(170,35));
+		searchTextField.setOpaque(false);
 		SearchButton searchButton = new SearchButton();
-		searchBar.getDocument().addDocumentListener(new DocumentListener() {
+		searchTextField.getDocument().addDocumentListener(new DocumentListener() {
 			  public void changedUpdate(DocumentEvent e) {
 			    changed();
 			  }
@@ -160,7 +176,7 @@ public class ToolBar extends JToolBar{
 			  }
 
 			  public void changed() {
-			     if (searchBar.getText().equals("")){
+			     if (searchTextField.getText().equals("")){
 			       searchButton.setEnabled(false);
 			       searchButton.setForeground(Color.black);
 			       searchButton.resetIcon();
@@ -172,8 +188,8 @@ public class ToolBar extends JToolBar{
 			  }
 			});
 		
-		searchBarPanel.add(searchBar);
-		add(searchBarPanel);
+		searchBarTextField.add(searchTextField);
+		add(searchBarTextField);
 		
 		add(Box.createHorizontalStrut(12));
 		add(searchButton);
