@@ -10,7 +10,10 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -27,29 +30,47 @@ public class CustomComboBox extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = -2036463339188625847L;
-  
-	public CustomComboBox(ArrayList<String> list) {
-		setLayout(new GridLayout(0,1));
-		setMinimumSize(new Dimension(214, 36));
-		setMaximumSize(new Dimension(214, 36));
+	public static Collection<CustomComboBox> customComboBoxes = new ArrayList<CustomComboBox>();
+	private String field;
+	
+	public CustomComboBox(ArrayList<String> arrayList) {
 		
-		String[] array = list.toArray(new String[list.size()]);
-		JComboBox<String> combo = new JComboBox<String>(array);
+		customComboBoxes.add(this);
+		setLayout(new GridLayout(0,1));
+		setMinimumSize(new Dimension(214,36));
+		setMaximumSize(new Dimension(214,36));
+		String[] array = arrayList.toArray(new String[arrayList.size()]);
+		JComboBox<String> combo = new JComboBox<String>(array);	
 		combo.setPreferredSize(new Dimension(214,36));
-		combo.setUI(ColorArrowUI.createUI(combo));
+		combo.setUI(CustomComboBoxUI.createUI(combo));
 		combo.setBorder(new SimpleRoundBorder());
+
+		field = (String) combo.getSelectedItem();
+		
 		JPanel comboBoxPanel = new JPanel();
 		FlowLayout fl = (FlowLayout) comboBoxPanel.getLayout();
 		fl.setVgap(0);
 		comboBoxPanel.add(combo);
-		
+		combo.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				field = (String) combo.getSelectedItem();
+			}
+			
+		});
 		add(comboBoxPanel);
 	}
 	
-	public static class ColorArrowUI extends BasicComboBoxUI {
+	
+	public CustomComboBox getCustomComboBox() {
+		return this;
+	}
+
+	public static class CustomComboBoxUI extends BasicComboBoxUI {
 
 	    public static ComboBoxUI createUI(JComponent c) {
-	        return new ColorArrowUI();
+	        return new CustomComboBoxUI();
 	    }
 
 	    @Override protected JButton createArrowButton() {
@@ -64,13 +85,12 @@ public class CustomComboBox extends JPanel {
 	       
 	    }
 	    
-	    public ImageIcon getResizedIcon(ImageIcon icon) {
+	    private ImageIcon getResizedIcon(ImageIcon icon) {
 			Image image = icon.getImage();
 			Image resizedImage = image.getScaledInstance(15, 7,  java.awt.Image.SCALE_SMOOTH);
 			icon = new ImageIcon(resizedImage);
 			return icon;
 		}
-	    
 	    
 	}
 	
@@ -96,6 +116,11 @@ public class CustomComboBox extends JPanel {
 	        insets.top = insets.left = insets.bottom = insets.right = 3;
 	        return insets;
 	    }
+	}
+	
+
+	public String getField() {
+		return field;
 	}
 
 }

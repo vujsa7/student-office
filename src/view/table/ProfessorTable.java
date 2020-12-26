@@ -13,6 +13,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 
+import model.AbstractProfessorTable;
+
 public class ProfessorTable extends JTable{
 
 	/**
@@ -26,6 +28,8 @@ public class ProfessorTable extends JTable{
 		setColumnSelectionAllowed(true);
 		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		setRowHeight(30);
+		// Sama JTable komponenta je implementirana postujuci MVC arhitekturu.
+		setModel(AbstractProfessorTable.getInstance());
 		
 		// Centriranje teksta unutar celija
 		DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
@@ -39,9 +43,6 @@ public class ProfessorTable extends JTable{
 	    tableHeader.setForeground(Color.white);    
 	    setGridColor(new Color(196,190,206));
 		UIManager.put("Table.focusCellHighlightBorder", BorderFactory.createMatteBorder(1, 1, 1, 1, Color.white));
-	   
-		// Sama JTable komponenta je implementirana postujuci MVC arhitekturu.
-		setModel(new AbstractProfessorTable());
 		
 	}
 	
@@ -66,7 +67,6 @@ public class ProfessorTable extends JTable{
 		return c;
 	}
 	
-
 }
 
 

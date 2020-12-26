@@ -15,6 +15,7 @@ import javax.swing.event.DocumentListener;
 
 import view.dialogs.components.ButtonHolderPanel;
 import view.dialogs.components.CustomTextField;
+import view.dialogs.components.DateComboBox;
 import view.dialogs.components.DialogConfirmButton;
 import view.dialogs.components.CustomComboBox;
 import view.dialogs.components.FieldName;
@@ -56,8 +57,26 @@ public class ProfessorDialog extends JDialog{
 		   add(zvanja);
 	}};
 	
-	private ArrayList<JTextField> list = new ArrayList<>();
-	private DialogConfirmButton dialogConfirmButton = new DialogConfirmButton();
+	@SuppressWarnings("serial")
+	public ArrayList<Integer> days = new ArrayList<Integer>() {{
+		for(int i = 1; i <= 31; i++)
+			add(i);
+	}};
+	
+	@SuppressWarnings("serial")
+	public ArrayList<Integer> months = new ArrayList<Integer>() {{
+		for(int i = 1; i <= 12; i++)
+			add(i);
+	}};
+	
+	@SuppressWarnings("serial")
+	public ArrayList<Integer> years = new ArrayList<Integer>() {{
+		for(int i = 1970; i <= 2001; i++)
+			add(i);
+	}};
+	
+	public static ArrayList<JTextField> list = new ArrayList<>();
+	private DialogConfirmButton dialogConfirmButton;
 
 
 	public ProfessorDialog(JFrame parent) {
@@ -68,7 +87,7 @@ public class ProfessorDialog extends JDialog{
 		setLocationRelativeTo(parent);
 
 		
-		
+		dialogConfirmButton = new DialogConfirmButton(this);
 		
 		JPanel basePanel = new JPanel();
 		BoxLayout box = new BoxLayout(basePanel, BoxLayout.Y_AXIS);
@@ -83,16 +102,23 @@ public class ProfessorDialog extends JDialog{
 			
 			BoxLayout boxHolder = new BoxLayout(holderPanel, BoxLayout.X_AXIS);
 			holderPanel.setLayout(boxHolder);
-			
-			
+						
 			FieldName fieldName = new FieldName(FIELD_TEXT[i-1]);
-			
 			
 			holderPanel.add(fieldName);
 			holderPanel.add(Box.createHorizontalStrut(39));
 			if(i == 9 || i == 10) {
 				CustomComboBox customComboBox = new CustomComboBox(profesorLista.get(i-9));
 				holderPanel.add(customComboBox);
+			} else if (i == 3) {
+				DateComboBox yearsComboBox = new DateComboBox(years, new Dimension(80, 36), "years");
+				holderPanel.add(yearsComboBox);
+				holderPanel.add(Box.createHorizontalStrut(8));
+				DateComboBox monthsComboBox = new DateComboBox(months, new Dimension(58, 36), "months");
+				holderPanel.add(monthsComboBox);
+				holderPanel.add(Box.createHorizontalStrut(8));
+				DateComboBox daysComboBox = new DateComboBox(days, new Dimension(58, 36), "days");
+				holderPanel.add(daysComboBox);
 			} else {
 				JTextField textField = new JTextField();
 				textField.getDocument().addDocumentListener(listener);
@@ -116,8 +142,7 @@ public class ProfessorDialog extends JDialog{
 			
 		}
 		
-		
-		ButtonHolderPanel buttonHolderPanel = new ButtonHolderPanel(dialogConfirmButton);
+		ButtonHolderPanel buttonHolderPanel = new ButtonHolderPanel(dialogConfirmButton, this);
 		
 		basePanel.add(buttonHolderPanel);
 		basePanel.add(Box.createVerticalStrut(18));

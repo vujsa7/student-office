@@ -43,9 +43,10 @@ public class MainFrame extends JFrame {
 		File font_file = new File("assets/fonts/Montserrat-Regular.ttf");
 		Font font = Font.createFont(Font.TRUETYPE_FONT, font_file);
 		Font sizedFont = font.deriveFont(16f);
+		Font comboBoxFont = font.deriveFont(14f);
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		ge.registerFont(sizedFont);
-		setAppFont(sizedFont);
+		setAppFont(sizedFont, comboBoxFont);
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("Studentska služba");
@@ -68,14 +69,14 @@ public class MainFrame extends JFrame {
 
 	}
 
-	private void setAppFont(Font myFont) {
+	private void setAppFont(Font myFont, Font comboBoxFont) {
 	    UIManager.put("CheckBoxMenuItem.acceleratorFont", myFont);
 	    UIManager.put("Button.font", myFont);
 	    UIManager.put("ToggleButton.font", myFont);
 	    UIManager.put("RadioButton.font", myFont);
 	    UIManager.put("CheckBox.font", myFont);
 	    UIManager.put("ColorChooser.font", myFont);
-	    UIManager.put("ComboBox.font", myFont);
+	    UIManager.put("ComboBox.font", comboBoxFont);
 	    UIManager.put("Label.font", myFont);
 	    UIManager.put("List.font", myFont);
 	    UIManager.put("MenuBar.font", myFont);
@@ -116,14 +117,13 @@ public class MainFrame extends JFrame {
 	    UIManager.put("InternalFrame.titleFont", myFont);
 	}
 	
-	private JRootPane getRightRootPane(JFrame parent, TablePanel tp) {
+	private JRootPane getRightRootPane(JFrame parent, TablePanel tablePanel) {
 		JRootPane jRootPane = new JRootPane();
 		JPanel rightPanel = new JPanel();
 		BoxLayout box = new BoxLayout(rightPanel, BoxLayout.Y_AXIS);
 		rightPanel.setLayout(box);
 		ToolBarPanel toolBarPanel = new ToolBarPanel();
 		rightPanel.add(toolBarPanel);
-		TablePanel tablePanel = tp;
 		rightPanel.add(tablePanel);
 		StatusBarPanel statusBarPanel = new StatusBarPanel();
 		rightPanel.add(statusBarPanel);

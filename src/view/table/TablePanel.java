@@ -8,8 +8,21 @@ import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
+
+import model.AbstractProfessorTable;
+
 
 public class TablePanel extends JPanel{
+	
+	private static TablePanel instance = null;
+	
+	public static TablePanel getInstance() {
+		if (instance == null) {
+			instance = new TablePanel();
+		}
+		return instance;
+	}
 
 	/**
 	 * 
@@ -21,17 +34,17 @@ public class TablePanel extends JPanel{
 	public static final String[] KEY_TEXTS = {STUDENT_PANEL, PROFESSOR_PANEL, GRADE_PANEL};
 	private CardLayout cardlayout = new CardLayout();
 	private JPanel cards = new JPanel(cardlayout);
+	
+	private JTable professorTable;
 
 	public TablePanel() {
+		
 		StudentTable studentTable = new StudentTable();
 		JScrollPane studentScrollPane = new JScrollPane(studentTable);
 		studentScrollPane.setBorder(BorderFactory.createEmptyBorder());
-		add(studentScrollPane, BorderLayout.CENTER);
-		
-		ProfessorTable professorTable = new ProfessorTable();
+		professorTable = new ProfessorTable();
 		JScrollPane professorScrollPane = new JScrollPane(professorTable);
 		professorScrollPane.setBorder(BorderFactory.createEmptyBorder());
-		add(professorScrollPane, BorderLayout.CENTER);
 		JPanel gradePanel = new JPanel();
 		gradePanel.setBackground(Color.pink);
 		gradePanel.setLayout(new GridLayout(0,1));
@@ -44,6 +57,12 @@ public class TablePanel extends JPanel{
 	
 	public void swapView(String key) {
 		   cardlayout.show(cards, key);
-		}
+	}
+
+	public void refreshView() {
+		AbstractProfessorTable model = (AbstractProfessorTable) professorTable.getModel();
+		model.fireTableDataChanged();
+		validate();
+	}
 
 }

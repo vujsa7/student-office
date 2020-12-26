@@ -7,10 +7,17 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JTextField;
+
+import controller.ProfessorController;
+import view.dialogs.ProfessorDialog;
+import view.table.TablePanel;
 
 public class DialogConfirmButton extends JButton {
 
@@ -21,9 +28,11 @@ public class DialogConfirmButton extends JButton {
 	private float alphaButton = 1f;
 	private ImageIcon hoveredConfirmIcon;
 	private ImageIcon confirmIcon;
+	private ProfessorDialog professorDialog;
 	
-	public DialogConfirmButton() {
+	public DialogConfirmButton(ProfessorDialog dialog) {
 		setEnabled(false);
+		professorDialog = dialog;
 		confirmIcon = getResizedIcon(new ImageIcon("assets/icons/potvrdi.png"));
 		hoveredConfirmIcon = getResizedIcon(new ImageIcon("assets/icons/potvrdi_hovered.png"));
 		setIcon(confirmIcon);
@@ -123,6 +132,22 @@ public class DialogConfirmButton extends JButton {
 								}
 							}
 						}).start();
+				ArrayList<JTextField> textFieldList = ProfessorDialog.list;
+				Collection<CustomComboBox> comboBoxes = CustomComboBox.customComboBoxes;
+				ArrayList<String> comboAnswers = new ArrayList<String>();
+				for(CustomComboBox customComboBox : comboBoxes) {
+					comboAnswers.add(customComboBox.getCustomComboBox().getField());
+				}
+				System.out.println(textFieldList.get(0).getText()+ textFieldList.get(1).getText()+
+						DateComboBox.dateString+ textFieldList.get(2).getText()+ textFieldList.get(3).getText()+ textFieldList.get(4).getText()+
+						textFieldList.get(5).getText()+ textFieldList.get(6).getText()+ comboAnswers.get(0)+ comboAnswers.get(1));
+				
+				ProfessorController.getInstance().dodajProfesora(textFieldList.get(0).getText(), textFieldList.get(1).getText(),
+						"1", textFieldList.get(2).getText(), textFieldList.get(3).getText(), textFieldList.get(4).getText(),
+						textFieldList.get(5).getText(), textFieldList.get(6).getText(),comboAnswers.get(0), comboAnswers.get(1));
+					professorDialog.dispose();
+				
+				
 			}
 		}
 	}

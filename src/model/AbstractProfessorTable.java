@@ -3,15 +3,21 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.table.AbstractTableModel;
 
-public class BazaProfesora {
+public class AbstractProfessorTable extends AbstractTableModel{
 
-	private static BazaProfesora instance = null;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7879422975558547019L;
+
+private static AbstractProfessorTable instance = null;
 	
 	private List<Profesor> professors;
 	private List<String> columns;
 	
-	private BazaProfesora() {
+	private AbstractProfessorTable() {
 		initialize();
 	}
 	
@@ -33,9 +39,9 @@ public class BazaProfesora {
 		professors.add(new Profesor("Mika", "Mikic", "19-19-2018", "Dubravska 12", "0617219096", "aleksvuj@yahoo.com", "FTN-park 18", "1293929312", "Inzenjer", "DR", null));
 	}
 	
-	public static BazaProfesora getInstance() {
+	public static AbstractProfessorTable getInstance() {
 		if(instance == null) {
-			instance = new BazaProfesora();
+			instance = new AbstractProfessorTable();
 		}
 		return instance;
 	}
@@ -78,5 +84,18 @@ public class BazaProfesora {
 		return this.professors.get(rowIndex);
 	}
 
+	public void dodajProfesora(String ime, String prezime, String datumRodjenja, String adresaStanovanja, String kontaktTelefon, String emailAdresa, String adresaKancelarije, String brojLicneKarte, String titula, String zvanje) {
+		professors.add(new Profesor(ime, prezime, datumRodjenja, adresaStanovanja, kontaktTelefon, emailAdresa, adresaKancelarije, brojLicneKarte, titula, zvanje, null));
+	}
+
+	@Override
+	public int getRowCount() {
+		return professors.size();
+	}
+	
+	@Override
+	public Class<?> getColumnClass(int column) {
+	    return getValueAt(0, column).getClass();
+	}
 
 }
