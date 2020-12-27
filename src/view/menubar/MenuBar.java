@@ -7,6 +7,7 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.IOException;
 
 import javax.swing.ImageIcon;
@@ -36,7 +37,7 @@ public class MenuBar extends JMenuBar{
                 file.setMnemonic(KeyEvent.VK_F);
  
                 JMenuItem minew = new JMenuItem("New");
-                ImageIcon newIcon = getResizedIcon(new ImageIcon("assets/icons/new.png"));
+                ImageIcon newIcon = getResizedIcon(new ImageIcon("assets" + File.separator + "icons" + File.separator + "new.png", "New"));
                 minew.setIcon(newIcon);
                 minew.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
                 minew.setMnemonic(KeyEvent.VK_N);
@@ -76,7 +77,7 @@ public class MenuBar extends JMenuBar{
                
                 JMenuItem close = new JMenuItem("Close");
                 close.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, ActionEvent.CTRL_MASK));
-                ImageIcon closeIcon = getResizedIcon(new ImageIcon("assets/icons/close.png"));
+                ImageIcon closeIcon = getResizedIcon(new ImageIcon("assets" + File.separator + "icons" + File.separator + "close.png", "Close"));
                 close.setIcon(closeIcon);
                 close.setMnemonic(KeyEvent.VK_C);
                 close.addActionListener(new ActionListener() {
@@ -98,13 +99,13 @@ public class MenuBar extends JMenuBar{
                
                 JMenuItem miedit = new JMenuItem("Edit");
                 miedit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.CTRL_MASK));
-                ImageIcon editIcon = getResizedIcon(new ImageIcon("assets/icons/edit.png"));
+                ImageIcon editIcon = getResizedIcon(new ImageIcon("assets" + File.separator + "icons" + File.separator + "edit.png", "Edit"));
                 miedit.setIcon(editIcon);
                 miedit.setMnemonic(KeyEvent.VK_E);
                
                 JMenuItem delete = new JMenuItem("Delete");
                 delete.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, ActionEvent.CTRL_MASK));
-                ImageIcon deleteIcon = getResizedIcon(new ImageIcon("assets/icons/delete.png"));
+                ImageIcon deleteIcon = getResizedIcon(new ImageIcon("assets" + File.separator + "icons" + File.separator + "delete.png", "Delete"));
                 delete.setIcon(deleteIcon);
                 delete.setMnemonic(KeyEvent.VK_D);
                
@@ -117,7 +118,7 @@ public class MenuBar extends JMenuBar{
                
                 JMenuItem mihelp = new JMenuItem("Help");
                 mihelp.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_H, ActionEvent.CTRL_MASK));
-                ImageIcon helpIcon = getResizedIcon(new ImageIcon("assets/icons/help.png"));
+                ImageIcon helpIcon = getResizedIcon(new ImageIcon("assets" + File.separator + "icons" + File.separator + "help.png", "Help"));
                 mihelp.setIcon(helpIcon);
                 mihelp.setMnemonic(KeyEvent.VK_H);
                 
@@ -158,7 +159,7 @@ public class MenuBar extends JMenuBar{
                
                 JMenuItem about = new JMenuItem("About");
                 about.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.CTRL_MASK));
-                ImageIcon aboutIcon = getResizedIcon(new ImageIcon("assets/icons/about.png"));
+                ImageIcon aboutIcon = getResizedIcon(new ImageIcon("assets" + File.separator + "icons" + File.separator + "about.png", "About"));
                 about.setIcon(aboutIcon);
                 about.setMnemonic(KeyEvent.VK_A);
                 about.addActionListener(new ActionListener() {

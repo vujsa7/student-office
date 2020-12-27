@@ -140,6 +140,7 @@ public class StudentDialog extends JDialog{
 				CustomComboBox customComboBox = new CustomComboBox(studentLista.get(i-9));
 				holderPanel.add(customComboBox);
 			} else if (i == 3) {
+				DateComboBox.emptyComboBox();
 				DateComboBox yearsComboBox = new DateComboBox(years, new Dimension(80, 36), "years");
 				holderPanel.add(yearsComboBox);
 				holderPanel.add(Box.createHorizontalStrut(8));
