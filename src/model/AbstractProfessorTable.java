@@ -47,12 +47,10 @@ private static AbstractProfessorTable instance = null;
 		return instance;
 	}
 	
-	// ne znam da li ce mi trebati
 	public List<Profesor> getProfessors() {
 		return professors;
 	}
 
-	// ne znam da li ce mi trebati
 	public void setProfessors(List<Profesor> profesori) {
 		this.professors = profesori;
 	}

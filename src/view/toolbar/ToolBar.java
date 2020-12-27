@@ -39,7 +39,6 @@ public class ToolBar extends JToolBar{
 		setBorderPainted(false);
 		BoxLayout box = new BoxLayout(this, BoxLayout.X_AXIS);
 		setLayout(box);
-		
 		HoverButton newBtn = new HoverButton("assets"+ File.separator +"icons"+ File.separator +"new_white.png", "New");
 		KeyStroke keyNew = KeyStroke.getKeyStroke(KeyEvent.VK_1, ActionEvent.CTRL_MASK); 
 		Action performNew = new AbstractAction("New") {  

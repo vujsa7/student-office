@@ -257,8 +257,6 @@ public class DateComboBox extends JPanel {
 			}
 			date = date.substring(0, date.length() - 1);
 			dateString = date.toString();
-			System.out.println(date);
-			System.out.println();
 		}
 	}
 

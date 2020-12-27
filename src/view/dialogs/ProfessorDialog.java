@@ -2,22 +2,15 @@ package view.dialogs;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.FontFormatException;
 import java.awt.GridLayout;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -25,6 +18,7 @@ import view.dialogs.components.ButtonHolderPanel;
 import view.dialogs.components.CustomTextField;
 import view.dialogs.components.DateComboBox;
 import view.dialogs.components.DialogConfirmButton;
+import view.dialogs.components.ErrorPanel;
 import view.dialogs.components.CustomComboBox;
 import view.dialogs.components.FieldName;
 
@@ -38,22 +32,22 @@ public class ProfessorDialog extends JDialog{
 	private static ArrayList<JDialog> dialogs = new ArrayList<JDialog>();
 	public static final String[] fieldText = {"Ime", "Prezime", "Datum rođenja", "Adresa stanovanja", "Kontakt telefon", "E-mail adresa",
 			"Adresa kancelarije", "Broj lične karte", "Titula", "Zvanje"};
-	private ArrayList<JPanel> errorPanelList = new ArrayList<JPanel>();
+	private ArrayList<ErrorPanel> errorPanelList = new ArrayList<ErrorPanel>();
 	public String[] textFieldName = {"0","1","2","3","4","5","6"};
 	public String[] regex = {
 			"[A-Z][a-z]{1,20}",
 			"[A-Z][a-z]{1,20}",
-			"[A-Z][a-z]{1,20},[\\s][A-Z][a-z]{1,20}[\\s]\\d{1,5}",
-			"^(\\+381)?(\\s|-)?6(([0-6]|[8-9])\\d{7,8}){1}$",
+			"[A-Z][a-z]{1,20}(\\s[A-Z][a-z]{1,20}){0,2},([\\s][A-Z][a-z]{1,20}){1,3}\\s\\d{1,5}[A-Za-z]?",
+			"^(\\+381)?(\\s|-)?[0]6(([0-6]|[8-9])\\d{7,8}){1}$",
 			"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$",
-			"[A-Z][a-z]{1,20},[\\s][A-Z][a-z]{1,20}[\\s]\\d{1,5}",
+			"[A-Z][a-z]{1,20}(\\\\s[A-Z][a-z]{1,20}){0,2},([\\\\s][A-Z][a-z]{1,20}){1,3}\\\\s\\\\d{1,5}[A-Za-z]?",
 			"\\d{9}"
 	};
 	public String[] errorText = {
 			"Pogrešan format imena",
 			"Pogrešan format prezimena",
-			"Unesite grad, ulicu i broj",
-			"Format telefona: (+381) xx xxxxxxx(x)",
+			"Format adrese: grad, ulica broj",
+			"Format telefona: (+381) (0)xx xxxxxxx(x)",
 			"Pogrešan format e-mail adrese",
 			"Format adrese: grad, ulica broj",
 			"Potrebno 9 brojeva"
@@ -174,32 +168,7 @@ public class ProfessorDialog extends JDialog{
 				CustomTextField customTextField = new CustomTextField(dialogConfirmButton, textField, regex[regexCounter++], textFieldName[textFieldCounter++], "profesor");
 				textPanel.add(customTextField);
 				
-				JPanel errorPanel = new JPanel();
-				File font_file = new File("assets"+ File.separator +"fonts"+ File.separator +"Montserrat-Regular.ttf");
-				Font font = null;
-				try {
-					font = Font.createFont(Font.TRUETYPE_FONT, font_file);
-				} catch (FontFormatException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				Font sizedFont = font.deriveFont(10f);
-				JLabel errorLabel = new JLabel(errorText[errorTextCounter++]);
-				FlowLayout layout = new FlowLayout(FlowLayout.RIGHT);
-				layout.setVgap(0);
-				errorPanel.setLayout(layout);
-				errorLabel.setBorder(new EmptyBorder(0,0,0,0));
-				errorLabel.setFont(sizedFont);
-				errorLabel.setForeground(new Color(199,0,0));
-				errorPanel.setMaximumSize(new Dimension(214, 13));
-				errorPanel.setPreferredSize(new Dimension(214, 13));
-				errorPanel.setOpaque(false);
-				errorPanel.setVisible(false);
-				errorPanel.add(errorLabel);
-				
+				ErrorPanel errorPanel = new ErrorPanel(errorText[errorTextCounter++]);		
 				errorPanelList.add(errorPanel);
 				
 				textAndErrorPanel.add(textPanel);
@@ -260,7 +229,7 @@ public class ProfessorDialog extends JDialog{
 		int i = 0;
 		ArrayList<JDialog> dialogs = getDialogs();
 		JDialog lastOpenedDialog = dialogs.get(dialogs.size()-1);
-		ArrayList<JPanel> errorPanelList = ((ProfessorDialog) lastOpenedDialog).getErrorPanelList();
+		ArrayList<ErrorPanel> errorPanelList = ((ProfessorDialog) lastOpenedDialog).getErrorPanelList();
 		for(JPanel errorPanel : errorPanelList) {
 			if(i == index) {
 				errorPanel.setVisible(true);
@@ -273,7 +242,7 @@ public class ProfessorDialog extends JDialog{
 		int i = 0;
 		ArrayList<JDialog> dialogs = getDialogs();
 		JDialog lastOpenedDialog = dialogs.get(dialogs.size()-1);
-		ArrayList<JPanel> errorPanelList = ((ProfessorDialog) lastOpenedDialog).getErrorPanelList();
+		ArrayList<ErrorPanel> errorPanelList = ((ProfessorDialog) lastOpenedDialog).getErrorPanelList();
 		for(JPanel errorPanel : errorPanelList) {
 			if(i == index) {
 				errorPanel.setVisible(false);
@@ -286,12 +255,31 @@ public class ProfessorDialog extends JDialog{
 		return dialogs;
 	}
 
-	public ArrayList<JPanel> getErrorPanelList() {
+	public ArrayList<ErrorPanel> getErrorPanelList() {
 		return errorPanelList;
 	}
 
 	public ArrayList<JTextField> getTextFieldList() {
 		return textFieldList;
+	}
+
+	public static void showIDErrorPanel() {
+		ArrayList<JDialog> dialogs = getDialogs();
+		JDialog lastOpenedDialog = dialogs.get(dialogs.size()-1);
+		ArrayList<ErrorPanel> errorPanelList = ((ProfessorDialog) lastOpenedDialog).getErrorPanelList();
+		ErrorPanel errorPanel = errorPanelList.get(6);
+		errorPanel.setLabelText("Profesor sa tim brojem već postoji");
+		errorPanel.setVisible(true);
+		
+	}
+
+	public static void hideIDErrorPanel() {
+		ArrayList<JDialog> dialogs = getDialogs();
+		JDialog lastOpenedDialog = dialogs.get(dialogs.size()-1);
+		ArrayList<ErrorPanel> errorPanelList = ((ProfessorDialog) lastOpenedDialog).getErrorPanelList();
+		ErrorPanel errorPanel = errorPanelList.get(6);
+		errorPanel.setLabelText("Potrebno 9 brojeva");
+		errorPanel.setVisible(false);
 	}
 	
 }

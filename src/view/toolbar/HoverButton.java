@@ -17,10 +17,11 @@ public class HoverButton extends JButton{
 	 * 
 	 */
 	private static final long serialVersionUID = 8701578317825563407L;
-	
+	private String buttonType;
 	private float alpha = 0.7f;
 
 	public HoverButton(String path, String toolTipText) {
+		buttonType = toolTipText;
 		setIcon(getResizedIcon(new ImageIcon(path)));
 		setToolTipText(toolTipText);
 		setFocusPainted(false);
@@ -109,15 +110,17 @@ public class HoverButton extends JButton{
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			if(TabBarButton.getActiveButton() == "Studenti") {
-				StudentDialog studentDialog = new StudentDialog(parent);
-				studentDialog.setVisible(true);
-			} else if(TabBarButton.getActiveButton() == "Profesori") {
-	        	 ProfessorDialog professorDialog = new ProfessorDialog(parent);
-	        	 professorDialog.setVisible(true);
-	        } else {
-	        	 
-	        }
+			if(buttonType.equals("New")) {
+				if(TabBarButton.getActiveButton() == "Studenti") {
+					StudentDialog studentDialog = new StudentDialog(parent);
+					studentDialog.setVisible(true);
+				} else if(TabBarButton.getActiveButton() == "Profesori") {
+		        	 ProfessorDialog professorDialog = new ProfessorDialog(parent);
+		        	 professorDialog.setVisible(true);
+		        } else {
+		        	 
+		        }
+			}
 		}
 	}
 	

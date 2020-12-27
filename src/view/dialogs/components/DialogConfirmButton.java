@@ -42,7 +42,6 @@ public class DialogConfirmButton extends JButton {
 		setEnabled(false);
 		this.dialog = dialog;
 		dialogType = type;
-		System.out.println(dialogType);
 		confirmIcon = getResizedIcon(new ImageIcon("assets"+ File.separator +"icons"+ File.separator +"potvrdi.png"));
 		hoveredConfirmIcon = getResizedIcon(new ImageIcon("assets"+ File.separator +"icons"+ File.separator +"potvrdi_hovered.png"));
 		setIcon(confirmIcon);
@@ -224,7 +223,7 @@ public class DialogConfirmButton extends JButton {
 		else {
 			ArrayList<JDialog> dialogs = ProfessorDialog.getDialogs();
 			JDialog lastOpenedDialog = dialogs.get(dialogs.size()-1);
-			ArrayList<JPanel> errorPanelList = ((ProfessorDialog) lastOpenedDialog).getErrorPanelList();
+			ArrayList<ErrorPanel> errorPanelList = ((ProfessorDialog) lastOpenedDialog).getErrorPanelList();
 			validated = true;
 			for(JPanel errorPanel : errorPanelList) {
 				if(errorPanel.isVisible()) {
