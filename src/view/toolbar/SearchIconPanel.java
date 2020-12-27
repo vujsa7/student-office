@@ -3,6 +3,7 @@ package view.toolbar;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
+import java.io.File;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -20,7 +21,7 @@ public class SearchIconPanel extends JPanel{
 		setMaximumSize(new Dimension(36,36));
 		setPreferredSize(new Dimension(36,36));
 		setOpaque(false);
-		ImageIcon searchIcon = new ImageIcon("assets/icons/search_icon_panel.png");
+		ImageIcon searchIcon = new ImageIcon("assets"+ File.separator +"icons"+ File.separator +"search_icon_panel.png");
 		JLabel label = new JLabel();
 		label.setOpaque(false);
 		label.setIcon(getResizedIcon(searchIcon));

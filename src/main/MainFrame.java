@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
@@ -40,7 +41,7 @@ public class MainFrame extends JFrame {
 	public MainFrame() throws FontFormatException, IOException {
 		
 		
-		File font_file = new File("assets/fonts/Montserrat-Regular.ttf");
+		File font_file = new File("assets"+ File.separator +"fonts"+ File.separator +"Montserrat-Regular.ttf");
 		Font font = Font.createFont(Font.TRUETYPE_FONT, font_file);
 		Font sizedFont = font.deriveFont(16f);
 		Font comboBoxFont = font.deriveFont(14f);
@@ -54,8 +55,9 @@ public class MainFrame extends JFrame {
 		setSize(toolkit.getScreenSize().width*3/4, toolkit.getScreenSize().height*3/4);
 		setLocationRelativeTo(null);
 		setMinimumSize(new Dimension(977, 530));
-		Image titleBarLogo = toolkit.getImage("assets/icons/titleBarLogo.png");
-		setIconImage(titleBarLogo);
+		Image titleBarLogo = toolkit.getImage("assets"+ File.separator +"icons"+ File.separator +"title_bar_logo.png");
+		Image resizedTitleBarLogo = titleBarLogo.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH);
+		setIconImage(resizedTitleBarLogo);
 		
 		TablePanel tablePanel = new TablePanel();
 		
@@ -68,7 +70,7 @@ public class MainFrame extends JFrame {
 
 
 	}
-
+	
 	private void setAppFont(Font myFont, Font comboBoxFont) {
 	    UIManager.put("CheckBoxMenuItem.acceleratorFont", myFont);
 	    UIManager.put("Button.font", myFont);

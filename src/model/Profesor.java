@@ -1,12 +1,14 @@
 package model;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public class Profesor {
 	
 	private String ime;
 	private String prezime;
-	private String datumRodjenja;
+	private LocalDate datumRodjenja;
 	private String adresaStanovanja;
 	private String kontaktTelefon;
 	private String emailAdresa;
@@ -17,13 +19,13 @@ public class Profesor {
 	private List<Predmet> listaPredmeta;
 	
 	
-	public Profesor(String ime, String prezime, String datumRodjenja, String adresaStanovanja, String kontaktTelefon,
+	public Profesor(String ime, String prezime, LocalDate localDate, String adresaStanovanja, String kontaktTelefon,
 			String emailAdresa, String adresaKancelarije, String brojLicneKarte, String titula, String zvanje,
 			List<Predmet> listaPredmeta) {
 		super();
 		this.ime = ime;
 		this.prezime = prezime;
-		this.datumRodjenja = datumRodjenja;
+		this.datumRodjenja = localDate;
 		this.adresaStanovanja = adresaStanovanja;
 		this.kontaktTelefon = kontaktTelefon;
 		this.emailAdresa = emailAdresa;
@@ -55,12 +57,12 @@ public class Profesor {
 	}
 
 
-	public String getDatumRodjenja() {
+	public LocalDate getDatumRodjenja() {
 		return datumRodjenja;
 	}
 
 
-	public void setDatumRodjenja(String datumRodjenja) {
+	public void setDatumRodjenja(LocalDate datumRodjenja) {
 		this.datumRodjenja = datumRodjenja;
 	}
 

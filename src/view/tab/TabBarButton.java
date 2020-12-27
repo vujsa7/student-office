@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -31,17 +32,17 @@ public class TabBarButton extends JButton{
 	public TabBarButton(String text) {
 		buttonId = text;
 		if(text.equals("Studenti")){
-			hoveredIcon = getResizedIcon(new ImageIcon("assets/icons/student_button_hover.jpg"));
-			normalIcon = getResizedIcon(new ImageIcon("assets/icons/student_button.jpg"));
-			clickedIcon = getResizedIcon(new ImageIcon("assets/icons/student_button_clicked.jpg"));
+			hoveredIcon = getResizedIcon(new ImageIcon("assets"+ File.separator +"icons"+ File.separator +"student_button_hover.jpg"));
+			normalIcon = getResizedIcon(new ImageIcon("assets"+ File.separator +"icons"+ File.separator +"student_button.jpg"));
+			clickedIcon = getResizedIcon(new ImageIcon("assets"+ File.separator +"icons"+ File.separator +"student_button_clicked.jpg"));
 		} else if(text.equals("Profesori")){
-			hoveredIcon = getResizedIcon(new ImageIcon("assets/icons/professor_button_hover.jpg"));
-			normalIcon = getResizedIcon(new ImageIcon("assets/icons/professor_button.jpg"));
-			clickedIcon = getResizedIcon(new ImageIcon("assets/icons/professor_button_clicked.jpg"));
+			hoveredIcon = getResizedIcon(new ImageIcon("assets"+ File.separator +"icons"+ File.separator +"professor_button_hover.jpg"));
+			normalIcon = getResizedIcon(new ImageIcon("assets"+ File.separator +"icons"+ File.separator +"professor_button.jpg"));
+			clickedIcon = getResizedIcon(new ImageIcon("assets"+ File.separator +"icons"+ File.separator +"professor_button_clicked.jpg"));
 		} else {
-			hoveredIcon = getResizedIcon(new ImageIcon("assets/icons/subject_button_hover.jpg"));
-			normalIcon = getResizedIcon(new ImageIcon("assets/icons/subject_button.jpg"));
-			clickedIcon = getResizedIcon(new ImageIcon("assets/icons/subject_button_clicked.jpg"));
+			hoveredIcon = getResizedIcon(new ImageIcon("assets"+ File.separator +"icons"+ File.separator +"subject_button_hover.jpg"));
+			normalIcon = getResizedIcon(new ImageIcon("assets"+ File.separator +"icons"+ File.separator +"subject_button.jpg"));
+			clickedIcon = getResizedIcon(new ImageIcon("assets"+ File.separator +"icons"+ File.separator +"subject_button_clicked.jpg"));
 		}
 		if(activeButton == text) {
 			setIcon(clickedIcon);

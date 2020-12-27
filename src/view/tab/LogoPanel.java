@@ -94,7 +94,7 @@ public class LogoPanel extends JPanel{
 		private Image image;
 		
 		public ImagePanel() {
-			ImageIcon icon = getResizedIcon(new ImageIcon("assets/icons/logo1.png"));
+			ImageIcon icon = getResizedIcon(new ImageIcon("assets"+ File.separator +"icons"+ File.separator +"logo1.png"));
 			image = icon.getImage();
 			FlowLayout layout = (FlowLayout)this.getLayout();
 			setPreferredSize(new Dimension(100,100));

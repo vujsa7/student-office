@@ -7,12 +7,17 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import controller.ProfessorController;
@@ -28,13 +33,14 @@ public class DialogConfirmButton extends JButton {
 	private float alphaButton = 1f;
 	private ImageIcon hoveredConfirmIcon;
 	private ImageIcon confirmIcon;
-	private ProfessorDialog professorDialog;
+	private JDialog dialog;
+	public static boolean validated;
 	
-	public DialogConfirmButton(ProfessorDialog dialog) {
+	public DialogConfirmButton(JDialog dialog) {
 		setEnabled(false);
-		professorDialog = dialog;
-		confirmIcon = getResizedIcon(new ImageIcon("assets/icons/potvrdi.png"));
-		hoveredConfirmIcon = getResizedIcon(new ImageIcon("assets/icons/potvrdi_hovered.png"));
+		this.dialog = dialog;
+		confirmIcon = getResizedIcon(new ImageIcon("assets"+ File.separator +"icons"+ File.separator +"potvrdi.png"));
+		hoveredConfirmIcon = getResizedIcon(new ImageIcon("assets"+ File.separator +"icons"+ File.separator +"potvrdi_hovered.png"));
 		setIcon(confirmIcon);
 		setBorderPainted(false);
 		setFocusPainted(false);
@@ -132,21 +138,32 @@ public class DialogConfirmButton extends JButton {
 								}
 							}
 						}).start();
-				ArrayList<JTextField> textFieldList = ProfessorDialog.list;
+				//Proveri koji je dijalog
+				ArrayList<JDialog> dialogs = ProfessorDialog.getDialogs();
+				JDialog lastOpenedDialog = dialogs.get(dialogs.size()-1);
+				ArrayList<JTextField> textFieldList = ((ProfessorDialog) lastOpenedDialog).getTextFieldList();
 				Collection<CustomComboBox> comboBoxes = CustomComboBox.customComboBoxes;
 				ArrayList<String> comboAnswers = new ArrayList<String>();
 				for(CustomComboBox customComboBox : comboBoxes) {
 					comboAnswers.add(customComboBox.getCustomComboBox().getField());
 				}
-				System.out.println(textFieldList.get(0).getText()+ textFieldList.get(1).getText()+
-						DateComboBox.dateString+ textFieldList.get(2).getText()+ textFieldList.get(3).getText()+ textFieldList.get(4).getText()+
-						textFieldList.get(5).getText()+ textFieldList.get(6).getText()+ comboAnswers.get(0)+ comboAnswers.get(1));
-				
-				ProfessorController.getInstance().dodajProfesora(textFieldList.get(0).getText(), textFieldList.get(1).getText(),
-						"1", textFieldList.get(2).getText(), textFieldList.get(3).getText(), textFieldList.get(4).getText(),
-						textFieldList.get(5).getText(), textFieldList.get(6).getText(),comboAnswers.get(0), comboAnswers.get(1));
-					professorDialog.dispose();
-				
+				String date = DateComboBox.dateString;
+				LocalDate localDate;
+				if(date.contentEquals("yyyy-MM-dd")) {
+					localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+				} else if(date.contentEquals("yyyy-M-dd")){
+					localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-M-dd"));
+				} else if(date.contentEquals("yyyy-MM-d")){
+					localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-d"));
+				} else {
+					localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-M-d"));
+				}
+				if(validated) {
+					ProfessorController.getInstance().dodajProfesora(textFieldList.get(0).getText(), textFieldList.get(1).getText(),
+							localDate,textFieldList.get(2).getText(), textFieldList.get(3).getText(), textFieldList.get(4).getText(),
+							textFieldList.get(5).getText(), textFieldList.get(6).getText(),comboAnswers.get(0), comboAnswers.get(1));
+						dialog.dispose();
+				}
 				
 			}
 		}
@@ -155,6 +172,21 @@ public class DialogConfirmButton extends JButton {
 
 	public void resetIcon() {
 		setIcon(confirmIcon);
+	}
+
+	public static void checkIfCanBeValidated() {
+		ArrayList<JDialog> dialogs = ProfessorDialog.getDialogs();
+		JDialog lastOpenedDialog = dialogs.get(dialogs.size()-1);
+		ArrayList<JPanel> errorPanelList = ((ProfessorDialog) lastOpenedDialog).getErrorPanelList();
+		validated = true;
+		for(JPanel errorPanel : errorPanelList) {
+			if(errorPanel.isVisible()) {
+				validated = false;
+				break;
+			}
+		}
+		
+		
 	}
 	
 }

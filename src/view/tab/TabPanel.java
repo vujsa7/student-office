@@ -31,9 +31,9 @@ public class TabPanel  extends JPanel{
 	         TabBarButton btn = new TabBarButton(keyText);
 	         btn.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
-	               //if (tablePanel != null) {
+	               if (tablePanel != null) {
 	                  tablePanel.swapView(keyText);
-	              // }
+	               }
 	            }
 	         });
 	         tabBarButtonPanel.add(btn);

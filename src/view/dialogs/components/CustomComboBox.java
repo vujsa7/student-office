@@ -12,6 +12,7 @@ import java.awt.Insets;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -75,7 +76,7 @@ public class CustomComboBox extends JPanel {
 
 	    @Override protected JButton createArrowButton() {
 	    	JButton comboBoxButton = new JButton();
-	    	ImageIcon imageIcon = getResizedIcon(new ImageIcon("assets/icons/arrow.png"));
+	    	ImageIcon imageIcon = getResizedIcon(new ImageIcon("assets"+ File.separator +"icons"+ File.separator +"arrow.png"));
 	    	comboBoxButton.setOpaque(false);
 	    	comboBoxButton.setFocusPainted(false);
 	    	comboBoxButton.setBorderPainted(false);

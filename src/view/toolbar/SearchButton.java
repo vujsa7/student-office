@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -26,8 +27,8 @@ public class SearchButton extends JButton {
 	
 	public SearchButton() {
 		setEnabled(false);
-		searchIcon = getResizedIcon(new ImageIcon("assets/icons/search_icon.png"));
-		hoveredSearchIcon = getResizedIcon(new ImageIcon("assets/icons/hovered_search_icon.png"));
+		searchIcon = getResizedIcon(new ImageIcon("assets"+ File.separator +"icons"+ File.separator +"search_icon.png"));
+		hoveredSearchIcon = getResizedIcon(new ImageIcon("assets"+ File.separator +"icons"+ File.separator +"hovered_search_icon.png"));
 		setIcon(searchIcon);
 		setBorderPainted(false);
 		setFocusPainted(false);

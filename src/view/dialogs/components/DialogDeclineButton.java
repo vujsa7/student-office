@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -23,8 +24,8 @@ public class DialogDeclineButton extends JButton{
 	private float alphaButton = 1f;
 	
 	public DialogDeclineButton() {
-		declineIcon = getResizedIcon(new ImageIcon("assets/icons/ponisti.png"));
-		hoveredDeclineIcon = getResizedIcon(new ImageIcon("assets/icons/ponisti_hovered.png"));
+		declineIcon = getResizedIcon(new ImageIcon("assets"+ File.separator +"icons"+ File.separator +"ponisti.png"));
+		hoveredDeclineIcon = getResizedIcon(new ImageIcon("assets"+ File.separator +"icons"+ File.separator +"ponisti_hovered.png"));
 		setIcon(declineIcon);
 		setBorderPainted(false);
 		setFocusPainted(false);

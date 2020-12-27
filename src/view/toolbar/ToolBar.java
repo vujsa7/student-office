@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.FontFormatException;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.IOException;
 
 import javax.swing.AbstractAction;
@@ -39,7 +40,7 @@ public class ToolBar extends JToolBar{
 		BoxLayout box = new BoxLayout(this, BoxLayout.X_AXIS);
 		setLayout(box);
 		
-		HoverButton newBtn = new HoverButton("assets/icons/new_white.png", "New");
+		HoverButton newBtn = new HoverButton("assets"+ File.separator +"icons"+ File.separator +"new_white.png", "New");
 		KeyStroke keyNew = KeyStroke.getKeyStroke(KeyEvent.VK_1, ActionEvent.CTRL_MASK); 
 		Action performNew = new AbstractAction("New") {  
 		    /**
@@ -93,7 +94,7 @@ public class ToolBar extends JToolBar{
 		newBtn.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(keyNew, "performNew"); 
 		add(newBtn);
 		
-		HoverButton editBtn = new HoverButton("assets/icons/edit_white.png", "Edit");
+		HoverButton editBtn = new HoverButton("assets"+ File.separator +"icons"+ File.separator +"edit_white.png", "Edit");
 		KeyStroke keyEdit = KeyStroke.getKeyStroke(KeyEvent.VK_2, ActionEvent.CTRL_MASK); 
 		Action performEdit = new AbstractAction("Edit") {  
 		    /**
@@ -122,7 +123,7 @@ public class ToolBar extends JToolBar{
 		editBtn.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(keyEdit, "performEdit"); 
 		add(editBtn);
 		
-		HoverButton deleteBtn = new HoverButton("assets/icons/delete_white1.png", "Delete");
+		HoverButton deleteBtn = new HoverButton("assets"+ File.separator +"icons"+ File.separator +"delete_white1.png", "Delete");
 		KeyStroke keyDelete = KeyStroke.getKeyStroke(KeyEvent.VK_3, ActionEvent.CTRL_MASK); 
 		Action performDelete = new AbstractAction("Delete") {  
 		    /**

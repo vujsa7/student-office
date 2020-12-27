@@ -12,6 +12,7 @@ import java.awt.Insets;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -53,7 +54,7 @@ public class DateComboBox extends JPanel {
 			combo.insertItemAt(list.get(i), i);;
 		}
 		comboSize = list.size();
-		dateString = "1970-1-1";
+		dateString = "1970-01-01";
 		combo.setSelectedItem(list.get(0));
 		
 		combo.setPreferredSize(size);
@@ -103,7 +104,7 @@ public class DateComboBox extends JPanel {
 
 	    @Override protected JButton createArrowButton() {
 	    	JButton comboBoxButton = new JButton();
-	    	ImageIcon imageIcon = getResizedIcon(new ImageIcon("assets/icons/arrow.png"));
+	    	ImageIcon imageIcon = getResizedIcon(new ImageIcon("assets"+ File.separator +"icons"+ File.separator +"arrow.png"));
 	    	comboBoxButton.setOpaque(false);
 	    	comboBoxButton.setFocusPainted(false);
 	    	comboBoxButton.setBorderPainted(false);
@@ -247,12 +248,13 @@ public class DateComboBox extends JPanel {
 		private void updateDate() {
 			String date = "";
 			for(DateComboBox dateComboBox : dateComboBoxes) {
-				//System.out.println(dateComboBox.getComboBox().getSelectedItem());
 				date = date.concat(String.valueOf(dateComboBox.getComboBox().getSelectedItem()));
 				date = date.concat("-");
 			}
 			date = date.substring(0, date.length() - 1);
 			dateString = date;
+			System.out.println(date);
+			System.out.println();
 		}
 	}
 
