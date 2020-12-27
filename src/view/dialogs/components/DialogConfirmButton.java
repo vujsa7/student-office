@@ -21,8 +21,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import controller.ProfessorController;
+import controller.StudentController;
 import view.dialogs.ProfessorDialog;
-import view.table.TablePanel;
+import view.dialogs.StudentDialog;
 
 public class DialogConfirmButton extends JButton {
 
@@ -35,10 +36,13 @@ public class DialogConfirmButton extends JButton {
 	private ImageIcon confirmIcon;
 	private JDialog dialog;
 	public static boolean validated;
+	public static String dialogType;
 	
-	public DialogConfirmButton(JDialog dialog) {
+	public DialogConfirmButton(JDialog dialog, String type) {
 		setEnabled(false);
 		this.dialog = dialog;
+		dialogType = type;
+		System.out.println(dialogType);
 		confirmIcon = getResizedIcon(new ImageIcon("assets"+ File.separator +"icons"+ File.separator +"potvrdi.png"));
 		hoveredConfirmIcon = getResizedIcon(new ImageIcon("assets"+ File.separator +"icons"+ File.separator +"potvrdi_hovered.png"));
 		setIcon(confirmIcon);
@@ -138,31 +142,61 @@ public class DialogConfirmButton extends JButton {
 								}
 							}
 						}).start();
-				//Proveri koji je dijalog
-				ArrayList<JDialog> dialogs = ProfessorDialog.getDialogs();
-				JDialog lastOpenedDialog = dialogs.get(dialogs.size()-1);
-				ArrayList<JTextField> textFieldList = ((ProfessorDialog) lastOpenedDialog).getTextFieldList();
-				Collection<CustomComboBox> comboBoxes = CustomComboBox.customComboBoxes;
-				ArrayList<String> comboAnswers = new ArrayList<String>();
-				for(CustomComboBox customComboBox : comboBoxes) {
-					comboAnswers.add(customComboBox.getCustomComboBox().getField());
+				
+				if(dialogType == "student") {
+					
+					ArrayList<JDialog> dialogs = StudentDialog.getDialogs();
+					JDialog lastOpenedDialog = dialogs.get(dialogs.size()-1);
+					ArrayList<JTextField> textFieldList = ((StudentDialog) lastOpenedDialog).getTextFieldList();
+					Collection<CustomComboBox> comboBoxes = CustomComboBox.customComboBoxes;
+					ArrayList<String> comboAnswers = new ArrayList<String>();
+					for(CustomComboBox customComboBox : comboBoxes) {
+						comboAnswers.add(customComboBox.getCustomComboBox().getField());
+					}
+					String date = DateComboBox.dateString;
+					LocalDate localDate;
+					if(date.contentEquals("yyyy-MM-dd")) {
+						localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+					} else if(date.contentEquals("yyyy-M-dd")){
+						localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-M-dd"));
+					} else if(date.contentEquals("yyyy-MM-d")){
+						localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-d"));
+					} else {
+						localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-M-d"));
+					}
+					if(validated) {
+						StudentController.getInstance().dodajStudenta(textFieldList.get(0).getText(), textFieldList.get(1).getText(),
+								localDate,textFieldList.get(2).getText(), textFieldList.get(3).getText(), textFieldList.get(4).getText(),
+								textFieldList.get(5).getText(), textFieldList.get(6).getText(),comboAnswers.get(0), comboAnswers.get(1));
+							dialog.dispose();
+					}
 				}
-				String date = DateComboBox.dateString;
-				LocalDate localDate;
-				if(date.contentEquals("yyyy-MM-dd")) {
-					localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-				} else if(date.contentEquals("yyyy-M-dd")){
-					localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-M-dd"));
-				} else if(date.contentEquals("yyyy-MM-d")){
-					localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-d"));
-				} else {
-					localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-M-d"));
-				}
-				if(validated) {
-					ProfessorController.getInstance().dodajProfesora(textFieldList.get(0).getText(), textFieldList.get(1).getText(),
-							localDate,textFieldList.get(2).getText(), textFieldList.get(3).getText(), textFieldList.get(4).getText(),
-							textFieldList.get(5).getText(), textFieldList.get(6).getText(),comboAnswers.get(0), comboAnswers.get(1));
-						dialog.dispose();
+				else {
+					ArrayList<JDialog> dialogs = ProfessorDialog.getDialogs();
+					JDialog lastOpenedDialog = dialogs.get(dialogs.size()-1);
+					ArrayList<JTextField> textFieldList = ((ProfessorDialog) lastOpenedDialog).getTextFieldList();
+					Collection<CustomComboBox> comboBoxes = CustomComboBox.customComboBoxes;
+					ArrayList<String> comboAnswers = new ArrayList<String>();
+					for(CustomComboBox customComboBox : comboBoxes) {
+						comboAnswers.add(customComboBox.getCustomComboBox().getField());
+					}
+					String date = DateComboBox.dateString;
+					LocalDate localDate;
+					if(date.contentEquals("yyyy-MM-dd")) {
+						localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+					} else if(date.contentEquals("yyyy-M-dd")){
+						localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-M-dd"));
+					} else if(date.contentEquals("yyyy-MM-d")){
+						localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-d"));
+					} else {
+						localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-M-d"));
+					}
+					if(validated) {
+						ProfessorController.getInstance().dodajProfesora(textFieldList.get(0).getText(), textFieldList.get(1).getText(),
+								localDate,textFieldList.get(2).getText(), textFieldList.get(3).getText(), textFieldList.get(4).getText(),
+								textFieldList.get(5).getText(), textFieldList.get(6).getText(),comboAnswers.get(0), comboAnswers.get(1));
+							dialog.dispose();
+					}
 				}
 				
 			}
@@ -175,14 +209,28 @@ public class DialogConfirmButton extends JButton {
 	}
 
 	public static void checkIfCanBeValidated() {
-		ArrayList<JDialog> dialogs = ProfessorDialog.getDialogs();
-		JDialog lastOpenedDialog = dialogs.get(dialogs.size()-1);
-		ArrayList<JPanel> errorPanelList = ((ProfessorDialog) lastOpenedDialog).getErrorPanelList();
-		validated = true;
-		for(JPanel errorPanel : errorPanelList) {
-			if(errorPanel.isVisible()) {
-				validated = false;
-				break;
+		if(dialogType == "student") {
+			ArrayList<JDialog> dialogs = StudentDialog.getDialogs();
+			JDialog lastOpenedDialog = dialogs.get(dialogs.size()-1);
+			ArrayList<JPanel> errorPanelList = ((StudentDialog) lastOpenedDialog).getErrorPanelList();
+			validated = true;
+			for(JPanel errorPanel : errorPanelList) {
+				if(errorPanel.isVisible()) {
+					validated = false;
+					break;
+				}
+			}	
+		} 
+		else {
+			ArrayList<JDialog> dialogs = ProfessorDialog.getDialogs();
+			JDialog lastOpenedDialog = dialogs.get(dialogs.size()-1);
+			ArrayList<JPanel> errorPanelList = ((ProfessorDialog) lastOpenedDialog).getErrorPanelList();
+			validated = true;
+			for(JPanel errorPanel : errorPanelList) {
+				if(errorPanel.isVisible()) {
+					validated = false;
+					break;
+				}
 			}
 		}
 		

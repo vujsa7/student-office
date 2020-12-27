@@ -1,23 +1,32 @@
 package view.dialogs;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GridLayout;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
-import view.listeners.MyFocusListener;
+import view.dialogs.components.ButtonHolderPanel;
+import view.dialogs.components.CustomComboBox;
+import view.dialogs.components.CustomTextField;
+import view.dialogs.components.DateComboBox;
+import view.dialogs.components.DialogConfirmButton;
+import view.dialogs.components.FieldName;
 
 public class StudentDialog extends JDialog{
 	
@@ -25,200 +34,260 @@ public class StudentDialog extends JDialog{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private static ArrayList<JDialog> dialogs = new ArrayList<JDialog>();
+	public static final String[] fieldText = {"Ime", "Prezime", "Datum rođenja", "Adresa stanovanja", "Broj telefona", "E-mail adresa",
+			"Broj indeksa", "Godina upisa", "Trenutna godija studija", "Način finansiranja"};
+	private ArrayList<JPanel> errorPanelList = new ArrayList<JPanel>();
+	public String[] textFieldName = {"0","1","2","3","4","5","6"};
+	
+	public String[] regex = {
+			"[A-Z][a-z]{1,20}",
+			"[A-Z][a-z]{1,20}",
+			"[A-Z][a-z]{1,20},[\\s][A-Z][a-z]{1,20}[\\s]\\d{1,5}",
+			"^(\\+381)?(\\s|-)?6(([0-6]|[8-9])\\d{7,8}){1}$",
+			"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$",
+			"[A-Z]{2}[0-9]{2}\\/[0-9]{4}",
+			"\\d{4}"
+	};
+	public String[] errorText = {
+			"Pogrešan format imena",
+			"Pogrešan format prezimena",
+			"Unesite grad, ulicu i broj",
+			"Format telefona: (+381) xx xxxxxxx(x)",
+			"Pogrešan format e-mail adrese",
+			"Pogrešan format broja indeksa (SMERBROJ/GODINA UPISA)",
+			"Pogrešan format godine upisa (XXXX)"
+	};
+	@SuppressWarnings("serial")
+	public ArrayList<String> godina_studija = new ArrayList<String>() {{
+		   add("I(prva)");
+		   add("II(druga)");
+		   add("III(treća)");
+		   add("IV(četvrta)");
+		   add("V(master studije)");
+		   add("VI(doktorske studije)");
+		   add("VII(doktorske studije)");
+		   add("VIII(doktorske studije)");
+		}};
+		
+	@SuppressWarnings("serial")
+	public ArrayList<String> status = new ArrayList<String>() {{
+		add("Budžet");
+		add("Samofinansiranje");
+		
+	}};
+	@SuppressWarnings("serial")
+	public ArrayList<ArrayList<String>> studentLista = new ArrayList<ArrayList<String>>() {{
+		   add(godina_studija);
+		   add(status);
+	}};
+	@SuppressWarnings("serial")
+	public ArrayList<Integer> days = new ArrayList<Integer>() {{
+		for(int i = 1; i <= 31; i++)
+			add(i);
+	}};
+	@SuppressWarnings("serial")
+	public ArrayList<Integer> months = new ArrayList<Integer>() {{
+		for(int i = 1; i <= 12; i++)
+			add(i);
+	}};
+	@SuppressWarnings("serial")
+	public ArrayList<Integer> years = new ArrayList<Integer>() {{
+		for(int i = 1955; i <= 1995; i++)
+			add(i);
+	}};
+	private ArrayList<JTextField> textFieldList = new ArrayList<>();
+	private DialogConfirmButton dialogConfirmButton;
+	
 	
 	public StudentDialog(JFrame parent) {
-		
-		super(parent, "Dodavanje studenta", true);
-		setPreferredSize(new Dimension(507, 721));
+		super(parent, "Dodavanje studenta", true);		
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		setPreferredSize(new Dimension(507, 750));
 		setResizable(false);
 		pack();
 		setLocationRelativeTo(parent);
+		getDialogs().add(this);
 		
+		dialogConfirmButton = new DialogConfirmButton(this, "student");
 		
-		MyFocusListener focusListener = new MyFocusListener();
-		JPanel panel = new JPanel();
-		BoxLayout boxLayout = new BoxLayout(panel, BoxLayout.Y_AXIS);
-		panel.setLayout(boxLayout);
+		JPanel basePanel = new JPanel();
+		BoxLayout box = new BoxLayout(basePanel, BoxLayout.Y_AXIS);
+		basePanel.setLayout(box);
+		basePanel.setBackground(new Color(249,249,249));
+		basePanel.add(Box.createVerticalStrut(18));
+		basePanel.setPreferredSize(new Dimension(507,692));
+		int regexCounter = 0;
+		int textFieldCounter = 0;
+		int errorTextCounter = 0;
 		
-		Dimension dim=new Dimension(200,36);
-	
-		JPanel panIme = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		JLabel lblIme = new JLabel("Ime*: ");
-		lblIme.setPreferredSize(dim);
-		
-		JTextField txtIme=new JTextField();
-        txtIme.setPreferredSize(dim);
-        txtIme.setBackground(Color.GRAY);
-        txtIme.setName("txtIme");
-        txtIme.addFocusListener(focusListener);
-        
-        panIme.add(lblIme);
-        panIme.add(txtIme);
-		
-        
-        JPanel panPrezime = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		JLabel lblPrezime = new JLabel("Prezime*: ");
-		lblPrezime.setPreferredSize(dim);
-		
-		JTextField txtPrezime=new JTextField();
-        txtPrezime.setPreferredSize(dim);
-        txtPrezime.setBackground(Color.GRAY);
-        txtPrezime.setName("txtPrezime");
-        txtPrezime.addFocusListener(focusListener);
-        panPrezime.add(lblPrezime);
-        panPrezime.add(txtPrezime);
-        
-        
-        JPanel panRodj = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		JLabel lblRodj = new JLabel("Datum rodjenja*: ");
-		lblRodj.setPreferredSize(dim);
-		
-		JTextField txtRodj=new JTextField();
-        txtRodj.setPreferredSize(dim);
-        txtRodj.setBackground(Color.GRAY);
-        txtRodj.setName("txtRodj");
-        txtRodj.addFocusListener(focusListener);
-        panRodj.add(lblRodj);
-        panRodj.add(txtRodj);
-        
-        
-        JPanel panAdr = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		JLabel lblAdr = new JLabel("Adresa stanovanja*: ");
-		lblAdr.setPreferredSize(dim);
-		
-		JTextField txtAdr=new JTextField();
-        txtAdr.setPreferredSize(dim);
-        txtAdr.setBackground(Color.GRAY);
-        txtAdr.setName("txtAdr");
-        txtAdr.addFocusListener(focusListener);
-        panAdr.add(lblAdr);
-        panAdr.add(txtAdr);
-        
-        
-        JPanel panBr = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		JLabel lblBr = new JLabel("Broj telefona*: ");
-		lblBr.setPreferredSize(dim);
-		
-		JTextField txtBr=new JTextField();
-        txtBr.setPreferredSize(dim);
-        txtBr.setBackground(Color.GRAY);
-        txtBr.setName("txtBr");
-        txtBr.addFocusListener(focusListener);
-        panBr.add(lblBr);
-        panBr.add(txtBr);
-        
-        
-        JPanel panMail = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		JLabel lblMail = new JLabel("E-mail adresa*: ");
-		lblMail.setPreferredSize(dim);
-		
-		JTextField txtMail=new JTextField();
-        txtMail.setPreferredSize(dim);
-        txtMail.setBackground(Color.GRAY);
-        txtMail.setName("txtMail");
-        txtMail.addFocusListener(focusListener);
-        panMail.add(lblMail);
-        panMail.add(txtMail);
-        
-        
-        JPanel panIdx = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		JLabel lblIdx = new JLabel("Broj indeksa*: ");
-		lblIdx.setPreferredSize(dim);
-		
-		JTextField txtIdx=new JTextField();
-        txtIdx.setPreferredSize(dim);
-        txtIdx.setBackground(Color.GRAY);
-        txtIdx.setName("txtIdx");
-        txtIdx.addFocusListener(focusListener);
-        panIdx.add(lblIdx);
-        panIdx.add(txtIdx);
-        
-        
-        JPanel panUpis = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		JLabel lblUpis = new JLabel("Godina upisa*: ");
-		lblUpis.setPreferredSize(dim);
-		
-		JTextField txtUpis=new JTextField();
-        txtUpis.setPreferredSize(dim);
-        txtUpis.setBackground(Color.GRAY);
-        txtUpis.setName("txtUpis");
-        txtUpis.addFocusListener(focusListener);
-        panUpis.add(lblUpis);
-        panUpis.add(txtUpis);
-        
-        
-        JPanel panStud = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		JLabel lblStud = new JLabel("Trenutna godina studija*: ");
-		lblStud.setPreferredSize(dim);
-		
-		String[] godinaStudija = { "I(prva)", "II(druga)", "III(treća)", "IV(četvrta)", };
-		JComboBox<String> combo = new JComboBox<String>(godinaStudija);
-        combo.setPreferredSize(dim);
-        panStud.add(lblStud);
-        panStud.add(combo);
-        
-        
-        JPanel panFin = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		JLabel lblFin = new JLabel("Način finansiranja*: ");
-		lblFin.setPreferredSize(dim);
-		
-		String[] statusStudenta = { "Budžet", "Samofinansiranje", };
-		JComboBox<String> comboBox = new JComboBox<String>(statusStudenta);
-		comboBox.setPreferredSize(dim);
-        panFin.add(lblFin);
-        panFin.add(comboBox);
-        
-        panel.add(Box.createVerticalStrut(18));
-        panel.add(panIme);
-        panel.add(Box.createVerticalStrut(15));
-        panel.add(panPrezime);
-        panel.add(Box.createVerticalStrut(15));
-        panel.add(panRodj);
-        panel.add(Box.createVerticalStrut(45));
-        panel.add(panAdr);
-        panel.add(Box.createVerticalStrut(15));
-        panel.add(panBr);
-        panel.add(Box.createVerticalStrut(15));
-        panel.add(panMail);
-        panel.add(Box.createVerticalStrut(45));
-        panel.add(panIdx);
-        panel.add(Box.createVerticalStrut(15));
-        panel.add(panUpis);
-        panel.add(Box.createVerticalStrut(45));
-        panel.add(panStud);
-        panel.add(Box.createVerticalStrut(15));
-        panel.add(panFin);
-        panel.add(Box.createVerticalStrut(45));
-        
-        add(panel, BorderLayout.CENTER);
-        
-        JPanel panBottom=new JPanel();
-		BoxLayout box=new BoxLayout(panBottom, BoxLayout.X_AXIS);
-		panBottom.setLayout(box);
-		
-		JButton btnPotvrdi=new JButton("Potvrdi");
-		btnPotvrdi.setPreferredSize(new Dimension(100,25));
-		
-		JButton btnOdustani=new JButton("Odustani");
-		btnOdustani.setPreferredSize(new Dimension(100,25));
-		btnOdustani.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
+		for(int i = 1; i <= 10; i++) {
+			JPanel holderPanel = new JPanel();
+			holderPanel.setPreferredSize(new Dimension(507, 49));
+			holderPanel.setOpaque(false);
+			
+			BoxLayout boxHolder = new BoxLayout(holderPanel, BoxLayout.X_AXIS);
+			holderPanel.setLayout(boxHolder);
+						
+			FieldName fieldName = new FieldName(fieldText[i-1]);
+			
+			holderPanel.add(fieldName);
+			holderPanel.add(Box.createHorizontalStrut(39));
+			
+			
+			
+			if(i == 9 || i == 10) {
+				CustomComboBox customComboBox = new CustomComboBox(studentLista.get(i-9));
+				holderPanel.add(customComboBox);
+			} else if (i == 3) {
+				DateComboBox yearsComboBox = new DateComboBox(years, new Dimension(80, 36), "years");
+				holderPanel.add(yearsComboBox);
+				holderPanel.add(Box.createHorizontalStrut(8));
+				DateComboBox monthsComboBox = new DateComboBox(months, new Dimension(58, 36), "months");
+				holderPanel.add(monthsComboBox);
+				holderPanel.add(Box.createHorizontalStrut(8));
+				DateComboBox daysComboBox = new DateComboBox(days, new Dimension(58, 36), "days");
+				holderPanel.add(daysComboBox);
+			} else {
+				JPanel textAndErrorPanel = new JPanel();
+				textAndErrorPanel.setPreferredSize(new Dimension(214, 49));
+				textAndErrorPanel.setMaximumSize(new Dimension(214, 49));
+				textAndErrorPanel.setMinimumSize(new Dimension(214, 49));
+				textAndErrorPanel.setOpaque(false);
+				BoxLayout boxTextAndError = new BoxLayout(textAndErrorPanel, BoxLayout.Y_AXIS);
+				textAndErrorPanel.setLayout(boxTextAndError);
+				
+				JPanel textPanel = new JPanel();
+				textPanel.setPreferredSize(new Dimension(214, 36));
+				textPanel.setMinimumSize(new Dimension(214, 36));
+				textPanel.setMaximumSize(new Dimension(214, 36));
+				textPanel.setLayout(new GridLayout(0,1));
+				textPanel.setOpaque(false);
+				JTextField textField = new JTextField();
+				textField.getDocument().addDocumentListener(listener);
+				textFieldList.add(textField);
+				
+				CustomTextField customTextField = new CustomTextField(dialogConfirmButton, textField, regex[regexCounter++], textFieldName[textFieldCounter++], "student");
+				textPanel.add(customTextField);
+				
+				JPanel errorPanel = new JPanel();
+				File font_file = new File("assets"+ File.separator +"fonts"+ File.separator +"Montserrat-Regular.ttf");
+				Font font = null;
+				try {
+					font = Font.createFont(Font.TRUETYPE_FONT, font_file);
+				} catch (FontFormatException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Font sizedFont = font.deriveFont(10f);
+				JLabel errorLabel = new JLabel(errorText[errorTextCounter++]);
+				FlowLayout layout = new FlowLayout(FlowLayout.RIGHT);
+				layout.setVgap(0);
+				errorPanel.setLayout(layout);
+				errorLabel.setBorder(new EmptyBorder(0,0,0,0));
+				errorLabel.setFont(sizedFont);
+				errorLabel.setForeground(new Color(199,0,0));
+				errorPanel.setMaximumSize(new Dimension(214, 13));
+				errorPanel.setPreferredSize(new Dimension(214, 13));
+				errorPanel.setOpaque(false);
+				errorPanel.setVisible(false);
+				errorPanel.add(errorLabel);
+				
+				getErrorPanelList().add(errorPanel);
+				
+				textAndErrorPanel.add(textPanel);
+				textAndErrorPanel.add(errorPanel);
+				holderPanel.add(textAndErrorPanel);
 			}
-		});
+			
+			holderPanel.add(Box.createHorizontalStrut(54));
+			
+			basePanel.add(holderPanel);
+			if(i%3 == 0 || i%8 == 0) {
+				if(i%9==0) {
+					basePanel.add(Box.createVerticalStrut(5));
+				} else {
+					basePanel.add(Box.createVerticalStrut(45));
+				}
+			} else {
+				basePanel.add(Box.createVerticalStrut(5));
+			}
+			
+		}
 		
-		panBottom.add(Box.createHorizontalStrut(75));
-		panBottom.add(btnPotvrdi);
-		panBottom.add(Box.createGlue());
-		panBottom.add(Box.createHorizontalStrut(10));
-		panBottom.add(btnOdustani);
-		panBottom.add(Box.createHorizontalStrut(10));
+		basePanel.add(Box.createVerticalStrut(13));
+		ButtonHolderPanel buttonHolderPanel = new ButtonHolderPanel(dialogConfirmButton, this);
+		
+		basePanel.add(buttonHolderPanel);
+		basePanel.add(Box.createVerticalStrut(16));
 		
 		
-		add(panBottom,BorderLayout.SOUTH);
+		add(basePanel);
+	}
+	
+	DocumentListener listener = new DocumentListener() {
 		
-		
+	    @Override
+	    public void removeUpdate(DocumentEvent e) {
+	    	changedUpdate(e); 
+	    }
+	    
+	    @Override
+	    public void insertUpdate(DocumentEvent e) { 
+	    	changedUpdate(e); 
+	    }
+
+	    @Override
+	    public void changedUpdate(DocumentEvent e) {
+	        boolean enableButton = true;
+	        for (JTextField textField : textFieldList) {
+	            if (textField.getText().isEmpty()) {
+	            	enableButton = false;
+	            }
+	        }
+	        dialogConfirmButton.setEnabled(enableButton);
+	    }
+	};
+	
+	
+	public static void showErrorPanel(int index) {
+		int i = 0;
+		ArrayList<JDialog> dialogs = getDialogs();
+		JDialog lastOpenedDialog = dialogs.get(dialogs.size()-1);
+		ArrayList<JPanel> errorPanelList = ((StudentDialog) lastOpenedDialog).getErrorPanelList();
+		for(JPanel errorPanel : errorPanelList) {
+			if(i == index) {
+				errorPanel.setVisible(true);
+			}
+			i++;
+		}
+	}
+	
+	public static void hideErrorPanel(int index) {
+		int i = 0;
+		ArrayList<JDialog> dialogs = getDialogs();
+		JDialog lastOpenedDialog = dialogs.get(dialogs.size()-1);
+		ArrayList<JPanel> errorPanelList = ((StudentDialog) lastOpenedDialog).getErrorPanelList();
+		for(JPanel errorPanel : errorPanelList) {
+			if(i == index) {
+				errorPanel.setVisible(false);
+			}
+			i++;
+		}
+	}
+
+	public static ArrayList<JDialog> getDialogs() {
+		return dialogs;
+	}
+
+	public ArrayList<JPanel> getErrorPanelList() {
+		return errorPanelList;
+	}
+
+	public ArrayList<JTextField> getTextFieldList() {
+		return textFieldList;
 	}
 }

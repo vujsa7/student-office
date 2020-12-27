@@ -13,12 +13,17 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 
+import model.AbstractStudentTable;
+
 public class StudentTable extends JTable{
 	
+	
+	private static final long serialVersionUID = -5981837537193921070L;
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	
 	
 	public StudentTable() {
 		
@@ -41,7 +46,7 @@ public class StudentTable extends JTable{
 		UIManager.put("Table.focusCellHighlightBorder", BorderFactory.createMatteBorder(1, 1, 1, 1, Color.white));
 		
 		// Sama JTable komponenta je implementirana postujuci MVC arhitekturu.
-		this.setModel(new AbstractTableStudent());
+		this.setModel(AbstractStudentTable.getInstance());
 	}
 
 	public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {

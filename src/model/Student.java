@@ -1,12 +1,13 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class Student {
 	
 	private String ime;
 	private String prezime;
-	private String datumRodjenja;
+	private LocalDate datumRodjenja;
 	private String adresaStanovanja;
 	private String brojTelefona;
 	private String email;
@@ -20,7 +21,7 @@ public class Student {
 	
 	Student() {}
 	
-	public Student(String ime, String prezime, String datumRodjenja, String adresaStanovanja, String brojTelefona,
+	public Student(String ime, String prezime, LocalDate datumRodjenja, String adresaStanovanja, String brojTelefona,
 			String email, String brojIndeksa, String godUpisa, String trenutnaGodStrudija, String status, String prosek,
 			List<PolozenIspit> polozeniIspiti, List<NepolozenIspit> nepolozeniIspiti) {
 		super();
@@ -58,10 +59,10 @@ public class Student {
 	public void setPrezime(String prezime) {
 		this.prezime = prezime;
 	}
-	public String getDatumRodjenja() {
+	public LocalDate getDatumRodjenja() {
 		return datumRodjenja;
 	}
-	public void setDatumRodjenja(String datumRodjenja) {
+	public void setDatumRodjenja(LocalDate datumRodjenja) {
 		this.datumRodjenja = datumRodjenja;
 	}
 	public String getAdresaStanovanja() {

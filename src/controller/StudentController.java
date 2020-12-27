@@ -1,7 +1,9 @@
 package controller;
 
-import java.awt.FontFormatException;
-import java.io.IOException;
+import java.time.LocalDate;
+
+import model.AbstractStudentTable;
+import view.table.TablePanel;
 
 public class StudentController {
 	
@@ -16,7 +18,12 @@ private static StudentController instance = null;
 	
 	private StudentController() {}
 	
-	public void dodajStudenta() throws FontFormatException, IOException {
+	public void dodajStudenta(String ime, String prezime, LocalDate datumRodjenja, String adresaStanovanja, String kontaktTelefon,
+			String emailAdresa, String brojIndeksa, String godUpisa, String trenutnaGodStudija, String status){
 		
+		AbstractStudentTable.getInstance().dodajStudenta(ime, prezime, datumRodjenja, adresaStanovanja, kontaktTelefon, emailAdresa,
+				brojIndeksa, godUpisa, trenutnaGodStudija, status);
+		TablePanel.getInstance().refreshView("student");
+
 	}
 }
