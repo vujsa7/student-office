@@ -56,7 +56,7 @@ public class ProfessorDialog extends JDialog{
 			"Format telefona: (+381) xx xxxxxxx(x)",
 			"Pogrešan format e-mail adrese",
 			"Format adrese: grad, ulica broj",
-			"Pogrešan format lične karte, potrebno 9 brojeva"
+			"Potrebno 9 brojeva"
 	};
 	@SuppressWarnings("serial")
 	public ArrayList<String> titule = new ArrayList<String>() {{
@@ -104,15 +104,16 @@ public class ProfessorDialog extends JDialog{
 
 
 	public ProfessorDialog(JFrame parent) {
-		super(parent, "Dodavanje profesora", true);		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		super(parent, "Dodavanje profesora", true);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setPreferredSize(new Dimension(507, 750));
 		setResizable(false);
 		pack();
 		setLocationRelativeTo(parent);
-		getDialogs().add(this);
+		dialogs.add(this);
 
 		
-		dialogConfirmButton = new DialogConfirmButton(this);
+		dialogConfirmButton = new DialogConfirmButton(this, "profesor");
 		
 		JPanel basePanel = new JPanel();
 		BoxLayout box = new BoxLayout(basePanel, BoxLayout.Y_AXIS);
@@ -142,6 +143,7 @@ public class ProfessorDialog extends JDialog{
 				CustomComboBox customComboBox = new CustomComboBox(profesorLista.get(i-9));
 				holderPanel.add(customComboBox);
 			} else if (i == 3) {
+				DateComboBox.emptyComboBox();
 				DateComboBox yearsComboBox = new DateComboBox(years, new Dimension(80, 36), "years");
 				holderPanel.add(yearsComboBox);
 				holderPanel.add(Box.createHorizontalStrut(8));
@@ -169,7 +171,7 @@ public class ProfessorDialog extends JDialog{
 				textField.getDocument().addDocumentListener(listener);
 				textFieldList.add(textField);
 				
-				CustomTextField customTextField = new CustomTextField(dialogConfirmButton, textField, regex[regexCounter++], textFieldName[textFieldCounter++]);
+				CustomTextField customTextField = new CustomTextField(dialogConfirmButton, textField, regex[regexCounter++], textFieldName[textFieldCounter++], "profesor");
 				textPanel.add(customTextField);
 				
 				JPanel errorPanel = new JPanel();
@@ -198,7 +200,7 @@ public class ProfessorDialog extends JDialog{
 				errorPanel.setVisible(false);
 				errorPanel.add(errorLabel);
 				
-				getErrorPanelList().add(errorPanel);
+				errorPanelList.add(errorPanel);
 				
 				textAndErrorPanel.add(textPanel);
 				textAndErrorPanel.add(errorPanel);
@@ -210,7 +212,7 @@ public class ProfessorDialog extends JDialog{
 			basePanel.add(holderPanel);
 			if(i%3 == 0 || i%8 == 0) {
 				if(i%9==0) {
-					basePanel.add(Box.createVerticalStrut(5));
+					basePanel.add(Box.createVerticalStrut(18));
 				} else {
 					basePanel.add(Box.createVerticalStrut(45));
 				}
@@ -220,7 +222,7 @@ public class ProfessorDialog extends JDialog{
 			
 		}
 		
-		basePanel.add(Box.createVerticalStrut(13));
+		//basePanel.add(Box.createVerticalStrut(13));
 		ButtonHolderPanel buttonHolderPanel = new ButtonHolderPanel(dialogConfirmButton, this);
 		
 		basePanel.add(buttonHolderPanel);

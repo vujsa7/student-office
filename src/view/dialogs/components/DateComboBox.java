@@ -54,7 +54,7 @@ public class DateComboBox extends JPanel {
 			combo.insertItemAt(list.get(i), i);;
 		}
 		comboSize = list.size();
-		dateString = "1970-01-01";
+		dateString = "1950-01-01";
 		combo.setSelectedItem(list.get(0));
 		
 		combo.setPreferredSize(size);
@@ -96,6 +96,10 @@ public class DateComboBox extends JPanel {
 		return this;
 	}
 	
+	public static String getDateString() {
+		return dateString;
+	}
+
 	public static class DateComboBoxUI extends BasicComboBoxUI {
 
 	    public static ComboBoxUI createUI(JComponent c) {
@@ -252,10 +256,17 @@ public class DateComboBox extends JPanel {
 				date = date.concat("-");
 			}
 			date = date.substring(0, date.length() - 1);
-			dateString = date;
+			dateString = date.toString();
 			System.out.println(date);
 			System.out.println();
 		}
+	}
+
+	public static void emptyComboBox() {
+		if(!dateComboBoxes.isEmpty()) {
+			dateComboBoxes.clear();
+		}
+		
 	}
 
 }

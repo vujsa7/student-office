@@ -23,7 +23,7 @@ public class ProfessorController {
 		
 		AbstractProfessorTable.getInstance().dodajProfesora(ime, prezime, datumRodjenja, adresaStanovanja, kontaktTelefon, emailAdresa,
 				adresaKancelarije, brojLicneKarte, titula, zvanje);
-		TablePanel.getInstance().refreshView();
+		TablePanel.getInstance().refreshView("profesor");
 
 	}
 }
