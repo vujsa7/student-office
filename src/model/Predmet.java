@@ -2,25 +2,29 @@ package model;
 
 import java.util.List;
 
+enum TipSemestra{LETNJI, ZIMSKI};
+
 public class Predmet {
 	
 	private String sifraPredmeta;
 	private String nazivPredmeta;
-	private String semestar;
-	private String godinaStudija;
+	private TipSemestra semestar;
+	private int godinaStudija; // Od 1-10
 	private Profesor predmetniProfesor;
+	private int brojESPB;
 	private List<Student> listaStudentataPol;
 	private List<Student> listaStudenataNepol;
 	
 	
-	public Predmet(String sifraPredmeta, String nazivPredmeta, String semestar, String godinaStudija,
-			Profesor predmetniProfesor, List<Student> listaStudentataPol, List<Student> listaStudenataNepol) {
+	public Predmet(String sifraPredmeta, String nazivPredmeta, TipSemestra semestar, int godinaStudija,
+			Profesor predmetniProfesor, int brojESPB, List<Student> listaStudentataPol, List<Student> listaStudenataNepol) {
 		super();
 		this.sifraPredmeta = sifraPredmeta;
 		this.nazivPredmeta = nazivPredmeta;
 		this.semestar = semestar;
 		this.godinaStudija = godinaStudija;
 		this.predmetniProfesor = predmetniProfesor;
+		this.brojESPB = brojESPB;
 		this.listaStudentataPol = listaStudentataPol;
 		this.listaStudenataNepol = listaStudenataNepol;
 	}
@@ -46,22 +50,22 @@ public class Predmet {
 	}
 
 
-	public String getSemestar() {
+	public TipSemestra getSemestar() {
 		return semestar;
 	}
 
 
-	public void setSemestar(String semestar) {
+	public void setSemestar(TipSemestra semestar) {
 		this.semestar = semestar;
 	}
 
 
-	public String getGodinaStudija() {
+	public int getGodinaStudija() {
 		return godinaStudija;
 	}
 
 
-	public void setGodinaStudija(String godinaStudija) {
+	public void setGodinaStudija(int godinaStudija) {
 		this.godinaStudija = godinaStudija;
 	}
 
@@ -73,6 +77,15 @@ public class Predmet {
 
 	public void setPredmetniProfesor(Profesor predmetniProfesor) {
 		this.predmetniProfesor = predmetniProfesor;
+	}
+	
+	public int getBrojESPB() {
+		return brojESPB;
+	}
+
+
+	public void setBrojESPB(int brojESPB) {
+		this.brojESPB = brojESPB;
 	}
 
 

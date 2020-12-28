@@ -2,8 +2,6 @@ package view.table;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Color;
-import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -12,6 +10,7 @@ import javax.swing.JTable;
 
 import model.AbstractProfessorTable;
 import model.AbstractStudentTable;
+import model.AbstractSubjectTable;
 
 
 public class TablePanel extends JPanel{
@@ -38,6 +37,7 @@ public class TablePanel extends JPanel{
 	
 	private JTable studentTable;
 	private JTable professorTable;
+	private JTable subjectTable;
 
 	public TablePanel() {
 		
@@ -49,12 +49,13 @@ public class TablePanel extends JPanel{
 		JScrollPane professorScrollPane = new JScrollPane(professorTable);
 		professorScrollPane.setBorder(BorderFactory.createEmptyBorder());
 		
-		JPanel gradePanel = new JPanel();
-		gradePanel.setBackground(Color.pink);
-		gradePanel.setLayout(new GridLayout(0,1));
+		subjectTable = new SubjectTable();
+		JScrollPane subjectScrollPanel = new JScrollPane(subjectTable);
+		subjectScrollPanel.setBorder(BorderFactory.createEmptyBorder());
+		
 		cards.add(studentScrollPane, STUDENT_PANEL);
 		cards.add(professorScrollPane, PROFESSOR_PANEL);
-		cards.add(gradePanel, GRADE_PANEL);
+		cards.add(subjectScrollPanel, GRADE_PANEL);
 		setLayout(new BorderLayout());
 		add(cards, BorderLayout.CENTER);
 	}
@@ -69,8 +70,12 @@ public class TablePanel extends JPanel{
 			model.fireTableDataChanged();
 			validate();
 		}
-		else {
+		else if (type == "profesor"){
 			AbstractProfessorTable model = (AbstractProfessorTable) professorTable.getModel();
+			model.fireTableDataChanged();
+			validate();
+		} else {
+			AbstractSubjectTable model = (AbstractSubjectTable) subjectTable.getModel();
 			model.fireTableDataChanged();
 			validate();
 		}

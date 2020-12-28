@@ -120,6 +120,16 @@ public class HoverButton extends JButton{
 		        } else {
 		        	 
 		        }
+			} else if(buttonType.equals("Edit")) {
+				if(TabBarButton.getActiveButton() == "Studenti") {
+					
+				} else if(TabBarButton.getActiveButton() == "Profesori") {
+					
+				} else {
+					
+				}
+			} else {
+				
 			}
 		}
 	}

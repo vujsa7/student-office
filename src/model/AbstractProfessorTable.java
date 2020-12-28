@@ -13,7 +13,7 @@ public class AbstractProfessorTable extends AbstractTableModel{
 	 */
 	private static final long serialVersionUID = -7879422975558547019L;
 
-private static AbstractProfessorTable instance = null;
+	private static AbstractProfessorTable instance = null;
 	
 	private List<Profesor> professors;
 	private List<String> columns;

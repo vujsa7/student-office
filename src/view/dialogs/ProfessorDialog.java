@@ -24,7 +24,6 @@ import view.dialogs.components.FieldName;
 
 public class ProfessorDialog extends JDialog{
 
-	
 	/**
 	 * 
 	 */
