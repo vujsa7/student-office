@@ -89,6 +89,7 @@ public class HoverButton extends JButton{
 		}
 		
 		public void mousePressed(MouseEvent mouseEvent) {
+			
 			new Thread(
 					new Runnable() {
 						public void run() {
@@ -102,35 +103,41 @@ public class HoverButton extends JButton{
 							}
 						}
 					}).start();
-			JFrame parent = null;
-			try {
-				parent = MainFrame.getInstance();
-			} catch (FontFormatException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+					
 			if(buttonType.equals("New")) {
 				if(TabBarButton.getActiveButton() == "Studenti") {
-					StudentDialog studentDialog = new StudentDialog(parent);
-					studentDialog.setVisible(true);
+					StudentDialog studentDialog;
+					try {
+						studentDialog = new StudentDialog(MainFrame.getInstance());
+						studentDialog.setVisible(true);
+					} catch (FontFormatException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
 				} else if(TabBarButton.getActiveButton() == "Profesori") {
-		        	 ProfessorDialog professorDialog = new ProfessorDialog(parent);
-		        	 professorDialog.setVisible(true);
+					ProfessorDialog professorDialog = ProfessorDialog.getInstance();
+		        	professorDialog.setDefaultValues();
+		        	professorDialog.setVisible(true);
 		        } else {
-		        	 
+		        	 // ako se dodaje predmet
 		        }
 			} else if(buttonType.equals("Edit")) {
 				if(TabBarButton.getActiveButton() == "Studenti") {
-					
+					// ako se menja student
 				} else if(TabBarButton.getActiveButton() == "Profesori") {
+					//DialogConfirmButton.dialogAction = "Edit";
 					
-				} else {
-					
-				}
+					} else {
+						JOptionPane.showMessageDialog(null, "Prvo izaberite profesora kojeg želite da izmenite", "Napomena", JOptionPane.INFORMATION_MESSAGE);
+					}
 			} else {
-				
+					// ako se menja predmet
 			}
+		
 		}
 	}
 	

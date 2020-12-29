@@ -2,11 +2,18 @@ package view.dialogs;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FontFormatException;
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -14,6 +21,8 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import controller.ProfessorController;
+import main.MainFrame;
 import view.dialogs.components.ButtonHolderPanel;
 import view.dialogs.components.CustomTextField;
 import view.dialogs.components.DateComboBox;
@@ -21,6 +30,7 @@ import view.dialogs.components.DialogConfirmButton;
 import view.dialogs.components.ErrorPanel;
 import view.dialogs.components.CustomComboBox;
 import view.dialogs.components.FieldName;
+import view.listeners.ProfessorListener;
 
 public class ProfessorDialog extends JDialog{
 
@@ -28,27 +38,48 @@ public class ProfessorDialog extends JDialog{
 	 * 
 	 */
 	private static final long serialVersionUID = 5767616325660054524L;
-	private static ArrayList<JDialog> dialogs = new ArrayList<JDialog>();
-	public static final String[] fieldText = {"Ime", "Prezime", "Datum rođenja", "Adresa stanovanja", "Kontakt telefon", "E-mail adresa",
+	
+	private static ProfessorDialog instance = null;
+	
+	public static ProfessorDialog getInstance() {	
+		if(instance == null) {
+			try {
+				instance = new ProfessorDialog(MainFrame.getInstance());
+			} catch (FontFormatException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} 
+		}
+		return instance;
+	}
+	
+	private static final String[] fieldText = {"Ime", "Prezime", "Datum rođenja", "Adresa stanovanja", "Kontakt telefon", "E-mail adresa",
 			"Adresa kancelarije", "Broj lične karte", "Titula", "Zvanje"};
-	private ArrayList<ErrorPanel> errorPanelList = new ArrayList<ErrorPanel>();
+	
+	public static ArrayList<ErrorPanel> errorPanelList = new ArrayList<ErrorPanel>();
+	public static ArrayList<CustomComboBox> customComboBoxes = new ArrayList<CustomComboBox>();
+	public static ArrayList<DateComboBox> dateComboBoxes = new ArrayList<DateComboBox>();
+	public static ArrayList<JTextField> textFieldList = new ArrayList<JTextField>();
+	private static DialogConfirmButton dialogConfirmButton;
+	
 	public String[] textFieldName = {"0","1","2","3","4","5","6"};
 	public String[] regex = {
-			"[A-Z][a-z]{1,20}",
-			"[A-Z][a-z]{1,20}",
-			"[A-Z][a-z]{1,20}(\\s[A-Z][a-z]{1,20}){0,2},([\\s][A-Z][a-z]{1,20}){1,3}\\s\\d{1,5}[A-Za-z]?",
+			"[A-Za-z]{1,20}",
+			"[A-Za-z]{1,20}",
+			".+",
 			"^(\\+381)?(\\s|-)?0?6(([0-6]|[8-9])\\d{7,8}){1}$",
 			"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$",
-			"[A-Z][a-z]{1,20}(\\s[A-Z][a-z]{1,20}){0,2},([\\s][A-Z][a-z]{1,20}){1,3}\\s\\d{1,5}[A-Za-z]?",
+			".+",
 			"\\d{9}"
 	};
 	public String[] errorText = {
 			"Pogrešan format imena",
 			"Pogrešan format prezimena",
-			"Format adrese: grad, ulica broj",
-			"Format telefona: (+381) (0)xx xxxxxxx(x)",
+			"Unesite grad, ulicu i broj",
+			"Format telefona: (+381) (0)6x xxxxxxx(x)",
 			"Pogrešan format e-mail adrese",
-			"Format adrese: grad, ulica broj",
+			"Unesite grad, ulicu i broj",
 			"Potrebno 9 brojeva"
 	};
 	@SuppressWarnings("serial")
@@ -77,6 +108,7 @@ public class ProfessorDialog extends JDialog{
 		   add(titule);
 		   add(zvanja);
 	}};
+	
 	@SuppressWarnings("serial")
 	public ArrayList<Integer> days = new ArrayList<Integer>() {{
 		for(int i = 1; i <= 31; i++)
@@ -92,8 +124,8 @@ public class ProfessorDialog extends JDialog{
 		for(int i = 1955; i <= 1995; i++)
 			add(i);
 	}};
-	private ArrayList<JTextField> textFieldList = new ArrayList<>();
-	private DialogConfirmButton dialogConfirmButton;
+	
+	
 
 
 	public ProfessorDialog(JFrame parent) {
@@ -103,10 +135,9 @@ public class ProfessorDialog extends JDialog{
 		setResizable(false);
 		pack();
 		setLocationRelativeTo(parent);
-		dialogs.add(this);
-
 		
-		dialogConfirmButton = new DialogConfirmButton(this, "profesor");
+		dialogConfirmButton = new DialogConfirmButton();
+		dialogConfirmButton.addMouseListener(new MyMouseListener());
 		
 		JPanel basePanel = new JPanel();
 		BoxLayout box = new BoxLayout(basePanel, BoxLayout.Y_AXIS);
@@ -134,17 +165,23 @@ public class ProfessorDialog extends JDialog{
 			
 			if(i == 9 || i == 10) {
 				CustomComboBox customComboBox = new CustomComboBox(profesorLista.get(i-9));
+				customComboBoxes.add(customComboBox);
 				holderPanel.add(customComboBox);
 			} else if (i == 3) {
-				DateComboBox.emptyComboBox();
 				DateComboBox yearsComboBox = new DateComboBox(years, new Dimension(80, 36), "years");
+				dateComboBoxes.add(yearsComboBox);
 				holderPanel.add(yearsComboBox);
 				holderPanel.add(Box.createHorizontalStrut(8));
 				DateComboBox monthsComboBox = new DateComboBox(months, new Dimension(58, 36), "months");
+				dateComboBoxes.add(monthsComboBox);
 				holderPanel.add(monthsComboBox);
 				holderPanel.add(Box.createHorizontalStrut(8));
 				DateComboBox daysComboBox = new DateComboBox(days, new Dimension(58, 36), "days");
+				dateComboBoxes.add(daysComboBox);
 				holderPanel.add(daysComboBox);
+				daysComboBox.setDateComboBoxes(dateComboBoxes);
+				monthsComboBox.setDateComboBoxes(dateComboBoxes);
+				yearsComboBox.setDateComboBoxes(dateComboBoxes);
 			} else {
 				JPanel textAndErrorPanel = new JPanel();
 				textAndErrorPanel.setPreferredSize(new Dimension(214, 49));
@@ -164,7 +201,8 @@ public class ProfessorDialog extends JDialog{
 				textField.getDocument().addDocumentListener(listener);
 				textFieldList.add(textField);
 				
-				CustomTextField customTextField = new CustomTextField(dialogConfirmButton, textField, regex[regexCounter++], textFieldName[textFieldCounter++], "profesor");
+				textField.addFocusListener(new ProfessorListener(regex[regexCounter++]));
+				CustomTextField customTextField = new CustomTextField(textField, textFieldName[textFieldCounter++]);
 				textPanel.add(customTextField);
 				
 				ErrorPanel errorPanel = new ErrorPanel(errorText[errorTextCounter++]);		
@@ -190,7 +228,7 @@ public class ProfessorDialog extends JDialog{
 			
 		}
 		
-		//basePanel.add(Box.createVerticalStrut(13));
+		basePanel.add(Box.createVerticalStrut(13));
 		ButtonHolderPanel buttonHolderPanel = new ButtonHolderPanel(dialogConfirmButton, this);
 		
 		basePanel.add(buttonHolderPanel);
@@ -210,7 +248,6 @@ public class ProfessorDialog extends JDialog{
 	    public void insertUpdate(DocumentEvent e) { 
 	    	changedUpdate(e); 
 	    }
-
 	    @Override
 	    public void changedUpdate(DocumentEvent e) {
 	        boolean enableButton = true;
@@ -226,9 +263,6 @@ public class ProfessorDialog extends JDialog{
 	
 	public static void showErrorPanel(int index) {
 		int i = 0;
-		ArrayList<JDialog> dialogs = getDialogs();
-		JDialog lastOpenedDialog = dialogs.get(dialogs.size()-1);
-		ArrayList<ErrorPanel> errorPanelList = ((ProfessorDialog) lastOpenedDialog).getErrorPanelList();
 		for(JPanel errorPanel : errorPanelList) {
 			if(i == index) {
 				errorPanel.setVisible(true);
@@ -239,9 +273,6 @@ public class ProfessorDialog extends JDialog{
 	
 	public static void hideErrorPanel(int index) {
 		int i = 0;
-		ArrayList<JDialog> dialogs = getDialogs();
-		JDialog lastOpenedDialog = dialogs.get(dialogs.size()-1);
-		ArrayList<ErrorPanel> errorPanelList = ((ProfessorDialog) lastOpenedDialog).getErrorPanelList();
 		for(JPanel errorPanel : errorPanelList) {
 			if(i == index) {
 				errorPanel.setVisible(false);
@@ -249,23 +280,8 @@ public class ProfessorDialog extends JDialog{
 			i++;
 		}
 	}
-
-	public static ArrayList<JDialog> getDialogs() {
-		return dialogs;
-	}
-
-	public ArrayList<ErrorPanel> getErrorPanelList() {
-		return errorPanelList;
-	}
-
-	public ArrayList<JTextField> getTextFieldList() {
-		return textFieldList;
-	}
-
+	
 	public static void showIDErrorPanel() {
-		ArrayList<JDialog> dialogs = getDialogs();
-		JDialog lastOpenedDialog = dialogs.get(dialogs.size()-1);
-		ArrayList<ErrorPanel> errorPanelList = ((ProfessorDialog) lastOpenedDialog).getErrorPanelList();
 		ErrorPanel errorPanel = errorPanelList.get(6);
 		errorPanel.setLabelText("Profesor sa tim brojem već postoji");
 		errorPanel.setVisible(true);
@@ -273,12 +289,96 @@ public class ProfessorDialog extends JDialog{
 	}
 
 	public static void hideIDErrorPanel() {
-		ArrayList<JDialog> dialogs = getDialogs();
-		JDialog lastOpenedDialog = dialogs.get(dialogs.size()-1);
-		ArrayList<ErrorPanel> errorPanelList = ((ProfessorDialog) lastOpenedDialog).getErrorPanelList();
 		ErrorPanel errorPanel = errorPanelList.get(6);
 		errorPanel.setLabelText("Potrebno 9 brojeva");
 		errorPanel.setVisible(false);
 	}
+
+	public static void checkIfCanBeValidated() {
+		dialogConfirmButton.validated = true;
+		for(JPanel errorPanel : ProfessorDialog.errorPanelList) {
+			if(errorPanel.isVisible()) {
+				dialogConfirmButton.validated = false;
+				break;
+			}
+		}
+	}
+	
+	public void setDefaultValues() {
+		for(JPanel errorPanel : errorPanelList) {
+			errorPanel.setVisible(false);
+		}
+		for(JTextField textField : textFieldList) {
+			textField.setText("");
+		}
+		for(DateComboBox dateComboBox : dateComboBoxes) {
+			dateComboBox.setDefaultDate();
+		}
+		for(CustomComboBox customComboBox : customComboBoxes) {
+			customComboBox.setDefaultValue();
+		}
+	}
+	
+	private class MyMouseListener extends MouseAdapter{
+		public void mouseExited(MouseEvent mouseEvent) {
+			JButton thisButton = (JButton) mouseEvent.getComponent();
+			if(thisButton.isEnabled()) {
+				new Thread(
+						new Runnable() {
+							public void run() {
+								for (float i = 1f; i >= 0.8f; i -= 0.07f){
+									dialogConfirmButton.setAlpha(i);
+									try {
+										Thread.sleep(10);
+									} catch (Exception e) {
+										
+									}
+								}
+								thisButton.setIcon(dialogConfirmButton.confirmIcon);
+								dialogConfirmButton.setAlpha(1f);
+							}
+						}).start();
+			}
+		}
+		public void mousePressed(MouseEvent mouseEvent) {
+			if(isEnabled()) {
+				new Thread(
+						new Runnable() {
+							public void run() {
+								for (float i = 1f; i >= 0.7f; i -= 0.1f) {
+									dialogConfirmButton.setAlpha(i);
+									try {
+										Thread.sleep(1);
+									} catch (Exception e) {
+										
+									}
+								}
+							}
+						}).start();
+				ArrayList<String> customComboAnswers = new ArrayList<String>();
+				for(CustomComboBox customComboBox : ProfessorDialog.customComboBoxes) {
+					customComboAnswers.add(customComboBox.getField());
+				}
+				String date = DateComboBox.dateString;
+				LocalDate localDate;
+				if(date.contentEquals("yyyy-MM-dd")) {
+					localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+				} else if(date.contentEquals("yyyy-M-dd")){
+					localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-M-dd"));
+				} else if(date.contentEquals("yyyy-MM-d")){
+					localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-d"));
+				} else {
+					localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-M-d"));
+				}
+				if(dialogConfirmButton.validated) {
+					ProfessorController.getInstance().dodajProfesora(textFieldList.get(0).getText(), textFieldList.get(1).getText(),
+							localDate,textFieldList.get(2).getText(), textFieldList.get(3).getText(), textFieldList.get(4).getText(),
+							textFieldList.get(5).getText(), textFieldList.get(6).getText(),customComboAnswers.get(0), customComboAnswers.get(1));
+						dispose();
+				}
+			}		
+		}
+	}
+
 	
 }

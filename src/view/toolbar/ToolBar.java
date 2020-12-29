@@ -48,6 +48,7 @@ public class ToolBar extends JToolBar{
 			private static final long serialVersionUID = -1236190707680017271L;
 
 			public void actionPerformed(ActionEvent e) {     
+				
 		         new Thread(
 							new Runnable() {
 								public void run() {
@@ -63,27 +64,17 @@ public class ToolBar extends JToolBar{
 							}).start();
 		         if(TabBarButton.getActiveButton() == "Studenti") {
 		        	 try {
-						StudentDialog studentDialog = new StudentDialog(MainFrame.getInstance());
-						studentDialog.setVisible(true);
-					} catch (FontFormatException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-		        	 
+							StudentDialog studentDialog = new StudentDialog(MainFrame.getInstance());
+							studentDialog.setVisible(true);
+						} catch (FontFormatException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 		         } else if(TabBarButton.getActiveButton() == "Profesori") {
-		        	 try {
-						ProfessorDialog professorDialog = new ProfessorDialog(MainFrame.getInstance());
-						professorDialog.setVisible(true);
-					} catch (FontFormatException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+					ProfessorDialog.getInstance().setVisible(true);
 		         } else {
 		        	 
 		         }

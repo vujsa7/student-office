@@ -2,12 +2,15 @@ package view.table;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import controller.ProfessorController;
 import model.AbstractProfessorTable;
 import model.AbstractStudentTable;
 import model.AbstractSubjectTable;
@@ -34,6 +37,10 @@ public class TablePanel extends JPanel{
 	public static final String[] KEY_TEXTS = {STUDENT_PANEL, PROFESSOR_PANEL, GRADE_PANEL};
 	private CardLayout cardlayout = new CardLayout();
 	private JPanel cards = new JPanel(cardlayout);
+	public static String currentlyOpenedTable;
+	public static int selectedStudentRow = -1;
+	public static int selectedProfessorRow = -1;
+	public static int selectedGradeRow = -1;
 	
 	private JTable studentTable;
 	private JTable professorTable;
@@ -46,6 +53,7 @@ public class TablePanel extends JPanel{
 		studentScrollPane.setBorder(BorderFactory.createEmptyBorder());
 		
 		professorTable = new ProfessorTable();
+		professorTable.addMouseListener(new MyMouseListener());
 		JScrollPane professorScrollPane = new JScrollPane(professorTable);
 		professorScrollPane.setBorder(BorderFactory.createEmptyBorder());
 		
@@ -62,6 +70,7 @@ public class TablePanel extends JPanel{
 	
 	public void swapView(String key) {
 		   cardlayout.show(cards, key);
+		   currentlyOpenedTable = key;
 	}
 
 	public void refreshView(String type) {
@@ -78,6 +87,30 @@ public class TablePanel extends JPanel{
 			AbstractSubjectTable model = (AbstractSubjectTable) subjectTable.getModel();
 			model.fireTableDataChanged();
 			validate();
+		}
+	}
+	
+	public String getSelectedEntityID() {
+		if(currentlyOpenedTable == PROFESSOR_PANEL) {
+			if(selectedProfessorRow != -1) {
+				return ProfessorController.getInstance().getSelectedProfessorID(selectedProfessorRow);
+			} else {
+				return "NO_SELECTION";
+			}
+		} else if(currentlyOpenedTable == STUDENT_PANEL) {
+			return null;
+		} else {
+			return null;
+		}
+		
+	}
+	
+	class MyMouseListener extends MouseAdapter{
+		
+		public void mouseClicked(MouseEvent mouseEvent) {
+			if(currentlyOpenedTable == PROFESSOR_PANEL) {
+				selectedProfessorRow = professorTable.rowAtPoint(mouseEvent.getPoint());
+			}
 		}
 	}
 

@@ -8,7 +8,6 @@ import javax.swing.JTextField;
 
 import controller.ProfessorController;
 import view.dialogs.ProfessorDialog;
-import view.dialogs.components.DialogConfirmButton;
 
 public class ProfessorListener implements FocusListener{
 
@@ -28,7 +27,7 @@ public class ProfessorListener implements FocusListener{
 		if(!Pattern.matches(regex, textField.getText())){
 			String textFieldName = textField.getName();
 			ProfessorDialog.showErrorPanel(Integer.parseInt(textFieldName));
-			DialogConfirmButton.checkIfCanBeValidated();
+			ProfessorDialog.checkIfCanBeValidated();
 		} else {
 			String textFieldName = textField.getName();
 			// Ako je broj licne karte
@@ -40,7 +39,7 @@ public class ProfessorListener implements FocusListener{
 				}
 			} else {
 				ProfessorDialog.hideErrorPanel(Integer.parseInt(textFieldName));
-				DialogConfirmButton.checkIfCanBeValidated();
+				ProfessorDialog.checkIfCanBeValidated();
 			}
 			
 		}

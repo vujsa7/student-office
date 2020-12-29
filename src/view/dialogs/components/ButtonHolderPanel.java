@@ -24,7 +24,6 @@ public class ButtonHolderPanel extends JPanel{
 		setLayout(buttonHolder);
 		DialogDeclineButton dialogDeclineButton = new DialogDeclineButton();
 		dialogDeclineButton.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dialog.dispose();

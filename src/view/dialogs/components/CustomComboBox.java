@@ -14,7 +14,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collection;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -31,17 +30,16 @@ public class CustomComboBox extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = -2036463339188625847L;
-	public static Collection<CustomComboBox> customComboBoxes = new ArrayList<CustomComboBox>();
 	private String field;
+	private JComboBox<String> combo;
 	
 	public CustomComboBox(ArrayList<String> arrayList) {
 		
-		customComboBoxes.add(this);
 		setLayout(new GridLayout(0,1));
 		setMinimumSize(new Dimension(214,36));
 		setMaximumSize(new Dimension(214,36));
 		String[] array = arrayList.toArray(new String[arrayList.size()]);
-		JComboBox<String> combo = new JComboBox<String>(array);	
+		combo = new JComboBox<String>(array);	
 		combo.setPreferredSize(new Dimension(214,36));
 		combo.setUI(CustomComboBoxUI.createUI(combo));
 		combo.setBorder(new SimpleRoundBorder());
@@ -63,11 +61,14 @@ public class CustomComboBox extends JPanel {
 		add(comboBoxPanel);
 	}
 	
-	
-	public CustomComboBox getCustomComboBox() {
-		return this;
+	public String getField() {
+		return field;
 	}
 
+	public void setDefaultValue() {
+		combo.setSelectedIndex(0);	
+	}
+	
 	public static class CustomComboBoxUI extends BasicComboBoxUI {
 
 	    public static ComboBoxUI createUI(JComponent c) {
@@ -117,11 +118,6 @@ public class CustomComboBox extends JPanel {
 	        insets.top = insets.left = insets.bottom = insets.right = 3;
 	        return insets;
 	    }
-	}
-	
-
-	public String getField() {
-		return field;
 	}
 
 }

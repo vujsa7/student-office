@@ -33,21 +33,20 @@ public class DateComboBox extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = -2036463339188625847L;
+	
 	private Integer selectedItem;
-	private static Collection<DateComboBox> dateComboBoxes = new ArrayList<DateComboBox>();
-	private String comboType;
+	private Collection<DateComboBox> dateComboBoxes = new ArrayList<DateComboBox>();
+	public String comboType;
 	private static boolean leap = false;
 	private JComboBox<Integer> combo;
 	private Integer comboSize;
 	private MutableComboBoxModel<Integer> model;
-	static String dateString;
+	public static String dateString;
 	
 	public DateComboBox(ArrayList<Integer> list, Dimension size, String type) {
-		
 		setLayout(new GridLayout(0,1));
 		setMinimumSize(size);
 		setMaximumSize(size);
-		dateComboBoxes.add(this);
 		combo = new JComboBox<Integer>();
 		model = (MutableComboBoxModel<Integer>) combo.getModel();	
 		for(int i = 0; i < list.size(); i++) {
@@ -85,19 +84,6 @@ public class DateComboBox extends JPanel {
 		}
 		comboSize = days.size();
 		combo.setSelectedItem(model.getElementAt(0));
-	}
-	
-	
-	public String getComboType() {
-		return comboType;
-	}
-	
-	public DateComboBox getDateComboBox() {
-		return this;
-	}
-	
-	public static String getDateString() {
-		return dateString;
 	}
 
 	public static class DateComboBoxUI extends BasicComboBoxUI {
@@ -172,25 +158,25 @@ public class DateComboBox extends JPanel {
 	    		    	 leap = false;
 	    		    }
 	    		for(DateComboBox dateComboBox : dateComboBoxes) {
-	    			if(dateComboBox.getComboType().equals("months")) {
+	    			if(dateComboBox.comboType.equals("months")) {
 	    				selectedItem = (Integer) dateComboBox.getComboBox().getSelectedItem();
 	    				if(selectedItem == 2) {
 	    					for(DateComboBox dateComboBox1 : dateComboBoxes) {
-	    						if(dateComboBox1.getComboType().equals("days")) {
+	    						if(dateComboBox1.comboType.equals("days")) {
 			    					if(leap) {
 			    						@SuppressWarnings("serial")
 			    						ArrayList<Integer> days = new ArrayList<Integer>() {{
 											for(int i = 1; i <= 29; i++)
 												add(i);
 										}};
-			    						dateComboBox1.getDateComboBox().updateDays(days);
+			    						dateComboBox1.updateDays(days);
 			    					} else {
 			    						@SuppressWarnings("serial")
 			    						ArrayList<Integer> days = new ArrayList<Integer>() {{
 											for(int i = 1; i <= 28; i++)
 												add(i);
 										}};
-			    						dateComboBox1.getDateComboBox().updateDays(days);
+			    						dateComboBox1.updateDays(days);
 			    					}
 			    					
 			    				}
@@ -203,45 +189,45 @@ public class DateComboBox extends JPanel {
 	    		// Postavljanje dana u mesecu
 	    		if (selectedItem == 2) {
 	    			for(DateComboBox dateComboBox : dateComboBoxes) {
-	    				if(dateComboBox.getComboType().equals("days")) {
+	    				if(dateComboBox.comboType.equals("days")) {
 	    					if(leap) {
 	    						@SuppressWarnings("serial")
 	    						ArrayList<Integer> days = new ArrayList<Integer>() {{
 									for(int i = 1; i <= 29; i++)
 										add(i);
 								}};
-	    						dateComboBox.getDateComboBox().updateDays(days);
+	    						dateComboBox.updateDays(days);
 	    					} else {
 	    						@SuppressWarnings("serial")
 	    						ArrayList<Integer> days = new ArrayList<Integer>() {{
 									for(int i = 1; i <= 28; i++)
 										add(i);
 								}};
-	    						dateComboBox.getDateComboBox().updateDays(days);
+	    						dateComboBox.updateDays(days);
 	    					}
 	    					
 	    				}
 	    			}
 	    		} else if(selectedItem == 4 || selectedItem == 6 || selectedItem == 9 || selectedItem == 11) {
 	    			for(DateComboBox dateComboBox : dateComboBoxes) {
-	    				if(dateComboBox.getComboType().equals("days")) {
+	    				if(dateComboBox.comboType.equals("days")) {
 	    					@SuppressWarnings("serial")
 	    					ArrayList<Integer> days = new ArrayList<Integer>() {{
 								for(int i = 1; i <= 30; i++)
 									add(i);
 							}};
-							dateComboBox.getDateComboBox().updateDays(days);
+							dateComboBox.updateDays(days);
 	    				}
 	    			}
 	    		} else {
 	    			for(DateComboBox dateComboBox : dateComboBoxes) {
-	    				if(dateComboBox.getComboType().equals("days")) {
+	    				if(dateComboBox.comboType.equals("days")) {
 	    					@SuppressWarnings("serial")
 							ArrayList<Integer> days = new ArrayList<Integer>() {{
 								for(int i = 1; i <= 31; i++)
 									add(i);
 							}};
-							dateComboBox.getDateComboBox().updateDays(days);
+							dateComboBox.updateDays(days);
 	    				}
 	    			}
 	    		}
@@ -249,22 +235,38 @@ public class DateComboBox extends JPanel {
 			
 		}
 
-		private void updateDate() {
-			String date = "";
-			for(DateComboBox dateComboBox : dateComboBoxes) {
-				date = date.concat(String.valueOf(dateComboBox.getComboBox().getSelectedItem()));
-				date = date.concat("-");
-			}
-			date = date.substring(0, date.length() - 1);
-			dateString = date.toString();
+		
+	}
+	
+	private void updateDate() {
+		String date = "";
+		for(DateComboBox dateComboBox : dateComboBoxes) {
+			date = date.concat(String.valueOf(dateComboBox.getComboBox().getSelectedItem()));
+			date = date.concat("-");
 		}
+		date = date.substring(0, date.length() - 1);
+		dateString = date.toString();
 	}
 
-	public static void emptyComboBox() {
-		if(!dateComboBoxes.isEmpty()) {
-			dateComboBoxes.clear();
-		}
-		
+	public void setDefaultDate() {
+			if(comboType.equals("days")) {
+				@SuppressWarnings("serial")
+				ArrayList<Integer> days = new ArrayList<Integer>() {{
+					for(int i = 1; i <= 31; i++)
+						add(i);
+				}};
+				updateDays(days);
+				getComboBox().setSelectedIndex(0);
+			} else if(comboType.equals("months")) {
+				getComboBox().setSelectedIndex(0);
+			} else {
+				getComboBox().setSelectedIndex(0);
+			}
+		updateDate();
+	}
+
+	public void setDateComboBoxes(ArrayList<DateComboBox> dateComboBoxes) {
+		this.dateComboBoxes = dateComboBoxes;
 	}
 
 }
