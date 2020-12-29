@@ -31,21 +31,21 @@ import view.dialogs.components.DialogConfirmButton;
 import view.dialogs.components.ErrorPanel;
 import view.dialogs.components.CustomComboBox;
 import view.dialogs.components.FieldName;
-import view.listeners.ProfessorListener;
+import view.listeners.ProfessorEditListener;
 
-public class ProfessorDialog extends JDialog{
+public class ProfessorEditDialog extends JDialog{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 5767616325660054524L;
 	
-	private static ProfessorDialog instance = null;
+	private static ProfessorEditDialog instance = null;
 	
-	public static ProfessorDialog getInstance() {	
+	public static ProfessorEditDialog getInstance() {	
 		if(instance == null) {
 			try {
-				instance = new ProfessorDialog(MainFrame.getInstance());
+				instance = new ProfessorEditDialog(MainFrame.getInstance());
 			} catch (FontFormatException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -63,6 +63,8 @@ public class ProfessorDialog extends JDialog{
 	public static ArrayList<DateComboBox> dateComboBoxes = new ArrayList<DateComboBox>();
 	public static ArrayList<JTextField> textFieldList = new ArrayList<JTextField>();
 	private static DialogConfirmButton dialogConfirmButton;
+
+	public static String entityID;
 	
 	public String[] textFieldName = {"0","1","2","3","4","5","6"};
 	public String[] regex = {
@@ -129,8 +131,8 @@ public class ProfessorDialog extends JDialog{
 	
 
 
-	private ProfessorDialog(JFrame parent) {
-		super(parent, "Dodavanje profesora", true);
+	private ProfessorEditDialog(JFrame parent) {
+		super(parent, "Izmena profesora", true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setPreferredSize(new Dimension(507, 750));
 		setResizable(false);
@@ -169,6 +171,7 @@ public class ProfessorDialog extends JDialog{
 				customComboBoxes.add(customComboBox);
 				holderPanel.add(customComboBox);
 			} else if (i == 3) {
+				
 				DateComboBox yearsComboBox = new DateComboBox(years, new Dimension(80, 36), "years");
 				dateComboBoxes.add(yearsComboBox);
 				holderPanel.add(yearsComboBox);
@@ -180,9 +183,12 @@ public class ProfessorDialog extends JDialog{
 				DateComboBox daysComboBox = new DateComboBox(days, new Dimension(58, 36), "days");
 				dateComboBoxes.add(daysComboBox);
 				holderPanel.add(daysComboBox);
+				
 				daysComboBox.setDateComboBoxes(dateComboBoxes);
 				monthsComboBox.setDateComboBoxes(dateComboBoxes);
 				yearsComboBox.setDateComboBoxes(dateComboBoxes);
+				
+				
 			} else {
 				JPanel textAndErrorPanel = new JPanel();
 				textAndErrorPanel.setPreferredSize(new Dimension(214, 49));
@@ -202,7 +208,7 @@ public class ProfessorDialog extends JDialog{
 				textField.getDocument().addDocumentListener(listener);
 				textFieldList.add(textField);
 				
-				textField.addFocusListener(new ProfessorListener(regex[regexCounter++]));
+				textField.addFocusListener(new ProfessorEditListener(regex[regexCounter++]));
 				CustomTextField customTextField = new CustomTextField(textField, textFieldName[textFieldCounter++]);
 				textPanel.add(customTextField);
 				
@@ -228,6 +234,7 @@ public class ProfessorDialog extends JDialog{
 			}
 			
 		}
+		
 		
 		basePanel.add(Box.createVerticalStrut(13));
 		ButtonHolderPanel buttonHolderPanel = new ButtonHolderPanel(dialogConfirmButton, this);
@@ -297,7 +304,7 @@ public class ProfessorDialog extends JDialog{
 
 	public static void checkIfCanBeValidated() {
 		dialogConfirmButton.validated = true;
-		for(JPanel errorPanel : ProfessorDialog.errorPanelList) {
+		for(JPanel errorPanel : ProfessorEditDialog.errorPanelList) {
 			if(errorPanel.isVisible()) {
 				dialogConfirmButton.validated = false;
 				break;
@@ -305,18 +312,28 @@ public class ProfessorDialog extends JDialog{
 		}
 	}
 	
-	public void setDefaultValues() {
+	public void setProperValues() {
 		for(JPanel errorPanel : errorPanelList) {
 			errorPanel.setVisible(false);
 		}
+		int textFieldCounter = 0;
 		for(JTextField textField : textFieldList) {
-			textField.setText("");
+			textField.setText(ProfessorController.getInstance().getSelectedProfessorValueAt(textFieldCounter++));
 		}
+		LocalDate dateOfBirth = ProfessorController.getInstance().getSelectedProfessorDateOfBirth();
 		for(DateComboBox dateComboBox : dateComboBoxes) {
-			dateComboBox.setDefaultDate();
+			if(dateComboBox.comboType == "days") {
+				dateComboBox.setValue(dateOfBirth.getDayOfMonth());
+			} else if(dateComboBox.comboType == "months") {
+				dateComboBox.setValue(dateOfBirth.getMonthValue());
+			} else {
+				dateComboBox.setValue(dateOfBirth.getYear());
+			}			
 		}
+		int i = 9;	// 9 jer je u tom redu CustomComboBox i plus
 		for(CustomComboBox customComboBox : customComboBoxes) {
-			customComboBox.setDefaultValue();
+			String value = ProfessorController.getInstance().getSelectedProfessorValueAt(i++);
+			customComboBox.setValue(value);
 		}
 	}
 	
@@ -378,7 +395,7 @@ public class ProfessorDialog extends JDialog{
 							}
 						}).start();
 				ArrayList<String> customComboAnswers = new ArrayList<String>();
-				for(CustomComboBox customComboBox : ProfessorDialog.customComboBoxes) {
+				for(CustomComboBox customComboBox : ProfessorEditDialog.customComboBoxes) {
 					customComboAnswers.add(customComboBox.getField());
 				}
 				String date = DateComboBox.dateString;
@@ -396,26 +413,25 @@ public class ProfessorDialog extends JDialog{
 				for(JTextField textField : textFieldList) {
 					if(!Pattern.matches(regex[i++], textField.getText())){
 						String textFieldName = textField.getName();
-						ProfessorDialog.showErrorPanel(Integer.parseInt(textFieldName));
-						ProfessorDialog.checkIfCanBeValidated();
+						ProfessorEditDialog.showErrorPanel(Integer.parseInt(textFieldName));
+						ProfessorEditDialog.checkIfCanBeValidated();
 					} else {
 						String textFieldName = textField.getName();
 						// Ako je broj licne karte
 						if(textFieldName.equals("6")) {
 							if(ProfessorController.getInstance().checkIDExists(textField.getText())) {
-								System.out.println("woohoo");
-								ProfessorDialog.showIDErrorPanel();
+								ProfessorEditDialog.showIDErrorPanel();
 							} else {
-								ProfessorDialog.hideIDErrorPanel();
+								ProfessorEditDialog.hideIDErrorPanel();
 							}
 						} else {
-							ProfessorDialog.hideErrorPanel(Integer.parseInt(textFieldName));
-							ProfessorDialog.checkIfCanBeValidated();
+							ProfessorEditDialog.hideErrorPanel(Integer.parseInt(textFieldName));
+							ProfessorEditDialog.checkIfCanBeValidated();
 						}
 					}
 				}
 				if(dialogConfirmButton.validated) {
-					ProfessorController.getInstance().dodajProfesora(textFieldList.get(0).getText(), textFieldList.get(1).getText(),
+					ProfessorController.getInstance().izmeniProfesora(entityID ,textFieldList.get(0).getText(), textFieldList.get(1).getText(),
 							localDate,textFieldList.get(2).getText(), textFieldList.get(3).getText(), textFieldList.get(4).getText(),
 							textFieldList.get(5).getText(), textFieldList.get(6).getText(),customComboAnswers.get(0), customComboAnswers.get(1));
 						dispose();

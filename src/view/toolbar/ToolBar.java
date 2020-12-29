@@ -2,17 +2,16 @@ package view.toolbar;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FontFormatException;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
-import java.io.IOException;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
@@ -21,10 +20,11 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import main.MainFrame;
 import view.dialogs.ProfessorDialog;
+import view.dialogs.ProfessorEditDialog;
 import view.dialogs.StudentDialog;
 import view.tab.TabBarButton;
+import view.table.TablePanel;
 
 public class ToolBar extends JToolBar{
 	/**
@@ -48,7 +48,6 @@ public class ToolBar extends JToolBar{
 			private static final long serialVersionUID = -1236190707680017271L;
 
 			public void actionPerformed(ActionEvent e) {     
-				
 		         new Thread(
 							new Runnable() {
 								public void run() {
@@ -63,22 +62,16 @@ public class ToolBar extends JToolBar{
 								}
 							}).start();
 		         if(TabBarButton.getActiveButton() == "Studenti") {
-		        	 try {
-							StudentDialog studentDialog = new StudentDialog(MainFrame.getInstance());
-							studentDialog.setVisible(true);
-						} catch (FontFormatException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						} catch (IOException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
+		        	StudentDialog.getInstance().setDefaultValues();
+					StudentDialog.getInstance().setVisible(true);
 		         } else if(TabBarButton.getActiveButton() == "Profesori") {
+					ProfessorDialog.getInstance().setDefaultValues();
 					ProfessorDialog.getInstance().setVisible(true);
 		         } else {
 		        	 
 		         }
 		    }
+		
 		}; 
 		newBtn.getActionMap().put("performNew", performNew);
 		newBtn.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(keyNew, "performNew"); 
@@ -106,7 +99,21 @@ public class ToolBar extends JToolBar{
 									
 								}
 							}).start();
-		         
+		         if(TabBarButton.getActiveButton() == "Studenti") {
+						// ako se menja student
+					} else if(TabBarButton.getActiveButton() == "Profesori") {
+						String selectedEntityID = TablePanel.getInstance().getSelectedEntityID();
+						if(selectedEntityID != "NO_SELECTION") {
+							ProfessorEditDialog.entityID = selectedEntityID;
+							ProfessorEditDialog professorEditDialog = ProfessorEditDialog.getInstance();
+							professorEditDialog.setProperValues();
+							professorEditDialog.setVisible(true);
+						} else {
+							JOptionPane.showMessageDialog(null, "Prvo izaberite profesora kojeg želite da izmenite", "Napomena", JOptionPane.INFORMATION_MESSAGE);
+						}
+					} else {
+						// ako se menja predmet
+					}
 		    }
 		}; 
 		editBtn.getActionMap().put("performEdit", performEdit);

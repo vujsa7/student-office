@@ -120,4 +120,8 @@ public class CustomComboBox extends JPanel {
 	    }
 	}
 
+	public void setValue(String value) {
+		combo.setSelectedItem(value);
+	}
+
 }

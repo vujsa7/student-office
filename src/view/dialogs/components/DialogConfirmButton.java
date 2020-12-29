@@ -18,11 +18,9 @@ public class DialogConfirmButton extends JButton {
 	 */
 	private static final long serialVersionUID = -1985136620379147442L;
 	private float alphaButton = 1f;
-	@SuppressWarnings("unused")
-	private ImageIcon hoveredConfirmIcon;
+	public ImageIcon hoveredConfirmIcon;
 	public ImageIcon confirmIcon;
 	public boolean validated;
-	public static String entityID;
 	
 	public DialogConfirmButton() {
 		setEnabled(false);

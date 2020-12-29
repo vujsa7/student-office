@@ -41,6 +41,7 @@ public class DateComboBox extends JPanel {
 	private JComboBox<Integer> combo;
 	private Integer comboSize;
 	private MutableComboBoxModel<Integer> model;
+	ArrayList<Integer> list = new ArrayList<Integer>();
 	public static String dateString;
 	
 	public DateComboBox(ArrayList<Integer> list, Dimension size, String type) {
@@ -49,18 +50,18 @@ public class DateComboBox extends JPanel {
 		setMaximumSize(size);
 		combo = new JComboBox<Integer>();
 		model = (MutableComboBoxModel<Integer>) combo.getModel();	
+		this.list = list;
 		for(int i = 0; i < list.size(); i++) {
 			combo.insertItemAt(list.get(i), i);;
 		}
 		comboSize = list.size();
 		dateString = "1950-01-01";
 		combo.setSelectedItem(list.get(0));
-		
 		combo.setPreferredSize(size);
 		combo.setUI(DateComboBoxUI.createUI(combo));
 		combo.setBorder(new SimpleRoundBorder());
 		comboType = type;
-		combo.addActionListener (new MyDateComboBoxListener());
+		combo.addActionListener(new MyDateComboBoxListener());
 		
 		JPanel comboBoxPanel = new JPanel();
 		FlowLayout fl = (FlowLayout) comboBoxPanel.getLayout();
@@ -74,17 +75,7 @@ public class DateComboBox extends JPanel {
 		return combo;
 	}
 	
-	private void updateDays(ArrayList<Integer> days) {
-		for(int i = 0; i < comboSize; i++){
-			model.removeElementAt(0);
-			
-	    }
-		for(int i = 0; i < days.size(); i++) {
-			model.insertElementAt(days.get(i), i);
-		}
-		comboSize = days.size();
-		combo.setSelectedItem(model.getElementAt(0));
-	}
+	
 
 	public static class DateComboBoxUI extends BasicComboBoxUI {
 
@@ -232,10 +223,21 @@ public class DateComboBox extends JPanel {
 	    			}
 	    		}
 	    	}
-			
 		}
-
 		
+		
+	}
+	
+	private void updateDays(ArrayList<Integer> days) {
+		for(int i = 0; i < comboSize; i++){
+			model.removeElementAt(0);
+			
+	    }
+		for(int i = 0; i < days.size(); i++) {
+			model.insertElementAt(days.get(i), i);
+		}
+		comboSize = days.size();
+		combo.setSelectedItem(model.getElementAt(0));
 	}
 	
 	private void updateDate() {
@@ -267,6 +269,10 @@ public class DateComboBox extends JPanel {
 
 	public void setDateComboBoxes(ArrayList<DateComboBox> dateComboBoxes) {
 		this.dateComboBoxes = dateComboBoxes;
+	}
+
+	public void setValue(Integer value) {
+		model.setSelectedItem(value);
 	}
 
 }

@@ -2,15 +2,15 @@ package view.toolbar;
 
 import javax.swing.*;
 
-import main.MainFrame;
 import view.dialogs.ProfessorDialog;
+import view.dialogs.ProfessorEditDialog;
 import view.dialogs.StudentDialog;
 import view.tab.TabBarButton;
+import view.table.TablePanel;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 
 public class HoverButton extends JButton{
   /**
@@ -54,91 +54,91 @@ public class HoverButton extends JButton{
 		super.paintComponent(g2);
 	}
 
-	public class MyMouseListener extends MouseAdapter{
-		
-		public void mouseEntered(MouseEvent mouseEvent) {
-			new Thread(
-					new Runnable() {
-						public void run() {
-							for (float i = 0.7f; i <= 1f; i += 0.03f){
-								setAlpha(i);
-								try {
-									Thread.sleep(10);
-								} catch (Exception e) {
-									
-								}
+	public class MyMouseListener extends MouseAdapter{public void mouseEntered(MouseEvent mouseEvent) {
+		new Thread(
+				new Runnable() {
+					public void run() {
+						for (float i = 0.7f; i <= 1f; i += 0.03f){
+							setAlpha(i);
+							try {
+								Thread.sleep(10);
+							} catch (Exception e) {
+								
 							}
 						}
-					}).start();
-		}
-		
-		public void mouseExited(MouseEvent mouseEvent) {
-			new Thread(
-					new Runnable() {
-						public void run() {
-							for (float i = 1f; i >= 0.7f; i -= 0.03f) {
-								setAlpha(i);
-								try{
-									Thread.sleep(10);
-								} catch (Exception e) {
-									
-								}
-							}
-						}
-					}).start();
-		}
-		
-		public void mousePressed(MouseEvent mouseEvent) {
-			
-			new Thread(
-					new Runnable() {
-						public void run() {
-							for (float i = 1f; i >= 0.7f; i -= 0.1f) {
-								setAlpha(i);
-								try {
-									Thread.sleep(1);
-								} catch (Exception e) {
-									
-								}
-							}
-						}
-					}).start();
-					
-			if(buttonType.equals("New")) {
-				if(TabBarButton.getActiveButton() == "Studenti") {
-					StudentDialog studentDialog;
-					try {
-						studentDialog = new StudentDialog(MainFrame.getInstance());
-						studentDialog.setVisible(true);
-					} catch (FontFormatException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
 					}
-					
-				} else if(TabBarButton.getActiveButton() == "Profesori") {
-					ProfessorDialog professorDialog = ProfessorDialog.getInstance();
-		        	professorDialog.setDefaultValues();
-		        	professorDialog.setVisible(true);
-		        } else {
-		        	 // ako se dodaje predmet
-		        }
-			} else if(buttonType.equals("Edit")) {
-				if(TabBarButton.getActiveButton() == "Studenti") {
-					// ako se menja student
-				} else if(TabBarButton.getActiveButton() == "Profesori") {
-					//DialogConfirmButton.dialogAction = "Edit";
-					
-					} else {
-						JOptionPane.showMessageDialog(null, "Prvo izaberite profesora kojeg želite da izmenite", "Napomena", JOptionPane.INFORMATION_MESSAGE);
-					}
-			} else {
-					// ako se menja predmet
-			}
-		
-		}
+				}).start();
 	}
+	
+	public void mouseExited(MouseEvent mouseEvent) {
+		new Thread(
+				new Runnable() {
+					public void run() {
+						for (float i = 1f; i >= 0.7f; i -= 0.03f) {
+							setAlpha(i);
+							try{
+								Thread.sleep(10);
+							} catch (Exception e) {
+								
+							}
+						}
+					}
+				}).start();
+	}
+	
+	public void mousePressed(MouseEvent mouseEvent) {
+		
+		new Thread(
+				new Runnable() {
+					public void run() {
+						for (float i = 1f; i >= 0.7f; i -= 0.1f) {
+							setAlpha(i);
+							try {
+								Thread.sleep(1);
+							} catch (Exception e) {
+								
+							}
+						}
+					}
+				}).start();
+				
+		if(buttonType.equals("New")) {
+			
+			if(TabBarButton.getActiveButton() == "Studenti") {
+				StudentDialog studentDialog = StudentDialog.getInstance();
+				studentDialog.setDefaultValues();
+				studentDialog.setVisible(true);
+			} else if(TabBarButton.getActiveButton() == "Profesori") {
+				ProfessorDialog professorDialog = ProfessorDialog.getInstance();
+	        	professorDialog.setDefaultValues();
+	        	professorDialog.setVisible(true);
+	        } else {
+	        	 // ako se dodaje predmet
+	        }
+			
+		} else if(buttonType.equals("Edit")) {
+			
+			if(TabBarButton.getActiveButton() == "Studenti") {
+				// ako se menja student
+			} else if(TabBarButton.getActiveButton() == "Profesori") {
+				String selectedEntityID = TablePanel.getInstance().getSelectedEntityID();
+				if(selectedEntityID != "NO_SELECTION") {
+					ProfessorEditDialog.entityID = selectedEntityID;
+					ProfessorEditDialog professorEditDialog = ProfessorEditDialog.getInstance();
+					professorEditDialog.setProperValues();
+					professorEditDialog.setVisible(true);
+				} else {
+					JOptionPane.showMessageDialog(null, "Prvo izaberite profesora kojeg želite da izmenite", "Napomena", JOptionPane.INFORMATION_MESSAGE);
+				}
+			} else {
+				// ako se menja predmet
+			}
+			
+		} else {
+				// ako se menja predmet
+		}
+	
+	}
+}
 	
 }

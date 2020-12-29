@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import model.AbstractProfessorTable;
 import model.Profesor;
+import view.dialogs.ProfessorEditDialog;
 import view.table.TablePanel;
 
 public class ProfessorController {
@@ -56,10 +57,41 @@ public class ProfessorController {
 				professor.setZvanje(zvanje);
 			}
 		}
+		TablePanel.getInstance().refreshView("profesor");
 	}
 	
 	public String getSelectedProfessorID(int rowIndex) {
 		Profesor profesor = AbstractProfessorTable.getInstance().getRow(rowIndex);
 		return profesor.getBrojLicneKarte();
+	}
+
+	public String getSelectedProfessorValueAt(int index) {
+		ArrayList<Profesor> professors = (ArrayList<Profesor>) AbstractProfessorTable.getInstance().getProfessors();
+		for(Profesor professor : professors) {
+			if(professor.getBrojLicneKarte().equals(ProfessorEditDialog.entityID)) {
+				switch(index) {
+					case 0: return professor.getIme();
+					case 1: return professor.getPrezime();
+					case 2: return professor.getAdresaStanovanja();
+					case 3: return professor.getKontaktTelefon();
+					case 4: return professor.getEmailAdresa();
+					case 5: return professor.getAdresaKancelarije();
+					case 6: return professor.getBrojLicneKarte();
+					case 9: return professor.getTitula();
+					case 10: return professor.getZvanje();
+					default: return null;
+				}
+			}
+		}
+		return null;
+	}
+
+	public LocalDate getSelectedProfessorDateOfBirth() {
+		for(Profesor professor : AbstractProfessorTable.getInstance().getProfessors()) {
+			if(professor.getBrojLicneKarte().equals(ProfessorEditDialog.entityID)) {
+				return professor.getDatumRodjenja();
+			}
+		}
+		return null;
 	}
 }
