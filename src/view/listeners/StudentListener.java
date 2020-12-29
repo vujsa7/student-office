@@ -7,7 +7,6 @@ import java.util.regex.Pattern;
 import javax.swing.JTextField;
 
 import view.dialogs.StudentDialog;
-import view.dialogs.components.DialogConfirmButton;
 
 public class StudentListener implements FocusListener{
 	
@@ -28,11 +27,11 @@ public class StudentListener implements FocusListener{
 		if(!Pattern.matches(regex, textField.getText())){
 			String textFieldName = textField.getName();
 			StudentDialog.showErrorPanel(Integer.parseInt(textFieldName));
-			DialogConfirmButton.checkIfCanBeValidated();
+			StudentDialog.checkIfCanBeValidated();
 		} else {
 			String textFieldName = textField.getName();
 			StudentDialog.hideErrorPanel(Integer.parseInt(textFieldName));
-			DialogConfirmButton.checkIfCanBeValidated();
+			StudentDialog.checkIfCanBeValidated();
 		}
 		
 	}

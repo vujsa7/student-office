@@ -2,13 +2,11 @@ package view.menubar;
  
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FontFormatException;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
-import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -18,7 +16,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
-import main.MainFrame;
 import view.dialogs.ProfessorDialog;
 import view.dialogs.StudentDialog;
 import view.tab.TabBarButton;
@@ -47,28 +44,16 @@ public class MenuBar extends JMenuBar{
 					public void actionPerformed(ActionEvent e) {
 						if(TabBarButton.getActiveButton() == "Studenti") {
 					
-							try {
-								StudentDialog studentDialog = new StudentDialog(MainFrame.getInstance());
-								studentDialog.setVisible(true);
-							} catch (FontFormatException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							} catch (IOException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
+							StudentDialog studentDialog = StudentDialog.getInstance();
+							studentDialog.setDefaultValues();
+							studentDialog.setVisible(true);
 							
 						} else if(TabBarButton.getActiveButton() == "Profesori") {
-							try {
-								ProfessorDialog professorDialog = new ProfessorDialog(MainFrame.getInstance());
-								professorDialog.setVisible(true);
-							} catch (FontFormatException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							} catch (IOException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
+							
+							ProfessorDialog professorDialog = ProfessorDialog.getInstance();
+				        	professorDialog.setDefaultValues();
+				        	professorDialog.setVisible(true);
+				        	
 						} else {
 							
 						}
