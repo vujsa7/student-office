@@ -49,7 +49,6 @@ public class TabBarButton extends JButton{
 		} else {
 			setIcon(normalIcon);
 		}
-		setBorderPainted(false);
 		setFocusPainted(false);
 		setContentAreaFilled(false);
 		setBorderPainted(false);

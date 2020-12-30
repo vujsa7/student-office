@@ -66,8 +66,8 @@ public class ProfessorDialog extends JDialog{
 	
 	public String[] textFieldName = {"0","1","2","3","4","5","6"};
 	public String[] regex = {
-			"[A-Za-z]{1,20}",
-			"[A-Za-z]{1,20}",
+			"[A-Za-zćčšđž]{1,20}",
+			"[A-Za-zćčšđž]{1,20}",
 			".+",
 			"^(\\+381)?(\\s|-)?0?6(([0-6]|[8-9])\\d{7,8}){1}$",
 			"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$",
@@ -187,14 +187,12 @@ public class ProfessorDialog extends JDialog{
 				JPanel textAndErrorPanel = new JPanel();
 				textAndErrorPanel.setPreferredSize(new Dimension(214, 49));
 				textAndErrorPanel.setMaximumSize(new Dimension(214, 49));
-				textAndErrorPanel.setMinimumSize(new Dimension(214, 49));
 				textAndErrorPanel.setOpaque(false);
 				BoxLayout boxTextAndError = new BoxLayout(textAndErrorPanel, BoxLayout.Y_AXIS);
 				textAndErrorPanel.setLayout(boxTextAndError);
 				
 				JPanel textPanel = new JPanel();
 				textPanel.setPreferredSize(new Dimension(214, 36));
-				textPanel.setMinimumSize(new Dimension(214, 36));
 				textPanel.setMaximumSize(new Dimension(214, 36));
 				textPanel.setLayout(new GridLayout(0,1));
 				textPanel.setOpaque(false);
@@ -405,8 +403,10 @@ public class ProfessorDialog extends JDialog{
 							if(ProfessorController.getInstance().checkIDExists(textField.getText())) {
 								System.out.println("woohoo");
 								ProfessorDialog.showIDErrorPanel();
+								ProfessorDialog.checkIfCanBeValidated();
 							} else {
 								ProfessorDialog.hideIDErrorPanel();
+								ProfessorDialog.checkIfCanBeValidated();
 							}
 						} else {
 							ProfessorDialog.hideErrorPanel(Integer.parseInt(textFieldName));

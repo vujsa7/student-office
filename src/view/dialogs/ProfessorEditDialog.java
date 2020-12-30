@@ -1,5 +1,7 @@
 package view.dialogs;
 
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FontFormatException;
@@ -31,6 +33,7 @@ import view.dialogs.components.DialogConfirmButton;
 import view.dialogs.components.ErrorPanel;
 import view.dialogs.components.CustomComboBox;
 import view.dialogs.components.FieldName;
+import view.dialogs.components.professoredit.DialogProfessorEditTabButtonPanel;
 import view.listeners.ProfessorEditListener;
 
 public class ProfessorEditDialog extends JDialog{
@@ -55,6 +58,12 @@ public class ProfessorEditDialog extends JDialog{
 		return instance;
 	}
 	
+	public static final String INFO_PANEL = "Info";
+	public static final String SUBJECT_PANEL = "Predmeti";
+	public static final String[] KEY_TEXTS = {INFO_PANEL, SUBJECT_PANEL};
+	private CardLayout cardlayout = new CardLayout();
+	private JPanel cards = new JPanel(cardlayout);
+	
 	private static final String[] fieldText = {"Ime", "Prezime", "Datum rođenja", "Adresa stanovanja", "Kontakt telefon", "E-mail adresa",
 			"Adresa kancelarije", "Broj lične karte", "Titula", "Zvanje"};
 	
@@ -68,8 +77,8 @@ public class ProfessorEditDialog extends JDialog{
 	
 	public String[] textFieldName = {"0","1","2","3","4","5","6"};
 	public String[] regex = {
-			"[A-Za-z]{1,20}",
-			"[A-Za-z]{1,20}",
+			"[A-Za-zćčšđž]{1,20}",
+			"[A-Za-zćčšđž]{1,20}",
 			".+",
 			"^(\\+381)?(\\s|-)?0?6(([0-6]|[8-9])\\d{7,8}){1}$",
 			"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$",
@@ -134,7 +143,7 @@ public class ProfessorEditDialog extends JDialog{
 	private ProfessorEditDialog(JFrame parent) {
 		super(parent, "Izmena profesora", true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setPreferredSize(new Dimension(507, 750));
+		setPreferredSize(new Dimension(507, 804));
 		setResizable(false);
 		pack();
 		setLocationRelativeTo(parent);
@@ -142,12 +151,19 @@ public class ProfessorEditDialog extends JDialog{
 		dialogConfirmButton = new DialogConfirmButton();
 		dialogConfirmButton.addMouseListener(new MyMouseListener());
 		
+		JPanel baseHolderPanel = new JPanel();
+		baseHolderPanel.setLayout(new BorderLayout());
+		DialogProfessorEditTabButtonPanel dialogTabButtonPanel = new DialogProfessorEditTabButtonPanel();
+		baseHolderPanel.add(dialogTabButtonPanel, BorderLayout.NORTH);
+		
+		
 		JPanel basePanel = new JPanel();
 		BoxLayout box = new BoxLayout(basePanel, BoxLayout.Y_AXIS);
 		basePanel.setLayout(box);
 		basePanel.setBackground(new Color(249,249,249));
+		
+		basePanel.setPreferredSize(new Dimension(507, 744));
 		basePanel.add(Box.createVerticalStrut(18));
-		basePanel.setPreferredSize(new Dimension(507,692));
 		int regexCounter = 0;
 		int textFieldCounter = 0;
 		int errorTextCounter = 0;
@@ -191,16 +207,17 @@ public class ProfessorEditDialog extends JDialog{
 				
 			} else {
 				JPanel textAndErrorPanel = new JPanel();
+			
+				BoxLayout boxTextAndError = new BoxLayout(textAndErrorPanel, BoxLayout.Y_AXIS);
+				textAndErrorPanel.setLayout(boxTextAndError);
 				textAndErrorPanel.setPreferredSize(new Dimension(214, 49));
 				textAndErrorPanel.setMaximumSize(new Dimension(214, 49));
 				textAndErrorPanel.setMinimumSize(new Dimension(214, 49));
 				textAndErrorPanel.setOpaque(false);
-				BoxLayout boxTextAndError = new BoxLayout(textAndErrorPanel, BoxLayout.Y_AXIS);
-				textAndErrorPanel.setLayout(boxTextAndError);
 				
 				JPanel textPanel = new JPanel();
 				textPanel.setPreferredSize(new Dimension(214, 36));
-				textPanel.setMinimumSize(new Dimension(214, 36));
+				//textPanel.setMinimumSize(new Dimension(214, 36));
 				textPanel.setMaximumSize(new Dimension(214, 36));
 				textPanel.setLayout(new GridLayout(0,1));
 				textPanel.setOpaque(false);
@@ -240,10 +257,18 @@ public class ProfessorEditDialog extends JDialog{
 		ButtonHolderPanel buttonHolderPanel = new ButtonHolderPanel(dialogConfirmButton, this);
 		
 		basePanel.add(buttonHolderPanel);
-		basePanel.add(Box.createVerticalStrut(16));
+		basePanel.add(Box.createVerticalStrut(17));
 		
 		
-		add(basePanel);
+		cards.add(basePanel, INFO_PANEL);
+		JPanel panel = new JPanel();
+		panel.setPreferredSize(new Dimension(507, 744));
+		panel.setMaximumSize(new Dimension(507, 744));
+		cards.add(panel, SUBJECT_PANEL);
+		
+		baseHolderPanel.add(cards, BorderLayout.CENTER);
+		
+		add(baseHolderPanel);
 	}
 
 
@@ -337,6 +362,10 @@ public class ProfessorEditDialog extends JDialog{
 		}
 	}
 	
+	public void swapView(String key) {
+		   cardlayout.show(cards, key);
+	}
+	
 	private class MyMouseListener extends MouseAdapter{
 		public void mouseEntered(MouseEvent mouseEvent) {
 			JButton thisButton = (JButton) mouseEvent.getComponent();
@@ -419,10 +448,12 @@ public class ProfessorEditDialog extends JDialog{
 						String textFieldName = textField.getName();
 						// Ako je broj licne karte
 						if(textFieldName.equals("6")) {
-							if(ProfessorController.getInstance().checkIDExists(textField.getText())) {
+							if(ProfessorController.getInstance().checkIDExistsWhenEdit(textField.getText())) {
 								ProfessorEditDialog.showIDErrorPanel();
+								ProfessorEditDialog.checkIfCanBeValidated();
 							} else {
 								ProfessorEditDialog.hideIDErrorPanel();
+								ProfessorEditDialog.checkIfCanBeValidated();
 							}
 						} else {
 							ProfessorEditDialog.hideErrorPanel(Integer.parseInt(textFieldName));

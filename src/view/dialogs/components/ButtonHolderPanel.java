@@ -18,7 +18,7 @@ public class ButtonHolderPanel extends JPanel{
 
 
 	public ButtonHolderPanel(DialogConfirmButton dialogConfirmButton, JDialog dialog) {
-		setPreferredSize(new Dimension(507, 49));
+		setPreferredSize(new Dimension(507, 36));
 		setOpaque(false);
 		BoxLayout buttonHolder = new BoxLayout(this, BoxLayout.X_AXIS);
 		setLayout(buttonHolder);

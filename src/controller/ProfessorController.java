@@ -94,4 +94,17 @@ public class ProfessorController {
 		}
 		return null;
 	}
+	
+	/**
+	* Vraca true ukoliko profesor sa tim brojem licne karte vec postoji, false ako profesor sa tim brojem licne ne postoji ili ako se prosledjeni profesor vec menja
+	*/
+	public boolean checkIDExistsWhenEdit(String text) {
+		ArrayList<Profesor> professors = (ArrayList<Profesor>) AbstractProfessorTable.getInstance().getProfessors();
+		for(Profesor professor : professors) {
+			if(professor.getBrojLicneKarte().equals(text) && !ProfessorEditDialog.entityID.equals(text)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

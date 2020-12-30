@@ -32,10 +32,12 @@ public class ProfessorEditListener implements FocusListener {
 			String textFieldName = textField.getName();
 			// Ako je broj licne karte
 			if(textFieldName.equals("6")) {
-				if(ProfessorController.getInstance().checkIDExists(textField.getText())) {
+				if(ProfessorController.getInstance().checkIDExistsWhenEdit(textField.getText())) {
 					ProfessorEditDialog.showIDErrorPanel();
+					ProfessorEditDialog.checkIfCanBeValidated();
 				} else {
 					ProfessorEditDialog.hideIDErrorPanel();
+					ProfessorEditDialog.checkIfCanBeValidated();
 				}
 			} else {
 				ProfessorEditDialog.hideErrorPanel(Integer.parseInt(textFieldName));
