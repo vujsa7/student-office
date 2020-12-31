@@ -17,13 +17,10 @@ import model.AbstractStudentTable;
 
 public class StudentTable extends JTable{
 	
-	
-	private static final long serialVersionUID = -5981837537193921070L;
-
 	/**
 	 * 
 	 */
-	
+	private static final long serialVersionUID = -5981837537193921070L;
 	
 	public StudentTable() {
 		
@@ -42,7 +39,7 @@ public class StudentTable extends JTable{
 		header.setPreferredSize(new Dimension(170, 25));
 	    header.setBackground(new Color(141, 102,217));
 	    header.setForeground(Color.white);    
-	    UIManager.put("Table.gridColor", new Color(58, 39, 93));
+	    UIManager.put("Table.gridColor", new Color(196, 190, 206));
 		UIManager.put("Table.focusCellHighlightBorder", BorderFactory.createMatteBorder(1, 1, 1, 1, Color.white));
 		
 		// Sama JTable komponenta je implementirana postujuci MVC arhitekturu.

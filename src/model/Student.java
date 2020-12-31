@@ -13,7 +13,7 @@ public class Student {
 	private String email;
 	private String brojIndeksa;
 	private String godUpisa;
-	private String trenutnaGodStrudija;
+	private String trenutnaGodStudija;
 	private String status;
 	private String prosek;
 	private List<PolozenIspit> polozeniIspiti;
@@ -22,7 +22,7 @@ public class Student {
 	Student() {}
 	
 	public Student(String ime, String prezime, LocalDate datumRodjenja, String adresaStanovanja, String brojTelefona,
-			String email, String brojIndeksa, String godUpisa, String trenutnaGodStrudija, String status, String prosek,
+			String email, String brojIndeksa, String godUpisa, String trenutnaGodStudija, String status, String prosek,
 			List<PolozenIspit> polozeniIspiti, List<NepolozenIspit> nepolozeniIspiti) {
 		super();
 		this.ime = ime;
@@ -33,7 +33,7 @@ public class Student {
 		this.email = email;
 		this.brojIndeksa = brojIndeksa;
 		this.godUpisa = godUpisa;
-		this.trenutnaGodStrudija = trenutnaGodStrudija;
+		this.trenutnaGodStudija = trenutnaGodStudija;
 		this.status = status;
 		this.prosek = prosek;
 		this.polozeniIspiti = polozeniIspiti;
@@ -95,11 +95,11 @@ public class Student {
 	public void setGod_upisa(String godUpisa) {
 		this.godUpisa = godUpisa;
 	}
-	public String getTrenutnaGodStrudija() {
-		return trenutnaGodStrudija;
+	public String getTrenutnaGodStudija() {
+		return trenutnaGodStudija;
 	}
-	public void setTrenutnaGodStrudija(String trenutnaGodStrudija) {
-		this.trenutnaGodStrudija = trenutnaGodStrudija;
+	public void setTrenutnaGodStrudija(String trenutnaGodStudija) {
+		this.trenutnaGodStudija = trenutnaGodStudija;
 	}
 	public String getStatus() {
 		return status;

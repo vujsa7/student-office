@@ -41,12 +41,28 @@ public class AbstractStudentTable extends AbstractTableModel{
 	private void initStudente() {
 		this.studenti = new ArrayList<Student>();
 		studenti.add(new Student("Pera", "Peric", LocalDate.of(1973, 10, 13), "Bulevar oslobodjenja 2", "060111222", "peraperic@gmail.com",
+				"RA2/2019", "2019.", "druga", "Budzet", "9.2", null, null));
+		studenti.add(new Student("Pera", "Peric", LocalDate.of(1973, 10, 14), "Bulevar oslobodjenja 2", "060111222", "peraperic@gmail.com",
 				"RA1/2019", "2019.", "druga", "Budzet", "9.2", null, null));
-		studenti.add(new Student("Pera", "Peric", LocalDate.of(1973, 10, 13), "Bulevar oslobodjenja 2", "060111222", "peraperic@gmail.com",
-				"RA1/2019", "2019.", "druga", "Budzet", "9.2", null, null));
-		studenti.add(new Student("Pera", "Peric", LocalDate.of(1973, 10, 13), "Bulevar oslobodjenja 2", "060111222", "peraperic@gmail.com",
-				"RA1/2019", "2019.", "druga", "Budzet", "9.2", null, null));
+		studenti.add(new Student("Pera", "Peric", LocalDate.of(1973, 10, 15), "Bulevar oslobodjenja 2", "060111222", "peraperic@gmail.com",
+				"RA3/2019", "2019.", "druga", "Budzet", "9.2", null, null));
 		
+	}
+	
+	public List<Student> getStudenti() {
+		return studenti;
+	}
+	
+	public void setStudente(List<Student> studenti) {
+		this.studenti = studenti;
+	}
+	
+	public List<String> getKolone() {
+		return kolone;
+	}
+	
+	public void setKolone(List<String> kolone) {
+		this.kolone = kolone;
 	}
 	
 	@Override
@@ -75,7 +91,7 @@ public class AbstractStudentTable extends AbstractTableModel{
 		case 2:
 			return student.getPrezime();
 		case 3:
-			return student.getTrenutnaGodStrudija();
+			return student.getTrenutnaGodStudija();
 		case 4:
 			return student.getStatus();
 		case 5:

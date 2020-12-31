@@ -17,8 +17,11 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
 import view.dialogs.ProfessorDialog;
+import view.dialogs.ProfessorEditDialog;
 import view.dialogs.StudentDialog;
+import view.dialogs.StudentEditDialog;
 import view.tab.TabBarButton;
+import view.table.TablePanel;
  
  
 public class MenuBar extends JMenuBar{
@@ -87,6 +90,39 @@ public class MenuBar extends JMenuBar{
                 ImageIcon editIcon = getResizedIcon(new ImageIcon("assets" + File.separator + "icons" + File.separator + "edit.png", "Edit"));
                 miedit.setIcon(editIcon);
                 miedit.setMnemonic(KeyEvent.VK_E);
+                miedit.addActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						if(TabBarButton.getActiveButton() == "Studenti") {
+							String selectedIndex = TablePanel.getInstance().getSelectedEntityID();
+							if(selectedIndex != "NO_SELECTION") {
+								StudentEditDialog.stariIndeks = selectedIndex;
+								StudentEditDialog studentEditDialog = StudentEditDialog.getInstance();
+								studentEditDialog.setProperValues();
+								studentEditDialog.setVisible(true);
+							} else {
+								JOptionPane.showMessageDialog(null, "Označite studenta kojeg želite da izmenite", "Napomena", JOptionPane.INFORMATION_MESSAGE);
+							}
+							
+						} else if(TabBarButton.getActiveButton() == "Profesori") {
+							String selectedEntityID = TablePanel.getInstance().getSelectedEntityID();
+							if(selectedEntityID != "NO_SELECTION") {
+								ProfessorEditDialog.entityID = selectedEntityID;
+								ProfessorEditDialog professorEditDialog = ProfessorEditDialog.getInstance();
+								professorEditDialog.setProperValues();
+								professorEditDialog.setVisible(true);
+							} else {
+								JOptionPane.showMessageDialog(null, "Prvo izaberite profesora kojeg želite da izmenite", "Napomena", JOptionPane.INFORMATION_MESSAGE);
+							}
+							
+						} else {
+							
+							
+						}
+						
+					}
+                });
                
                 JMenuItem delete = new JMenuItem("Delete");
                 delete.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, ActionEvent.CTRL_MASK));

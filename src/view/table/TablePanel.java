@@ -11,6 +11,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import controller.ProfessorController;
+import controller.StudentController;
 import controller.SubjectController;
 import model.AbstractProfessorTable;
 import model.AbstractStudentTable;
@@ -38,7 +39,7 @@ public class TablePanel extends JPanel{
 	public static final String[] KEY_TEXTS = {STUDENT_PANEL, PROFESSOR_PANEL, GRADE_PANEL};
 	private CardLayout cardlayout = new CardLayout();
 	private JPanel cards = new JPanel(cardlayout);
-	public static String currentlyOpenedTable;
+	public static String currentlyOpenedTable = STUDENT_PANEL;
 	public static int selectedStudentRow = -1;
 	public static int selectedProfessorRow = -1;
 	public static int selectedSubjectRow = -1;
@@ -50,6 +51,7 @@ public class TablePanel extends JPanel{
 	public TablePanel() {
 		
 		studentTable = new StudentTable();
+		studentTable.addMouseListener(new MyMouseListener());
 		JScrollPane studentScrollPane = new JScrollPane(studentTable);
 		studentScrollPane.setBorder(BorderFactory.createEmptyBorder());
 		
@@ -100,7 +102,10 @@ public class TablePanel extends JPanel{
 				return "NO_SELECTION";
 			}
 		} else if(currentlyOpenedTable == STUDENT_PANEL) {
-			return null;
+			if(selectedStudentRow != -1) 
+				return StudentController.getInstance().getSelectedStudentIndeks(selectedStudentRow);
+			else
+				return "NO_SELECTION";
 		} else {
 			if(selectedSubjectRow != -1) {
 				return SubjectController.getInstance().getSelectedSubjectID(selectedSubjectRow);
@@ -117,7 +122,8 @@ public class TablePanel extends JPanel{
 			if(currentlyOpenedTable == PROFESSOR_PANEL) {
 				selectedProfessorRow = professorTable.rowAtPoint(mouseEvent.getPoint());
 			} else if (currentlyOpenedTable == STUDENT_PANEL) {
-				
+				selectedStudentRow = studentTable.rowAtPoint(mouseEvent.getPoint());
+				//System.out.println("SELECTED: " + selectedStudentRow);
 			} else {
 				selectedSubjectRow = subjectTable.rowAtPoint(mouseEvent.getPoint());
 			}

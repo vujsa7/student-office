@@ -30,22 +30,21 @@ import view.dialogs.components.DateComboBox;
 import view.dialogs.components.DialogConfirmButton;
 import view.dialogs.components.ErrorPanel;
 import view.dialogs.components.FieldName;
-import view.listeners.StudentListener;
+import view.listeners.StudentEditListener;
 
-public class StudentDialog extends JDialog{
-	
+public class StudentEditDialog extends JDialog{
 	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 7352043213856771747L;
+	private static final long serialVersionUID = -5617222736652920717L;
 	
-	private static StudentDialog instance = null;
+	private static StudentEditDialog instance = null;
 	
-	public static StudentDialog getInstance() {	
+	public static StudentEditDialog getInstance() {	
 		if(instance == null) {
 			try {
-				instance = new StudentDialog(MainFrame.getInstance());
+				instance = new StudentEditDialog(MainFrame.getInstance());
 			} catch (FontFormatException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -55,12 +54,12 @@ public class StudentDialog extends JDialog{
 		return instance;
 	}
 	
+	public static String stariIndeks;
 	public static ArrayList<ErrorPanel> errorPanelList = new ArrayList<ErrorPanel>();
 	public static ArrayList<CustomComboBox> customComboBoxes = new ArrayList<CustomComboBox>();
 	public static ArrayList<DateComboBox> dateComboBoxes = new ArrayList<DateComboBox>();
 	public static ArrayList<JTextField> textFieldList = new ArrayList<JTextField>();
 	private static DialogConfirmButton dialogConfirmButton;
-	
 	
 	public static final String[] fieldText = {"Ime", "Prezime", "Datum rođenja", "Adresa stanovanja", "Broj telefona", "E-mail adresa",
 			"Broj indeksa", "Godina upisa", "Trenutna godija studija", "Način finansiranja"};
@@ -123,8 +122,8 @@ public class StudentDialog extends JDialog{
 			add(i);
 	}};
 	
-	private StudentDialog(JFrame parent) {
-		super(parent, "Dodavanje studenta", true);		
+	private StudentEditDialog(JFrame parent) {
+		super(parent, "Izmena studenta", true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setPreferredSize(new Dimension(507, 750));
 		setResizable(false);
@@ -197,7 +196,7 @@ public class StudentDialog extends JDialog{
 				textField.getDocument().addDocumentListener(listener);
 				textFieldList.add(textField);
 				
-				textField.addFocusListener(new StudentListener(regex[regexCounter++]));
+				textField.addFocusListener(new StudentEditListener(regex[regexCounter++]));
 				CustomTextField customTextField = new CustomTextField(textField, textFieldName[textFieldCounter++]);
 				textPanel.add(customTextField);
 					
@@ -232,6 +231,7 @@ public class StudentDialog extends JDialog{
 		
 		
 		add(basePanel);
+		
 	}
 	
 	DocumentListener listener = new DocumentListener() {
@@ -255,6 +255,7 @@ public class StudentDialog extends JDialog{
 	    }
 	};
 	
+	
 	public static void showErrorPanel(int index) {
 		int i = 0;
 		for(JPanel errorPanel : errorPanelList) {
@@ -275,6 +276,8 @@ public class StudentDialog extends JDialog{
 		}
 	}
 	
+	
+	
 	public static void checkIfCanBeValidated() {
 		dialogConfirmButton.validated = true;
 		for(JPanel errorPanel : StudentDialog.errorPanelList) {
@@ -285,18 +288,30 @@ public class StudentDialog extends JDialog{
 		}
 	}
 	
-	public void setDefaultValues() {
+	public void setProperValues() {
 		for(JPanel errorPanel : errorPanelList) {
 			errorPanel.setVisible(false);
 		}
+		int textFieldCounter = 0;
 		for(JTextField textField : textFieldList) {
-			textField.setText("");
+			textField.setText(StudentController.getInstance().getSelectedStudentValue(textFieldCounter++));
 		}
+		LocalDate dateOfBirth = StudentController.getInstance().getSelectedStudentDateOfBirth();
 		for(DateComboBox dateComboBox : dateComboBoxes) {
-			dateComboBox.setDefaultDate();
+			if(dateComboBox.comboType == "days") {
+				dateComboBox.setValue(dateOfBirth.getDayOfMonth());
+			} else if(dateComboBox.comboType == "months") {
+				dateComboBox.setValue(dateOfBirth.getMonthValue());
+			} else {
+				
+				dateComboBox.setValue(dateOfBirth.getYear());
+			}			
 		}
+		
+		int i = 9;	
 		for(CustomComboBox customComboBox : customComboBoxes) {
-			customComboBox.setDefaultValue();
+			String value = StudentController.getInstance().getSelectedStudentValue(i++);
+			customComboBox.setValue(value);
 		}
 	}
 	
@@ -321,7 +336,6 @@ public class StudentDialog extends JDialog{
 			}
 
 		}
-		
 		public void mouseExited(MouseEvent mouseEvent) {
 			JButton thisButton = (JButton) mouseEvent.getComponent();
 			if(thisButton.isEnabled()) {
@@ -342,7 +356,6 @@ public class StudentDialog extends JDialog{
 						}).start();
 			}
 		}
-		
 		public void mousePressed(MouseEvent mouseEvent) {
 			JButton thisButton = (JButton) mouseEvent.getComponent();
 			if(thisButton.isEnabled()) {
@@ -359,9 +372,9 @@ public class StudentDialog extends JDialog{
 								}
 							}
 						}).start();
-				ArrayList<String> comboAnswers = new ArrayList<String>();
-				for(CustomComboBox customComboBox : StudentDialog.customComboBoxes) {
-					comboAnswers.add(customComboBox.getField());
+				ArrayList<String> customComboAnswers = new ArrayList<String>();
+				for(CustomComboBox customComboBox : StudentEditDialog.customComboBoxes) {
+					customComboAnswers.add(customComboBox.getField());
 				}
 				String date = DateComboBox.dateString;
 				LocalDate localDate;
@@ -375,12 +388,10 @@ public class StudentDialog extends JDialog{
 					localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-M-d"));
 				}
 				
-				
-				
 				if(dialogConfirmButton.validated) {
-					StudentController.getInstance().dodajStudenta(textFieldList.get(0).getText(), textFieldList.get(1).getText(),
-							localDate,textFieldList.get(2).getText(), textFieldList.get(3).getText(), textFieldList.get(4).getText(),
-							textFieldList.get(5).getText(), textFieldList.get(6).getText(),comboAnswers.get(0), comboAnswers.get(1));
+						StudentController.getInstance().izmeniStudenta(stariIndeks, textFieldList.get(0).getText(), textFieldList.get(1).getText(),
+								localDate, textFieldList.get(2).getText(), textFieldList.get(3).getText(), textFieldList.get(4).getText(),
+								textFieldList.get(5).getText(), textFieldList.get(6).getText(), customComboAnswers.get(0), customComboAnswers.get(1));
 						dispose();
 				}
 			}		
