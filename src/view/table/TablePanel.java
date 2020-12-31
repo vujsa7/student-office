@@ -11,6 +11,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import controller.ProfessorController;
+import controller.SubjectController;
 import model.AbstractProfessorTable;
 import model.AbstractStudentTable;
 import model.AbstractSubjectTable;
@@ -40,7 +41,7 @@ public class TablePanel extends JPanel{
 	public static String currentlyOpenedTable;
 	public static int selectedStudentRow = -1;
 	public static int selectedProfessorRow = -1;
-	public static int selectedGradeRow = -1;
+	public static int selectedSubjectRow = -1;
 	
 	private JTable studentTable;
 	private JTable professorTable;
@@ -58,6 +59,7 @@ public class TablePanel extends JPanel{
 		professorScrollPane.setBorder(BorderFactory.createEmptyBorder());
 		
 		subjectTable = new SubjectTable();
+		subjectTable.addMouseListener(new MyMouseListener());
 		JScrollPane subjectScrollPanel = new JScrollPane(subjectTable);
 		subjectScrollPanel.setBorder(BorderFactory.createEmptyBorder());
 		
@@ -100,7 +102,11 @@ public class TablePanel extends JPanel{
 		} else if(currentlyOpenedTable == STUDENT_PANEL) {
 			return null;
 		} else {
-			return null;
+			if(selectedSubjectRow != -1) {
+				return SubjectController.getInstance().getSelectedSubjectID(selectedSubjectRow);
+			} else {
+				return "NO_SELECTION";
+			}
 		}
 		
 	}
@@ -110,6 +116,10 @@ public class TablePanel extends JPanel{
 		public void mouseClicked(MouseEvent mouseEvent) {
 			if(currentlyOpenedTable == PROFESSOR_PANEL) {
 				selectedProfessorRow = professorTable.rowAtPoint(mouseEvent.getPoint());
+			} else if (currentlyOpenedTable == STUDENT_PANEL) {
+				
+			} else {
+				selectedSubjectRow = subjectTable.rowAtPoint(mouseEvent.getPoint());
 			}
 		}
 	}

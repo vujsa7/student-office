@@ -42,15 +42,15 @@ public class AbstractSubjectTable extends AbstractTableModel{
 
 
 	private void initSubjects() {
-		this.subjects = new ArrayList<Predmet>();
-		subjects.add(new Predmet("06-E212", "Matematicka analiza", TipSemestra.ZIMSKI, 1, null, 9, null, null));
-		subjects.add(new Predmet("06-E213A", "Algebra", TipSemestra.ZIMSKI, 1, null, 9, null, null));
-		subjects.add(new Predmet("06-E215", "Fizika", TipSemestra.LETNJI, 1, null, 9, null, null));		
+		this.setSubjects(new ArrayList<Predmet>());
+		getSubjects().add(new Predmet("06-E212", "Matematicka analiza", TipSemestra.ZIMSKI, 1, null, 9, null, null));
+		getSubjects().add(new Predmet("06-E213A", "Algebra", TipSemestra.ZIMSKI, 1, null, 9, null, null));
+		getSubjects().add(new Predmet("06-E215", "Fizika", TipSemestra.LETNJI, 1, null, 9, null, null));		
 	}
 
 	@Override
 	public int getRowCount() {
-		return this.subjects.size();
+		return this.getSubjects().size();
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class AbstractSubjectTable extends AbstractTableModel{
 
 	@Override
 	public String getValueAt(int rowIndex, int columnIndex) {
-		Predmet subject = this.subjects.get(rowIndex);
+		Predmet subject = this.getSubjects().get(rowIndex);
 		switch (columnIndex) {
 		case 0:
 			return subject.getSifraPredmeta();
@@ -85,9 +85,25 @@ public class AbstractSubjectTable extends AbstractTableModel{
 		return this.columns.get(index);
 	}
 	
+	public Predmet getRow(int rowIndex) {
+		return this.getSubjects().get(rowIndex);
+	}
+	
 	@Override
 	public Class<?> getColumnClass(int column) {
 	    return getValueAt(0, column).getClass();
 	}
+
+	public List<Predmet> getSubjects() {
+		return subjects;
+	}
+
+	public void setSubjects(List<Predmet> subjects) {
+		this.subjects = subjects;
+	}
+	
+	public void removeRow(int row) {
+        this.subjects.remove(row);
+    }
 
 }

@@ -2,6 +2,7 @@ package view.toolbar;
 
 import javax.swing.*;
 
+import controller.SubjectController;
 import view.dialogs.ProfessorDialog;
 import view.dialogs.ProfessorEditDialog;
 import view.dialogs.StudentDialog;
@@ -135,7 +136,28 @@ public class HoverButton extends JButton{
 			}
 			
 		} else {
-				// ako se menja predmet
+			// Ako se brise
+			if(TabBarButton.getActiveButton() == "Studenti") {
+				// ako se brise student
+			} else if(TabBarButton.getActiveButton() == "Profesori") {
+				
+			} else {
+				// ako se brise predmet
+				String selectedEntityID = TablePanel.getInstance().getSelectedEntityID();
+				if(selectedEntityID != "NO_SELECTION") {
+					String[] options = new String[2];
+					options[0] = new String("Poništi");
+					options[1] = new String("Obriši");
+					int reply = JOptionPane.showOptionDialog(null, "Da li ste sigurni da želite da obrišete predmet?", "Brisanje predmeta", 0,
+							JOptionPane.INFORMATION_MESSAGE, null, options, null);
+					if(reply == 1) {
+						SubjectController.getInstance().obrisiPredmet(selectedEntityID);
+					}
+					
+				} else {
+					JOptionPane.showMessageDialog(null, "Prvo izaberite predmet koji želite da izbrišete", "Napomena", JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
 		}
 	
 	}
