@@ -19,7 +19,9 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.text.AbstractDocument;
 
+import controller.ProfessorController;
 import view.dialogs.ProfessorDialog;
 import view.dialogs.ProfessorEditDialog;
 import view.dialogs.StudentDialog;
@@ -31,6 +33,7 @@ public class ToolBar extends JToolBar{
 	 * 
 	 */
 	private static final long serialVersionUID = -7607547575772558529L;
+	
 
 	public ToolBar() {
 		super(SwingConstants.HORIZONTAL);
@@ -161,7 +164,9 @@ public class ToolBar extends JToolBar{
 		searchTextField.setBorder(new EmptyBorder(0,0,0,10));
 		searchTextField.setMinimumSize(new Dimension(170,35));
 		searchTextField.setOpaque(false);
-		SearchButton searchButton = new SearchButton();
+		((AbstractDocument)searchTextField.getDocument()).setDocumentFilter(new LimitDocumentFilter());
+		
+		SearchButton searchButton = new SearchButton(searchTextField);
 		searchTextField.getDocument().addDocumentListener(new DocumentListener() {
 			  public void changedUpdate(DocumentEvent e) {
 			    changed();
@@ -174,17 +179,20 @@ public class ToolBar extends JToolBar{
 			  }
 
 			  public void changed() {
-			     if (searchTextField.getText().equals("")){
-			       searchButton.setEnabled(false);
-			       searchButton.setForeground(Color.black);
-			       searchButton.resetIcon();
+			     if (searchTextField.getText().equals("")){	
+					searchButton.setEnabled(false);
+					searchButton.setForeground(Color.black);
+					searchButton.resetIcon();
+					ProfessorController.getInstance().vratiDefaultProfesore();
 			     }
 			     else {
 			       searchButton.setEnabled(true);
+			       LimitDocumentFilter.spaces = searchTextField.getText().replaceAll("[^ ]", "").length();
 			    }
 
 			  }
 			});
+		
 		
 		searchBarTextField.add(searchTextField);
 		add(searchBarTextField);

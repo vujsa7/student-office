@@ -123,7 +123,6 @@ public class TablePanel extends JPanel{
 				selectedProfessorRow = professorTable.rowAtPoint(mouseEvent.getPoint());
 			} else if (currentlyOpenedTable == STUDENT_PANEL) {
 				selectedStudentRow = studentTable.rowAtPoint(mouseEvent.getPoint());
-				//System.out.println("SELECTED: " + selectedStudentRow);
 			} else {
 				selectedSubjectRow = subjectTable.rowAtPoint(mouseEvent.getPoint());
 			}

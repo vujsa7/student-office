@@ -16,6 +16,7 @@ public class AbstractProfessorTable extends AbstractTableModel{
 	private static AbstractProfessorTable instance = null;
 	
 	private List<Profesor> professors;
+	private List<Profesor> professorsBackup;
 	private List<String> columns;
 	
 	private AbstractProfessorTable() {
@@ -38,6 +39,7 @@ public class AbstractProfessorTable extends AbstractTableModel{
 		professors.add(new Profesor("Mile", "Mitić", LocalDate.of(1973, 10, 13), "Novi Sad, Stevana Musića 18", "+381 618289304", "mile.mitic@gmail.com", "FTN-park 18", "129392932", "Prof. dr.", "Redovni profesor", null));
 		professors.add(new Profesor("Rade", "Milenković", LocalDate.of(1963, 7, 11), "Novi Sad, Stevana Musića 10", "+381 6284853501", "rade.milenkovic@yahoo.com", "FTN-park 1", "129392921", "Dr.", "Naučni-saradnik", null));
 		professors.add(new Profesor("Mika", "Mikic", LocalDate.of(1969, 1, 29), "Novi Sad, Radnička 8", "+381 617444036", "mikamikic@gmail.rs", "FTN-park 33", "129392944", "Prof. dr", "Vanredni profesor", null));
+		professorsBackup = professors;
 	}
 	
 	public static AbstractProfessorTable getInstance() {
@@ -95,6 +97,15 @@ public class AbstractProfessorTable extends AbstractTableModel{
 	@Override
 	public Class<?> getColumnClass(int column) {
 	    return getValueAt(0, column).getClass();
+	}
+
+	public void setSearchedProfessors(ArrayList<Profesor> searchedProfessors) {
+		professorsBackup = professors;
+		professors = searchedProfessors;
+	}
+	
+	public void setDefaultProfessors() {
+		professors = professorsBackup;
 	}
 
 }

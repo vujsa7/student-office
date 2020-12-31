@@ -23,7 +23,8 @@ public class ProfessorController {
 	
 	public void dodajProfesora(String ime, String prezime, LocalDate datumRodjenja, String adresaStanovanja, String kontaktTelefon,
 			String emailAdresa, String adresaKancelarije, String brojLicneKarte, String titula, String zvanje){
-		
+		ime = ime.substring(0, 1).toUpperCase() + ime.substring(1);
+		prezime = prezime.substring(0, 1).toUpperCase() + prezime.substring(1);
 		AbstractProfessorTable.getInstance().dodajProfesora(ime, prezime, datumRodjenja, adresaStanovanja, kontaktTelefon, emailAdresa,
 				adresaKancelarije, brojLicneKarte, titula, zvanje);
 		TablePanel.getInstance().refreshView("profesor");
@@ -43,6 +44,8 @@ public class ProfessorController {
 	public void izmeniProfesora(String brojStareLicneKarte, String ime, String prezime, LocalDate datumRodjenja, String adresaStanovanja, String kontaktTelefon,
 			String emailAdresa, String adresaKancelarije, String brojLicneKarte, String titula, String zvanje) {
 		ArrayList<Profesor> professors = (ArrayList<Profesor>) AbstractProfessorTable.getInstance().getProfessors();
+		ime = ime.substring(0, 1).toUpperCase() + ime.substring(1);
+		prezime = prezime.substring(0, 1).toUpperCase() + prezime.substring(1);
 		for(Profesor professor : professors) {
 			if(professor.getBrojLicneKarte().equals(brojStareLicneKarte)) {
 				professor.setIme(ime);
@@ -106,5 +109,36 @@ public class ProfessorController {
 			}
 		}
 		return false;
+	}
+
+	public void pronadjiProfesore(String prezime, String ime, String brojLicneKarte) {
+		ArrayList<Profesor> searchedProfessors = new ArrayList<Profesor>();
+		ArrayList<Profesor> professors = (ArrayList<Profesor>) AbstractProfessorTable.getInstance().getProfessors();
+		if(ime == "-1") {
+			for(Profesor professor : professors) {
+				if(professor.getPrezime().toLowerCase().contains(prezime.toLowerCase())) {
+					searchedProfessors.add(professor);
+				}
+			}
+		} else if (brojLicneKarte == "-1") {
+			for(Profesor professor : professors) {
+				if(professor.getPrezime().toLowerCase().contains(prezime.toLowerCase()) && professor.getIme().toLowerCase().contains(ime.toLowerCase())) {
+					searchedProfessors.add(professor);
+				}
+			}
+		} else {
+			for(Profesor professor : professors) {
+				if(professor.getPrezime().toLowerCase().contains(prezime.toLowerCase()) && professor.getIme().toLowerCase().contains(ime.toLowerCase()) && professor.getBrojLicneKarte().toLowerCase().contains(brojLicneKarte.toLowerCase())) {
+					searchedProfessors.add(professor);
+				}
+			}
+		}
+		AbstractProfessorTable.getInstance().setSearchedProfessors(searchedProfessors);
+		TablePanel.getInstance().refreshView("profesor");
+	}
+	
+	public void vratiDefaultProfesore() {
+		AbstractProfessorTable.getInstance().setDefaultProfessors();
+		TablePanel.getInstance().refreshView("profesor");
 	}
 }

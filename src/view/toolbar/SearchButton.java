@@ -13,6 +13,10 @@ import java.io.File;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JTextField;
+
+import controller.ProfessorController;
+import view.table.TablePanel;
 
 
 public class SearchButton extends JButton {
@@ -24,8 +28,10 @@ public class SearchButton extends JButton {
 	private float alphaButton = 1f;
 	private ImageIcon hoveredSearchIcon;
 	private ImageIcon searchIcon;
+	private JTextField textField;
 	
-	public SearchButton() {
+	public SearchButton(JTextField searchTextField) {
+		textField = searchTextField;
 		setEnabled(false);
 		searchIcon = getResizedIcon(new ImageIcon("assets"+ File.separator +"icons"+ File.separator +"search_icon.png"));
 		hoveredSearchIcon = getResizedIcon(new ImageIcon("assets"+ File.separator +"icons"+ File.separator +"hovered_search_icon.png"));
@@ -114,6 +120,21 @@ public class SearchButton extends JButton {
 								}
 							}
 						}).start();
+			}
+			if(TablePanel.currentlyOpenedTable == TablePanel.STUDENT_PANEL) {
+				
+			} else if(TablePanel.currentlyOpenedTable == TablePanel.PROFESSOR_PANEL) {
+				ProfessorController.getInstance().vratiDefaultProfesore();
+				String[] parts = textField.getText().split(" ");
+				if(parts.length == 1) {
+					ProfessorController.getInstance().pronadjiProfesore(parts[0], "-1", "-1");
+				} else if(parts.length == 2) {
+					ProfessorController.getInstance().pronadjiProfesore(parts[0], parts[1], "-1");
+				} else if(parts.length == 3) {
+					ProfessorController.getInstance().pronadjiProfesore(parts[0], parts[1], parts[2]);
+				}
+			} else {
+				
 			}
 		}
 	}

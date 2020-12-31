@@ -187,6 +187,7 @@ public class ProfessorDialog extends JDialog{
 				JPanel textAndErrorPanel = new JPanel();
 				textAndErrorPanel.setPreferredSize(new Dimension(214, 49));
 				textAndErrorPanel.setMaximumSize(new Dimension(214, 49));
+				textAndErrorPanel.setMinimumSize(new Dimension(214, 49));
 				textAndErrorPanel.setOpaque(false);
 				BoxLayout boxTextAndError = new BoxLayout(textAndErrorPanel, BoxLayout.Y_AXIS);
 				textAndErrorPanel.setLayout(boxTextAndError);
@@ -194,6 +195,7 @@ public class ProfessorDialog extends JDialog{
 				JPanel textPanel = new JPanel();
 				textPanel.setPreferredSize(new Dimension(214, 36));
 				textPanel.setMaximumSize(new Dimension(214, 36));
+				textPanel.setMinimumSize(new Dimension(214, 36));
 				textPanel.setLayout(new GridLayout(0,1));
 				textPanel.setOpaque(false);
 				JTextField textField = new JTextField();

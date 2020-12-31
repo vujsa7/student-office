@@ -217,7 +217,7 @@ public class ProfessorEditDialog extends JDialog{
 				
 				JPanel textPanel = new JPanel();
 				textPanel.setPreferredSize(new Dimension(214, 36));
-				//textPanel.setMinimumSize(new Dimension(214, 36));
+				textPanel.setMinimumSize(new Dimension(214, 36));
 				textPanel.setMaximumSize(new Dimension(214, 36));
 				textPanel.setLayout(new GridLayout(0,1));
 				textPanel.setOpaque(false);
