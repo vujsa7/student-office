@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 
 import javax.swing.JTextField;
 
+import controller.StudentController;
 import view.dialogs.StudentDialog;
 
 public class StudentListener implements FocusListener{
@@ -30,8 +31,18 @@ public class StudentListener implements FocusListener{
 			StudentDialog.checkIfCanBeValidated();
 		} else {
 			String textFieldName = textField.getName();
-			StudentDialog.hideErrorPanel(Integer.parseInt(textFieldName));
-			StudentDialog.checkIfCanBeValidated();
+			if(textField.getName().equals("5")) {
+				if(StudentController.getInstance().proveriPostojanjeIndeksa(textField.getText())) {
+					StudentDialog.showIndexErrorPanel();
+					StudentDialog.checkIfCanBeValidated();
+				} else {
+					StudentDialog.hideIndexErrorPanel();
+					StudentDialog.checkIfCanBeValidated();
+				}
+			} else {
+				StudentDialog.hideErrorPanel(Integer.parseInt(textFieldName));
+				StudentDialog.checkIfCanBeValidated();
+			}
 		}
 		
 	}

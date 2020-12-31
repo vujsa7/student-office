@@ -41,11 +41,11 @@ public class AbstractStudentTable extends AbstractTableModel{
 	private void initStudente() {
 		this.studenti = new ArrayList<Student>();
 		studenti.add(new Student("Pera", "Peric", LocalDate.of(1973, 10, 13), "Bulevar oslobodjenja 2", "060111222", "peraperic@gmail.com",
-				"RA2/2019", "2019.", "druga", "Budzet", "9.2", null, null));
+				"RA2/2019", "2019", "druga", "Budzet", "9.2", null, null));
 		studenti.add(new Student("Pera", "Peric", LocalDate.of(1973, 10, 14), "Bulevar oslobodjenja 2", "060111222", "peraperic@gmail.com",
-				"RA1/2019", "2019.", "druga", "Budzet", "9.2", null, null));
+				"RA1/2019", "2019", "druga", "Budzet", "9.2", null, null));
 		studenti.add(new Student("Pera", "Peric", LocalDate.of(1973, 10, 15), "Bulevar oslobodjenja 2", "060111222", "peraperic@gmail.com",
-				"RA3/2019", "2019.", "druga", "Budzet", "9.2", null, null));
+				"RA3/2019", "2019", "druga", "Budzet", "9.2", null, null));
 		
 	}
 	

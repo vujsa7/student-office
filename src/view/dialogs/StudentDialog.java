@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -70,9 +71,9 @@ public class StudentDialog extends JDialog{
 			"[A-Z][a-z]{1,20}",
 			"[A-Z][a-z]{1,20}",
 			".+",
-			"^(\\+381)?(\\s|-)?(0)?6(([0-6]|[8-9])\\d{7,8}){1}$",
+			"^(\\+381)?(\\s|-)?(0)?6(([0-6]|[8-9])\\d{6,7}){1}$",
 			"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$",
-			"[A-Z]{2}[0-9]{2}\\/[0-9]{4}",
+			"[A-Z]{2}[0-9]{1,3}\\/[0-9]{4}",
 			"\\d{4}"
 	};
 	public String[] errorText = {
@@ -300,6 +301,18 @@ public class StudentDialog extends JDialog{
 		}
 	}
 	
+	public static void showIndexErrorPanel() {
+		ErrorPanel errorPanel = errorPanelList.get(5);  //jer mi je na petom mestu broj indeksa, tj na sestom ali indeksiranje ide od nule
+		errorPanel.setLabelText("Student sa tim brojem indeksa je vec unet u tabelu!");
+		errorPanel.setVisible(true);
+	}
+	
+	public static void hideIndexErrorPanel() {
+		ErrorPanel errorPanel = errorPanelList.get(5);
+		errorPanel.setLabelText("Pogrešan format broja indeksa (SMERBROJ/GODINA UPISA)");
+		errorPanel.setVisible(false);
+	}
+	
 	private class MyMouseListener extends MouseAdapter{
 		public void mouseEntered(MouseEvent mouseEvent) {
 			JButton thisButton = (JButton) mouseEvent.getComponent();
@@ -375,7 +388,29 @@ public class StudentDialog extends JDialog{
 					localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-M-d"));
 				}
 				
-				
+				int j = 0;
+				for(JTextField textField : textFieldList) {
+					if(!Pattern.matches(regex[j++], textField.getText())){
+						String textFieldName = textField.getName();
+						StudentDialog.showErrorPanel(Integer.parseInt(textFieldName));
+						StudentDialog.checkIfCanBeValidated();
+					} else {
+						String textFieldName = textField.getName();
+						if(textFieldName.equals("5")) {
+							if(StudentController.getInstance().proveriPostojanjeIndeksa(textField.getText())) {
+								StudentDialog.showIndexErrorPanel();
+								StudentDialog.checkIfCanBeValidated();
+							} else {
+								StudentDialog.hideIndexErrorPanel();
+								StudentDialog.checkIfCanBeValidated();
+							}
+						} else {
+							StudentDialog.hideErrorPanel(Integer.parseInt(textFieldName));
+							StudentDialog.checkIfCanBeValidated();
+						}
+					}
+					
+				}
 				
 				if(dialogConfirmButton.validated) {
 					StudentController.getInstance().dodajStudenta(textFieldList.get(0).getText(), textFieldList.get(1).getText(),

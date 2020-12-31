@@ -56,6 +56,17 @@ private static StudentController instance = null;
 		return student.getBrojIndeksa();
 	}
 	
+	//provera prilikom dodavanja novog studenta
+	public boolean proveriPostojanjeIndeksa(String indeks) {
+		List<Student> studenti = AbstractStudentTable.getInstance().getStudenti();
+		for(Student student : studenti) {
+			if(student.getBrojIndeksa().equals(indeks)) 
+				return true;	
+		}
+		
+		return false;
+	}
+	
 	public String getSelectedStudentValue(int index) {
 		List<Student> studenti = AbstractStudentTable.getInstance().getStudenti();
 		for(Student student : studenti) {
@@ -104,5 +115,19 @@ private static StudentController instance = null;
 			}
 		}
 		return null;
+	}
+	
+	//provera prilikom izmene studenta
+	public boolean postojiLiIndeks(String indeks) {
+		List<Student> studenti = AbstractStudentTable.getInstance().getStudenti();
+		for(Student student : studenti) {
+			//System.out.println("NADJEN BR IDENKSA" + student.getBrojIndeksa());
+			//System.out.println("PROSLEDJEN INDEKS" + indeks);
+			if(student.getBrojIndeksa().equals(indeks) && !StudentEditDialog.stariIndeks.equals(indeks)) {
+				return true;
+			}  	
+		}		
+		
+		return false;
 	}
 }
