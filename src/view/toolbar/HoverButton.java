@@ -6,6 +6,7 @@ import controller.SubjectController;
 import view.dialogs.ProfessorDialog;
 import view.dialogs.ProfessorEditDialog;
 import view.dialogs.StudentDialog;
+import view.dialogs.StudentEditDialog;
 import view.tab.TabBarButton;
 import view.table.TablePanel;
 
@@ -120,7 +121,15 @@ public class HoverButton extends JButton{
 		} else if(buttonType.equals("Edit")) {
 			
 			if(TabBarButton.getActiveButton() == "Studenti") {
-				// ako se menja student
+				String selectedEntityID = TablePanel.getInstance().getSelectedEntityID();
+					if(selectedEntityID != "NO_SELECTION") {
+						StudentEditDialog.stariIndeks = selectedEntityID;
+						StudentEditDialog studentEditDialog = StudentEditDialog.getInstance();
+						studentEditDialog.setProperValues();
+						studentEditDialog.setVisible(true);
+					} else {
+						JOptionPane.showMessageDialog(null, "Prvo izaberite studenta kojeg želite da izmenite", "Napomena", JOptionPane.INFORMATION_MESSAGE);
+					}
 			} else if(TabBarButton.getActiveButton() == "Profesori") {
 				String selectedEntityID = TablePanel.getInstance().getSelectedEntityID();
 				if(selectedEntityID != "NO_SELECTION") {

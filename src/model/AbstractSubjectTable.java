@@ -22,6 +22,7 @@ public class AbstractSubjectTable extends AbstractTableModel{
 	}
 	
 	private List<Predmet> subjects;
+	private List<Predmet> subjectsBackup;
 	private List<String> columns;
 	
 	private AbstractSubjectTable() {
@@ -45,7 +46,8 @@ public class AbstractSubjectTable extends AbstractTableModel{
 		this.setSubjects(new ArrayList<Predmet>());
 		getSubjects().add(new Predmet("06-E212", "Matematicka analiza", TipSemestra.ZIMSKI, 1, null, 9, null, null));
 		getSubjects().add(new Predmet("06-E213A", "Algebra", TipSemestra.ZIMSKI, 1, null, 9, null, null));
-		getSubjects().add(new Predmet("06-E215", "Fizika", TipSemestra.LETNJI, 1, null, 9, null, null));		
+		getSubjects().add(new Predmet("06-E215", "Fizika", TipSemestra.LETNJI, 1, null, 9, null, null));	
+		subjectsBackup = subjects;
 	}
 
 	@Override
@@ -105,5 +107,14 @@ public class AbstractSubjectTable extends AbstractTableModel{
 	public void removeRow(int row) {
         this.subjects.remove(row);
     }
+
+	public void setDefaultSubjects() {
+		subjects = subjectsBackup;
+	}
+
+	public void setSearchedSubjects(ArrayList<Predmet> searchedSubjects) {
+		subjectsBackup = subjects;
+		subjects = searchedSubjects;
+	}
 
 }

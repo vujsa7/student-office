@@ -22,6 +22,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.text.AbstractDocument;
 
 import controller.ProfessorController;
+import controller.SubjectController;
 import view.dialogs.ProfessorDialog;
 import view.dialogs.ProfessorEditDialog;
 import view.dialogs.StudentDialog;
@@ -183,7 +184,12 @@ public class ToolBar extends JToolBar{
 					searchButton.setEnabled(false);
 					searchButton.setForeground(Color.black);
 					searchButton.resetIcon();
-					ProfessorController.getInstance().vratiDefaultProfesore();
+					if(TablePanel.currentlyOpenedTable.equals(TablePanel.PROFESSOR_PANEL)) {
+						ProfessorController.getInstance().vratiDefaultProfesore();
+					} else if(TablePanel.currentlyOpenedTable.equals(TablePanel.SUBJECT_PANEL)) {
+						SubjectController.getInstance().vratiDefaultPredmete();
+					}
+					
 			     }
 			     else {
 			       searchButton.setEnabled(true);

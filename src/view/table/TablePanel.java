@@ -35,8 +35,8 @@ public class TablePanel extends JPanel{
 	private static final long serialVersionUID = 7261518674510605927L;
 	public static final String STUDENT_PANEL = "Studenti";
 	public static final String PROFESSOR_PANEL = "Profesori";
-	public static final String GRADE_PANEL = "Predmeti";
-	public static final String[] KEY_TEXTS = {STUDENT_PANEL, PROFESSOR_PANEL, GRADE_PANEL};
+	public static final String SUBJECT_PANEL = "Predmeti";
+	public static final String[] KEY_TEXTS = {STUDENT_PANEL, PROFESSOR_PANEL, SUBJECT_PANEL};
 	private CardLayout cardlayout = new CardLayout();
 	private JPanel cards = new JPanel(cardlayout);
 	public static String currentlyOpenedTable = STUDENT_PANEL;
@@ -67,7 +67,7 @@ public class TablePanel extends JPanel{
 		
 		cards.add(studentScrollPane, STUDENT_PANEL);
 		cards.add(professorScrollPane, PROFESSOR_PANEL);
-		cards.add(subjectScrollPanel, GRADE_PANEL);
+		cards.add(subjectScrollPanel, SUBJECT_PANEL);
 		setLayout(new BorderLayout());
 		add(cards, BorderLayout.CENTER);
 	}

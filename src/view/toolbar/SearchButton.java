@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 
 import controller.ProfessorController;
+import controller.SubjectController;
 import view.table.TablePanel;
 
 
@@ -124,6 +125,7 @@ public class SearchButton extends JButton {
 			if(TablePanel.currentlyOpenedTable == TablePanel.STUDENT_PANEL) {
 				
 			} else if(TablePanel.currentlyOpenedTable == TablePanel.PROFESSOR_PANEL) {
+				
 				ProfessorController.getInstance().vratiDefaultProfesore();
 				String[] parts = textField.getText().split(" ");
 				if(parts.length == 1) {
@@ -133,8 +135,18 @@ public class SearchButton extends JButton {
 				} else if(parts.length == 3) {
 					ProfessorController.getInstance().pronadjiProfesore(parts[0], parts[1], parts[2]);
 				}
+				
 			} else {
 				
+				SubjectController.getInstance().vratiDefaultPredmete();
+				String[] parts = textField.getText().split(" ");
+				if(parts.length == 1) {
+					SubjectController.getInstance().pronadjiPredmete(parts[0], "-1", "-1");
+				} else if(parts.length == 2) {
+					SubjectController.getInstance().pronadjiPredmete(parts[0], parts[1], "-1");
+				} else if(parts.length == 3) {
+					SubjectController.getInstance().pronadjiPredmete(parts[0], parts[1], parts[2]);
+				}
 			}
 		}
 	}
