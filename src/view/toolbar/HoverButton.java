@@ -161,6 +161,7 @@ public class HoverButton extends JButton{
 							JOptionPane.INFORMATION_MESSAGE, null, options, null);
 					if(reply == 1) {
 						SubjectController.getInstance().obrisiPredmet(selectedEntityID);
+						TablePanel.getInstance().setSelectedEntityID(-1);
 					}
 					
 				} else {

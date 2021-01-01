@@ -116,6 +116,16 @@ public class TablePanel extends JPanel{
 		
 	}
 	
+	public void setSelectedEntityID(int i) {
+		if(currentlyOpenedTable == PROFESSOR_PANEL) {
+			selectedProfessorRow = -1;
+		} else if(currentlyOpenedTable == STUDENT_PANEL) {
+			selectedStudentRow = -1;
+		} else {
+			selectedSubjectRow = -1;
+		}
+	}
+	
 	class MyMouseListener extends MouseAdapter{
 		
 		public void mouseClicked(MouseEvent mouseEvent) {
@@ -128,5 +138,7 @@ public class TablePanel extends JPanel{
 			}
 		}
 	}
+
+	
 
 }
