@@ -26,6 +26,7 @@ import controller.SubjectController;
 import view.dialogs.ProfessorDialog;
 import view.dialogs.ProfessorEditDialog;
 import view.dialogs.StudentDialog;
+import view.dialogs.StudentEditDialog;
 import view.tab.TabBarButton;
 import view.table.TablePanel;
 
@@ -103,21 +104,29 @@ public class ToolBar extends JToolBar{
 									
 								}
 							}).start();
-		         if(TabBarButton.getActiveButton() == "Studenti") {
-						// ako se menja student
-					} else if(TabBarButton.getActiveButton() == "Profesori") {
-						String selectedEntityID = TablePanel.getInstance().getSelectedEntityID();
-						if(selectedEntityID != "NO_SELECTION") {
-							ProfessorEditDialog.entityID = selectedEntityID;
-							ProfessorEditDialog professorEditDialog = ProfessorEditDialog.getInstance();
-							professorEditDialog.setProperValues();
-							professorEditDialog.setVisible(true);
-						} else {
-							JOptionPane.showMessageDialog(null, "Prvo izaberite profesora kojeg želite da izmenite", "Napomena", JOptionPane.INFORMATION_MESSAGE);
-						}
+	         	if(TabBarButton.getActiveButton() == "Studenti") {
+	         		String selectedEntityID = TablePanel.getInstance().getSelectedEntityID();
+					if(selectedEntityID != "NO_SELECTION") {
+						StudentEditDialog.stariIndeks = selectedEntityID;
+						StudentEditDialog studentEditDialog = StudentEditDialog.getInstance();
+						studentEditDialog.setProperValues();
+						studentEditDialog.setVisible(true);
 					} else {
-						// ako se menja predmet
+						JOptionPane.showMessageDialog(null, "Prvo izaberite studenta kojeg želite da izmenite", "Napomena", JOptionPane.INFORMATION_MESSAGE);
 					}
+				} else if(TabBarButton.getActiveButton() == "Profesori") {
+					String selectedEntityID = TablePanel.getInstance().getSelectedEntityID();
+					if(selectedEntityID != "NO_SELECTION") {
+						ProfessorEditDialog.entityID = selectedEntityID;
+						ProfessorEditDialog professorEditDialog = ProfessorEditDialog.getInstance();
+						professorEditDialog.setProperValues();
+						professorEditDialog.setVisible(true);
+					} else {
+						JOptionPane.showMessageDialog(null, "Prvo izaberite profesora kojeg želite da izmenite", "Napomena", JOptionPane.INFORMATION_MESSAGE);
+					}
+				} else {
+					// ako se menja predmet
+				}
 		    }
 		}; 
 		editBtn.getActionMap().put("performEdit", performEdit);
@@ -146,6 +155,28 @@ public class ToolBar extends JToolBar{
 									
 								}
 							}).start();
+		         if(TabBarButton.getActiveButton() == "Studenti") {
+		        	 
+		         } else if(TabBarButton.getActiveButton() == "Profesori") {
+		        	 
+		         } else {
+		        	// ako se brise predmet
+						String selectedEntityID = TablePanel.getInstance().getSelectedEntityID();
+						if(selectedEntityID != "NO_SELECTION") {
+							String[] options = new String[2];
+							options[0] = new String("Poništi");
+							options[1] = new String("Obriši");
+							int reply = JOptionPane.showOptionDialog(null, "Da li ste sigurni da želite da obrišete predmet?", "Brisanje predmeta", 0,
+									JOptionPane.INFORMATION_MESSAGE, null, options, null);
+							if(reply == 1) {
+								SubjectController.getInstance().obrisiPredmet(selectedEntityID);
+								TablePanel.getInstance().setSelectedEntityID(-1);
+							}
+							
+						} else {
+							JOptionPane.showMessageDialog(null, "Prvo izaberite predmet koji želite da izbrišete", "Napomena", JOptionPane.INFORMATION_MESSAGE);
+						}
+		         }
 		         
 		    }
 		}; 
