@@ -44,9 +44,9 @@ public class AbstractSubjectTable extends AbstractTableModel{
 
 	private void initSubjects() {
 		this.setSubjects(new ArrayList<Predmet>());
-		getSubjects().add(new Predmet("06-E212", "Matematicka analiza", TipSemestra.ZIMSKI, 1, null, 9, null, null));
-		getSubjects().add(new Predmet("06-E213A", "Algebra", TipSemestra.ZIMSKI, 1, null, 9, null, null));
-		getSubjects().add(new Predmet("06-E215", "Fizika", TipSemestra.LETNJI, 1, null, 9, null, null));	
+		getSubjects().add(new Predmet("06-E212", "Matematicka analiza", Predmet.TipSemestra.ZIMSKI, 1, null, 9, null, null));
+		getSubjects().add(new Predmet("06-E213A", "Algebra", Predmet.TipSemestra.ZIMSKI, 1, null, 9, null, null));
+		getSubjects().add(new Predmet("06-E215", "Fizika", Predmet.TipSemestra.LETNJI, 1, null, 9, null, null));	
 		subjectsBackup = subjects;
 	}
 
@@ -73,7 +73,7 @@ public class AbstractSubjectTable extends AbstractTableModel{
 		case 3:
 			return String.valueOf(subject.getGodinaStudija());
 		case 4:
-			if(subject.getSemestar() == TipSemestra.LETNJI) {
+			if(subject.getSemestar() == Predmet.TipSemestra.LETNJI) {
 				return "Letnji";
 			} else {
 				return "Zimski";

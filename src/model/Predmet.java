@@ -2,9 +2,11 @@ package model;
 
 import java.util.List;
 
-enum TipSemestra{LETNJI, ZIMSKI};
 
 public class Predmet {
+	
+
+	public enum TipSemestra{LETNJI, ZIMSKI};
 	
 	private String sifraPredmeta;
 	private String nazivPredmeta;
