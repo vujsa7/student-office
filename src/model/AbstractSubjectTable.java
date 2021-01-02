@@ -93,6 +93,9 @@ public class AbstractSubjectTable extends AbstractTableModel{
 	
 	@Override
 	public Class<?> getColumnClass(int column) {
+		if (subjects.isEmpty()) {
+	        return Object.class;
+	    }
 	    return getValueAt(0, column).getClass();
 	}
 

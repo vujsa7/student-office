@@ -35,6 +35,8 @@ public class SubjectTable extends JTable{
 		cellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 		setDefaultRenderer(String.class, cellRenderer);
 		
+		setAutoCreateRowSorter(true);
+		
 		JTableHeader tableHeader = this.getTableHeader();
 		UIManager.put("TableHeader.cellBorder", BorderFactory.createMatteBorder(1, 1, 1, 1, new Color(58, 39, 93)));
 		tableHeader.setPreferredSize(new Dimension(170, 25));
