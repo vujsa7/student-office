@@ -16,6 +16,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
+import view.dialogs.PredmetDialog;
 import view.dialogs.ProfessorDialog;
 import view.dialogs.ProfessorEditDialog;
 import view.dialogs.StudentDialog;
@@ -59,6 +60,9 @@ public class MenuBar extends JMenuBar{
 				        	
 						} else {
 							
+							PredmetDialog predmetDialog = PredmetDialog.getInstance();
+				        	predmetDialog.setDefaultValues();
+				        	predmetDialog.setVisible(true);
 						}
 					}     	
                 });

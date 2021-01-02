@@ -1,9 +1,11 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import model.AbstractSubjectTable;
 import model.Predmet;
+import model.Profesor;
 import view.table.TablePanel;
 
 
@@ -78,6 +80,20 @@ public class SubjectController {
 		TablePanel.getInstance().refreshView("predmet");
 	}
 
-	
+	public void dodajPredmet(String sifra, String naziv, int godina, Predmet.TipSemestra semestar, int espb, Profesor profesor){
+		
+		AbstractSubjectTable.getInstance().dodajPredmet(sifra, naziv, godina, semestar, espb, profesor);
+		TablePanel.getInstance().refreshView("predmet");
+	} 
+    
+    public boolean proveriPostojanjeSifre(String sifra) {
+		List<Predmet> predmeti = AbstractSubjectTable.getInstance().getSubjects();
+		for(Predmet predmet : predmeti) {
+			if(predmet.getSifraPredmeta().equals(sifra))
+				return true;
+		}
+		
+		return false;
+	}
 
 }

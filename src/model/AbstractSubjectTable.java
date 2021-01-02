@@ -119,5 +119,8 @@ public class AbstractSubjectTable extends AbstractTableModel{
 		subjectsBackup = subjects;
 		subjects = searchedSubjects;
 	}
-
+	
+	public void dodajPredmet(String sifra, String naziv, int godina, Predmet.TipSemestra semestar, int espb, Profesor profesor) {
+		this.subjects.add(new Predmet(sifra, naziv, semestar, godina, profesor, espb, null, null));
+	}
 }
