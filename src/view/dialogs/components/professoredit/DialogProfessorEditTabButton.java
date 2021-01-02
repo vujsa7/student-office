@@ -24,7 +24,7 @@ public class DialogProfessorEditTabButton extends JButton{
 	private static final long serialVersionUID = -3473907588890025772L;
 	public ImageIcon activeIcon;
 	public ImageIcon inactiveIcon;
-	private static String activeButton = "Info";
+	public static String activeButton = "Informacije";
 	private String buttonId;
 	
 	private static Collection<DialogProfessorEditTabButton> buttons = new ArrayList<DialogProfessorEditTabButton>();
@@ -80,9 +80,16 @@ public class DialogProfessorEditTabButton extends JButton{
 		}		
 	}
 	
-	public void updateAll() {
+	public static void updateAll() {
 		for(DialogProfessorEditTabButton button : buttons) {
 			button.updateView();
+		}
+		if(activeButton == ProfessorEditDialog.INFO_PANEL) {
+			ProfessorEditDialog.getInstance().setPreferredSize(new Dimension(507, 804));
+			ProfessorEditDialog.getInstance().pack();
+		} else {
+			ProfessorEditDialog.getInstance().setPreferredSize(new Dimension(1000, 804));
+			ProfessorEditDialog.getInstance().pack();
 		}
 	}
 	

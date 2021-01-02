@@ -22,6 +22,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.text.AbstractDocument;
 
 import controller.ProfessorController;
+import controller.ProfessorHasSubjectsController;
 import controller.SubjectController;
 import view.dialogs.ProfessorDialog;
 import view.dialogs.ProfessorEditDialog;
@@ -120,6 +121,8 @@ public class ToolBar extends JToolBar{
 						ProfessorEditDialog.entityID = selectedEntityID;
 						ProfessorEditDialog professorEditDialog = ProfessorEditDialog.getInstance();
 						professorEditDialog.setProperValues();
+						professorEditDialog.setDefaultView();
+						ProfessorHasSubjectsController.nabaviIPostaviPredmeteOdProfesora(ProfessorEditDialog.entityID);
 						professorEditDialog.setVisible(true);
 					} else {
 						JOptionPane.showMessageDialog(null, "Prvo izaberite profesora kojeg želite da izmenite", "Napomena", JOptionPane.INFORMATION_MESSAGE);

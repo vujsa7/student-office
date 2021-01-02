@@ -137,7 +137,7 @@ public class Profesor {
 
 
 	public List<Predmet> getListaPredmeta() {
-		return listaPredmeta;
+			return listaPredmeta;
 	}
 
 

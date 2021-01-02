@@ -141,4 +141,13 @@ public class ProfessorController {
 		AbstractProfessorTable.getInstance().setDefaultProfessors();
 		TablePanel.getInstance().refreshView("profesor");
 	}
+	
+	public Profesor nabaviProfesoraSaLicnomKartom(String brojLicne) {
+		for(Profesor profesor : AbstractProfessorTable.getInstance().getProfessors()) {
+			if(profesor.getBrojLicneKarte() == brojLicne) {
+				return profesor;
+			}
+		}
+		return null;
+	}
 }

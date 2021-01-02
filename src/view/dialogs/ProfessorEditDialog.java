@@ -33,7 +33,9 @@ import view.dialogs.components.DialogConfirmButton;
 import view.dialogs.components.ErrorPanel;
 import view.dialogs.components.CustomComboBox;
 import view.dialogs.components.FieldName;
+import view.dialogs.components.professoredit.DialogProfessorEditTabButton;
 import view.dialogs.components.professoredit.DialogProfessorEditTabButtonPanel;
+import view.dialogs.components.professoredit.ProfessorHasSubjectsTablePanel;
 import view.listeners.ProfessorEditListener;
 
 public class ProfessorEditDialog extends JDialog{
@@ -58,7 +60,7 @@ public class ProfessorEditDialog extends JDialog{
 		return instance;
 	}
 	
-	public static final String INFO_PANEL = "Info";
+	public static final String INFO_PANEL = "Informacije";
 	public static final String SUBJECT_PANEL = "Predmeti";
 	public static final String[] KEY_TEXTS = {INFO_PANEL, SUBJECT_PANEL};
 	private CardLayout cardlayout = new CardLayout();
@@ -261,10 +263,9 @@ public class ProfessorEditDialog extends JDialog{
 		
 		
 		cards.add(basePanel, INFO_PANEL);
-		JPanel panel = new JPanel();
-		panel.setPreferredSize(new Dimension(507, 744));
-		panel.setMaximumSize(new Dimension(507, 744));
-		cards.add(panel, SUBJECT_PANEL);
+		ProfessorHasSubjectsTablePanel subjectForProfessorPanel = new ProfessorHasSubjectsTablePanel();
+		
+		cards.add(subjectForProfessorPanel, SUBJECT_PANEL);
 		
 		baseHolderPanel.add(cards, BorderLayout.CENTER);
 		
@@ -471,5 +472,10 @@ public class ProfessorEditDialog extends JDialog{
 		}
 	}
 
+	public void setDefaultView() {
+		cardlayout.show(cards, INFO_PANEL);
+		DialogProfessorEditTabButton.activeButton = INFO_PANEL;
+		DialogProfessorEditTabButton.updateAll();
+	}
 	
 }
