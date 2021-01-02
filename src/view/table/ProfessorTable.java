@@ -35,6 +35,7 @@ public class ProfessorTable extends JTable{
 		DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
 		cellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 		setDefaultRenderer(String.class, cellRenderer);
+		
 		setAutoCreateRowSorter(true);
 		
 		JTableHeader tableHeader = this.getTableHeader();

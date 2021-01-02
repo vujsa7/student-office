@@ -96,6 +96,9 @@ public class AbstractProfessorTable extends AbstractTableModel{
 	
 	@Override
 	public Class<?> getColumnClass(int column) {
+		if (professors.isEmpty()) {
+	        return Object.class;
+	    }
 	    return getValueAt(0, column).getClass();
 	}
 

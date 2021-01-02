@@ -130,9 +130,17 @@ public class TablePanel extends JPanel{
 		
 		public void mouseClicked(MouseEvent mouseEvent) {
 			if(currentlyOpenedTable == PROFESSOR_PANEL) {
-				selectedProfessorRow = professorTable.rowAtPoint(mouseEvent.getPoint());
+				if(!professorTable.getSelectionModel().isSelectionEmpty()) {
+					selectedProfessorRow = professorTable.convertRowIndexToModel(professorTable.getSelectedRow());
+				} else {
+					selectedProfessorRow = -1;
+				}
 			} else if (currentlyOpenedTable == STUDENT_PANEL) {
-				selectedStudentRow = studentTable.rowAtPoint(mouseEvent.getPoint());
+				if(!studentTable.getSelectionModel().isSelectionEmpty()) {
+					selectedStudentRow = studentTable.rowAtPoint(mouseEvent.getPoint());
+				} else {
+					selectedStudentRow = -1;
+				}
 			} else {
 				if(!subjectTable.getSelectionModel().isSelectionEmpty()) {
 					selectedSubjectRow = subjectTable.rowAtPoint(mouseEvent.getPoint());
