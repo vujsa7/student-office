@@ -31,19 +31,20 @@ import view.dialogs.components.FieldName;
 import view.dialogs.components.addingsubject.ButtonsPlusMinus;
 import view.dialogs.components.addingsubject.SubjectCustomComboBox;
 import view.dialogs.components.addingsubject.SubjectCustomTextField;
-import view.listeners.PredmetListener;
+import view.listeners.PredmetEditListener;
 
-public class PredmetDialog extends JDialog{
+public class PredmetEditDialog extends JDialog{
+	
 /**
 	 * 
 	 */
-	private static final long serialVersionUID = 4860889121944555950L;
-	private static PredmetDialog instance = null;
+	private static final long serialVersionUID = 4696773160457484593L;
+	private static PredmetEditDialog instance = null;
 	
-	public static PredmetDialog getInstance() {	
+	public static PredmetEditDialog getInstance() {	
 		if(instance == null) {
 			try {
-				instance = new PredmetDialog(MainFrame.getInstance());
+				instance = new PredmetEditDialog(MainFrame.getInstance());
 			} catch (FontFormatException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -53,6 +54,7 @@ public class PredmetDialog extends JDialog{
 		return instance;
 	}
 	
+	public static String staraSifra;
 	public static ArrayList<ErrorPanel> errorPanelList = new ArrayList<ErrorPanel>();
 	public static ArrayList<SubjectCustomComboBox> customComboBoxes = new ArrayList<SubjectCustomComboBox>();
 	public static ArrayList<JTextField> textFieldList = new ArrayList<JTextField>();
@@ -60,7 +62,7 @@ public class PredmetDialog extends JDialog{
 	
 	
 	public static final String[] fieldText = {"Šifra", "Naziv", "Semestar", "Godina", "ESPB", "Profesor"};
-	public String[] textFieldName = {"0","1","2"};
+	public String[] textFieldName = {"0","1","4"};
 	
 	public String[] regex = {
 			"[A-Z][0-9]{1,20}",
@@ -91,8 +93,8 @@ public class PredmetDialog extends JDialog{
 		   add(godina);
 	}};
 	
-	private PredmetDialog(JFrame parent) {
-		super(parent, "Dodavanje predmeta", true);		
+	private PredmetEditDialog(JFrame parent) {
+		super(parent, "Izmena predmeta", true);		
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setPreferredSize(new Dimension(558, 520));
 		setResizable(false);
@@ -180,7 +182,7 @@ public class PredmetDialog extends JDialog{
 				textField.getDocument().addDocumentListener(listener);
 				textFieldList.add(textField);
 				
-				textField.addFocusListener(new PredmetListener(regex[regexCounter++]));
+				textField.addFocusListener(new PredmetEditListener(regex[regexCounter++]));
 				SubjectCustomTextField customTextField = new SubjectCustomTextField(textField, textFieldName[textFieldCounter++], false);
 				textPanel.add(customTextField);
 					
@@ -235,7 +237,6 @@ public class PredmetDialog extends JDialog{
 	    }
 	};
 	
-	
 	public static void showErrorPanel(int index) {
 		int i = 0;
 		for(JPanel errorPanel : errorPanelList) {
@@ -258,7 +259,7 @@ public class PredmetDialog extends JDialog{
 	
 	public static void checkIfCanBeValidated() {
 		dialogConfirmButton.validated = true;
-		for(JPanel errorPanel : PredmetDialog.errorPanelList) {
+		for(JPanel errorPanel : PredmetEditDialog.errorPanelList) {
 			if(errorPanel.isVisible()) {
 				dialogConfirmButton.validated = false;
 				break;
@@ -266,15 +267,23 @@ public class PredmetDialog extends JDialog{
 		}
 	}
 	
-	public void setDefaultValues() {
+	public void setProperValues() {
 		for(JPanel errorPanel : errorPanelList) {
 			errorPanel.setVisible(false);
 		}
+		int textFieldCounter = 0;
 		for(JTextField textField : textFieldList) {
-			textField.setText("");
+			if(textFieldCounter > 1) {
+				textField.setText(SubjectController.getInstance().getSelectedPredmetValue(4));
+			} else {
+				textField.setText(SubjectController.getInstance().getSelectedPredmetValue(textFieldCounter++));
+			}
 		}
+		
+		int i = 2;
 		for(SubjectCustomComboBox customComboBox : customComboBoxes) {
-			customComboBox.setDefaultValue();
+			String value = SubjectController.getInstance().getSelectedPredmetValue(i++);
+			customComboBox.setValue(value);
 		}
 	}
 	
@@ -350,7 +359,7 @@ public class PredmetDialog extends JDialog{
 							}
 						}).start();
 				ArrayList<String> comboAnswers = new ArrayList<String>();
-				for(SubjectCustomComboBox customComboBox : PredmetDialog.customComboBoxes) {
+				for(SubjectCustomComboBox customComboBox : PredmetEditDialog.customComboBoxes) {
 					comboAnswers.add(customComboBox.getField());
 				}
 				
@@ -358,21 +367,21 @@ public class PredmetDialog extends JDialog{
 				for(JTextField textField : textFieldList) {
 					if(!Pattern.matches(regex[j++], textField.getText())){
 						String textFieldName = textField.getName();
-						PredmetDialog.showErrorPanel(Integer.parseInt(textFieldName));
-						PredmetDialog.checkIfCanBeValidated();
+						PredmetEditDialog.showErrorPanel(Integer.parseInt(textFieldName));
+						PredmetEditDialog.checkIfCanBeValidated();
 					} else {
 						String textFieldName = textField.getName();
 						if(textFieldName.equals("0")) {
-							if(SubjectController.getInstance().proveriPostojanjeSifre(textField.getText())) {
-								PredmetDialog.showSifraErrorPanel();
-								PredmetDialog.checkIfCanBeValidated();
+							if(SubjectController.getInstance().postojiLiSifra(textField.getText())) {
+								PredmetEditDialog.showSifraErrorPanel();
+								PredmetEditDialog.checkIfCanBeValidated();
 							} else {
-								PredmetDialog.hideSifraErrorPanel();
-								PredmetDialog.checkIfCanBeValidated();
+								PredmetEditDialog.hideSifraErrorPanel();
+								PredmetEditDialog.checkIfCanBeValidated();
 							}
 						} else {
-							PredmetDialog.hideErrorPanel(Integer.parseInt(textFieldName));
-							PredmetDialog.checkIfCanBeValidated();
+							PredmetEditDialog.hideErrorPanel(Integer.parseInt(textFieldName));
+							PredmetEditDialog.checkIfCanBeValidated();
 						}
 					}
 					
@@ -380,11 +389,11 @@ public class PredmetDialog extends JDialog{
 				
 				if(dialogConfirmButton.validated) {
 					 if(comboAnswers.get(0) == "LETNJI") {
-						SubjectController.getInstance().dodajPredmet(textFieldList.get(0).getText(), textFieldList.get(1).getText(),
+						SubjectController.getInstance().izmeniPredmet(staraSifra, textFieldList.get(0).getText(), textFieldList.get(1).getText(),
 					 			Integer.parseInt(comboAnswers.get(1)), Predmet.TipSemestra.LETNJI, Integer.parseInt(textFieldList.get(2).getText()), null);
 						dispose();
 					 } else {
-						 SubjectController.getInstance().dodajPredmet(textFieldList.get(0).getText(), textFieldList.get(1).getText(),
+						 SubjectController.getInstance().izmeniPredmet(staraSifra, textFieldList.get(0).getText(), textFieldList.get(1).getText(),
 								 Integer.parseInt(comboAnswers.get(1)), Predmet.TipSemestra.ZIMSKI, Integer.parseInt(textFieldList.get(2).getText()), null);
 						dispose();
 					 }
@@ -393,4 +402,3 @@ public class PredmetDialog extends JDialog{
 		}
 	}
 }
-

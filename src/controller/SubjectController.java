@@ -6,6 +6,7 @@ import java.util.List;
 import model.AbstractSubjectTable;
 import model.Predmet;
 import model.Profesor;
+import view.dialogs.PredmetEditDialog;
 import view.table.TablePanel;
 
 
@@ -85,6 +86,23 @@ public class SubjectController {
 		AbstractSubjectTable.getInstance().dodajPredmet(sifra, naziv, godina, semestar, espb, profesor);
 		TablePanel.getInstance().refreshView("predmet");
 	} 
+	
+	public void izmeniPredmet(String staraSifra, String sifra, String naziv, int godina, Predmet.TipSemestra semestar, int espb, Profesor profesor){
+		
+		List<Predmet> listaPredmeta = AbstractSubjectTable.getInstance().getSubjects();
+		for(Predmet predmet : listaPredmeta) {
+			if(predmet.getSifraPredmeta().equals(staraSifra)) {
+				predmet.setSifraPredmeta(sifra);
+				predmet.setNazivPredmeta(naziv);
+				predmet.setGodinaStudija(godina);
+				predmet.setSemestar(semestar);
+				predmet.setBrojESPB(espb);
+				predmet.setPredmetniProfesor(profesor);
+			}
+		}
+		
+		TablePanel.getInstance().refreshView("predmet");
+	} 
     
     public boolean proveriPostojanjeSifre(String sifra) {
 		List<Predmet> predmeti = AbstractSubjectTable.getInstance().getSubjects();
@@ -95,5 +113,50 @@ public class SubjectController {
 		
 		return false;
 	}
-
+    
+    public String getSelectedPredmetValue(int index) {
+		List<Predmet> predmeti = AbstractSubjectTable.getInstance().getSubjects();
+		for(Predmet predmet : predmeti) {
+			if(predmet.getSifraPredmeta().equals(PredmetEditDialog.staraSifra)) {
+				switch(index) {
+				case 0:
+					return predmet.getSifraPredmeta();
+					
+				case 1:
+					return predmet.getNazivPredmeta();
+					
+				case 2:
+					if(predmet.getSemestar() == Predmet.TipSemestra.LETNJI)
+						return "LETNJI";
+					else
+						return "ZIMSKI";
+					
+				case 3:
+					return String.valueOf(predmet.getGodinaStudija());
+					
+				case 4:
+					return String.valueOf(predmet.getBrojESPB());
+					
+				case 5:
+					return null;
+					
+				default:
+					return null;
+				}
+			}
+		}
+		
+		return null;
+	}
+    
+    public boolean postojiLiSifra(String sifra) {
+		List<Predmet> predmeti = AbstractSubjectTable.getInstance().getSubjects();
+		for(Predmet predmet : predmeti) {
+			if(predmet.getSifraPredmeta().equals(sifra) && !PredmetEditDialog.staraSifra.equals(sifra)) {
+				return true;
+			}  	
+		}		
+		
+		return false;
+	}
 }

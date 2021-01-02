@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
 import view.dialogs.PredmetDialog;
+import view.dialogs.PredmetEditDialog;
 import view.dialogs.ProfessorDialog;
 import view.dialogs.ProfessorEditDialog;
 import view.dialogs.StudentDialog;
@@ -121,7 +122,15 @@ public class MenuBar extends JMenuBar{
 							}
 							
 						} else {
-							
+							String selectedEntityID = TablePanel.getInstance().getSelectedEntityID();
+							if(selectedEntityID != "NO_SELECTION") {
+								PredmetEditDialog.staraSifra = selectedEntityID;
+								PredmetEditDialog predmetEditDialog = PredmetEditDialog.getInstance();
+								predmetEditDialog.setProperValues();
+								predmetEditDialog.setVisible(true);
+							} else {
+								JOptionPane.showMessageDialog(null, "Prvo izaberite predmet koji želite da izmenite", "Napomena", JOptionPane.INFORMATION_MESSAGE);
+							}
 							
 						}
 						
