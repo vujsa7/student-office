@@ -1,4 +1,4 @@
-package view.table;
+package view.dialogs.tables;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -13,56 +13,52 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 
-import model.AbstractStudentTable;
+import model.AbstractStudentoviPolozeniIspitiTable;
 
-public class StudentTable extends JTable{
-	
+public class StudentoviPolozeniIspitiTable extends JTable{
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5981837537193921070L;
+	private static final long serialVersionUID = -5643544754697053549L;
 	
-	public StudentTable() {
-		
+	public StudentoviPolozeniIspitiTable() {
 		this.setRowSelectionAllowed(true);
 		this.setColumnSelectionAllowed(true);
 		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		this.setRowHeight(30);
+		this.setRowHeight(25);
+		this.setModel(AbstractStudentoviPolozeniIspitiTable.getInstance());
+		
 		
 		DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
 		cellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 		setDefaultRenderer(String.class, cellRenderer);
+		setBackground(new Color(249,249,249));
+		setFillsViewportHeight(true);
+		setAutoCreateRowSorter(true);
 		
-		JTableHeader header = this.getTableHeader();
+		JTableHeader tableHeader = this.getTableHeader();
 		UIManager.put("TableHeader.cellBorder", BorderFactory.createMatteBorder(1, 1, 1, 1, new Color(58, 39, 93)));
-		header.setBorder(null);
-		header.setPreferredSize(new Dimension(170, 25));
-	    header.setBackground(new Color(141, 102,217));
-	    header.setForeground(Color.white);    
+		tableHeader.setPreferredSize(new Dimension(170, 25));
+	    tableHeader.setBackground(new Color(141, 102,217));
+	    tableHeader.setForeground(Color.white);    
 	    setGridColor(new Color(196,190,206));
 		UIManager.put("Table.focusCellHighlightBorder", BorderFactory.createMatteBorder(1, 1, 1, 1, Color.white));
 		
-		// Sama JTable komponenta je implementirana postujuci MVC arhitekturu.
-		this.setModel(AbstractStudentTable.getInstance());
+		
 	}
-
+	
 	public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
-		
 		Component c = super.prepareRenderer(renderer, row, column);
-		
-		if(isRowSelected(row)) {
+		if (isRowSelected(row)) {
 			c.setBackground(new Color(90, 90, 90));
-			c.setForeground(Color.WHITE);
+			c.setForeground(Color.white);
+
 		} else {
-			if(row % 2 == 0) {
-				c.setBackground(Color.WHITE);
-				c.setForeground(Color.BLACK);
-			} else {
-				c.setBackground(new Color(232, 232, 232));
-				c.setForeground(Color.BLACK);
-			}
+			c.setBackground(row % 2 == 0 ? Color.WHITE : new Color(232,232,232));
+			c.setForeground(Color.black);
 		}
-		
 		return c;
 	}
+	
 }

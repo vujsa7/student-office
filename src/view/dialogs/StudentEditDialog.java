@@ -1,5 +1,7 @@
 package view.dialogs;
 
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FontFormatException;
@@ -31,6 +33,9 @@ import view.dialogs.components.DateComboBox;
 import view.dialogs.components.DialogConfirmButton;
 import view.dialogs.components.ErrorPanel;
 import view.dialogs.components.FieldName;
+import view.dialogs.components.studentedit.StudentEditDialogTabButton;
+import view.dialogs.components.studentedit.StudentEditDialogTabButtonPanel;
+import view.dialogs.components.studentedit.StudentoviPolozeniIspitiTablePanel;
 import view.listeners.StudentEditListener;
 
 public class StudentEditDialog extends JDialog{
@@ -54,6 +59,12 @@ public class StudentEditDialog extends JDialog{
 		}
 		return instance;
 	}
+	
+	public static final String INFO_PANEL = "Informacije";
+	public static final String POLOZENI_PANEL = "Položeni";
+	private CardLayout cardLayout = new CardLayout();	//za prikaz vise tabova u dijalogu za izmenu
+	private JPanel cards = new JPanel(cardLayout);
+	
 	
 	public static String stariIndeks;
 	public static ArrayList<ErrorPanel> errorPanelList = new ArrayList<ErrorPanel>();
@@ -126,13 +137,18 @@ public class StudentEditDialog extends JDialog{
 	private StudentEditDialog(JFrame parent) {
 		super(parent, "Izmena studenta", true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setPreferredSize(new Dimension(507, 750));
+		setPreferredSize(new Dimension(507, 800));
 		setResizable(false);
 		pack();
 		setLocationRelativeTo(parent);
 		
 		dialogConfirmButton = new DialogConfirmButton();
 		dialogConfirmButton.addMouseListener(new MyMouseListener());
+		
+		JPanel baseHolderPanel = new JPanel();
+		baseHolderPanel.setLayout(new BorderLayout());
+		StudentEditDialogTabButtonPanel editTabButtonPanel = new StudentEditDialogTabButtonPanel();
+		baseHolderPanel.add(editTabButtonPanel, BorderLayout.NORTH);
 		
 		JPanel basePanel = new JPanel();
 		BoxLayout box = new BoxLayout(basePanel, BoxLayout.Y_AXIS);
@@ -230,8 +246,13 @@ public class StudentEditDialog extends JDialog{
 		basePanel.add(buttonHolderPanel);
 		basePanel.add(Box.createVerticalStrut(16));
 		
+		cards.add(basePanel, INFO_PANEL);
+		StudentoviPolozeniIspitiTablePanel polozeniIspitiPanel = new StudentoviPolozeniIspitiTablePanel();
+		cards.add(polozeniIspitiPanel, POLOZENI_PANEL);
 		
-		add(basePanel);
+		baseHolderPanel.add(cards, BorderLayout.CENTER);
+		
+		add(baseHolderPanel);
 		
 	}
 	
@@ -256,6 +277,9 @@ public class StudentEditDialog extends JDialog{
 	    }
 	};
 	
+	public void swapView(String key) {
+		   cardLayout.show(cards, key);
+	}
 	
 	public static void showErrorPanel(int index) {
 		int i = 0;
@@ -437,5 +461,11 @@ public class StudentEditDialog extends JDialog{
 				}
 			}		
 		}
+	}
+	
+	public void setDefaultView() {
+		cardLayout.show(cards, INFO_PANEL);
+		StudentEditDialogTabButton.activeButton = INFO_PANEL;
+		StudentEditDialogTabButton.updateAll();
 	}
 }

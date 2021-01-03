@@ -1,21 +1,23 @@
 package model;
 
+import java.time.LocalDate;
+
 public class PolozenIspit {
 	
 	private String sifraPredmeta;
 	private String nazivPredmeta;
 	private String ESPB;
 	private String ocenaIzPredmeta;
-	private String datumPolaganja;
+	private LocalDate datumPolaganja;
 	
 	public PolozenIspit() {}
 	
-	public PolozenIspit(String sifraPredmeta, String nazivPredmeta, String eSPB, String ocenaIzPredmeta,
-			String datumPolaganja) {
+	public PolozenIspit(String sifraPredmeta, String nazivPredmeta, String ESPB, String ocenaIzPredmeta,
+			LocalDate datumPolaganja) {
 		super();
 		this.sifraPredmeta = sifraPredmeta;
 		this.nazivPredmeta = nazivPredmeta;
-		ESPB = eSPB;
+		this.ESPB = ESPB;
 		this.ocenaIzPredmeta = ocenaIzPredmeta;
 		this.datumPolaganja = datumPolaganja;
 	}
@@ -37,8 +39,8 @@ public class PolozenIspit {
 	public String getESPB() {
 		return ESPB;
 	}
-	public void setESPB(String eSPB) {
-		ESPB = eSPB;
+	public void setESPB(String ESPB) {
+		this.ESPB = ESPB;
 	}
 	public String getOcenaIzPredmeta() {
 		return ocenaIzPredmeta;
@@ -46,10 +48,10 @@ public class PolozenIspit {
 	public void setOcenaIzPredmeta(String ocenaIzPredmeta) {
 		this.ocenaIzPredmeta = ocenaIzPredmeta;
 	}
-	public String getDatumPolaganja() {
+	public LocalDate getDatumPolaganja() {
 		return datumPolaganja;
 	}
-	public void setDatumPolaganja(String datumPolaganja) {
+	public void setDatumPolaganja(LocalDate datumPolaganja) {
 		this.datumPolaganja = datumPolaganja;
 	}
 	
