@@ -18,7 +18,7 @@ public class ProfessorHasSubjectsController {
 	
 	private ProfessorHasSubjectsController() {}
 
-	public static void nabaviIPostaviPredmeteOdProfesora(String entityID) {
+	public void nabaviIPostaviPredmeteOdProfesora() {
 		Profesor profesor = ProfessorController.getInstance().nabaviProfesoraSaLicnomKartom(ProfessorEditDialog.entityID);	
 		AbstractProfessorHasSubjectsTable.getInstance().setProfessorSubjects(profesor.getListaPredmeta());
 		ProfessorHasSubjectsTablePanel.getInstance().refreshView();

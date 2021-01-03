@@ -13,6 +13,9 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+import controller.SubjectNotTeachedController;
+import view.dialogs.AddSubjectToProfessorDialog;
+
 public class SubjectAddButton extends JButton {
 	
 	/**
@@ -22,7 +25,6 @@ public class SubjectAddButton extends JButton {
 	private float alphaButton = 1f;
 	public ImageIcon hoveredIcon;
 	public ImageIcon icon;
-	private String currentlyActiveIcon = "icon";
 	
 	public SubjectAddButton() {
 		icon = getResizedIcon(new ImageIcon("assets"+ File.separator +"icons"+ File.separator +"dodaj.png"));
@@ -56,18 +58,6 @@ public class SubjectAddButton extends JButton {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alphaButton));
 		super.paintComponent(g2);
-	}
-
-	public void changeIcon() {
-		if(currentlyActiveIcon == "icon") {
-			currentlyActiveIcon = "hoveredIcon";
-			setIcon(hoveredIcon);
-		} else {
-			currentlyActiveIcon = "icon";
-			setIcon(icon);
-		}
-		
-		
 	}
 	
 	private class MyMouseListener extends MouseAdapter{
@@ -118,6 +108,12 @@ public class SubjectAddButton extends JButton {
 								}
 							}
 						}).start();
+				SubjectNotTeachedController.getInstance().postaviPredmeteKojeProfesorNePredaje();
+				
+				//for(Predmet predmet : AbstractSubjectNotTeachedTable.getInstance().subjectsNotTeachedByProfessor) {
+				//	System.out.println(predmet.getNazivPredmeta());
+				//}
+				AddSubjectToProfessorDialog.getInstance().setVisible(true);
 			}
 	}
 

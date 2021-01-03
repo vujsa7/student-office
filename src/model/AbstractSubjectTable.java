@@ -44,15 +44,15 @@ public class AbstractSubjectTable extends AbstractTableModel{
 
 	private void initSubjects() {
 		this.setSubjects(new ArrayList<Predmet>());
-		getSubjects().add(new Predmet("E212", "Matematicka analiza", Predmet.TipSemestra.ZIMSKI, 1, null, 9, null, null));
-		getSubjects().add(new Predmet("E213", "Algebra", Predmet.TipSemestra.ZIMSKI, 1, null, 9, null, null));
-		getSubjects().add(new Predmet("E214", "Fizika", Predmet.TipSemestra.LETNJI, 1, null, 9, null, null));	
+		subjects.add(new Predmet("E212", "Matematicka analiza", Predmet.TipSemestra.ZIMSKI, 1, null, 9, null, null));
+		subjects.add(new Predmet("E213", "Algebra", Predmet.TipSemestra.ZIMSKI, 1, null, 9, null, null));
+		subjects.add(new Predmet("E214", "Fizika", Predmet.TipSemestra.LETNJI, 1, null, 9, null, null));	
 		subjectsBackup = subjects;
 	}
 
 	@Override
 	public int getRowCount() {
-		return this.getSubjects().size();
+		return this.subjects.size();
 	}
 
 	@Override

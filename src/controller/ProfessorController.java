@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.AbstractProfessorTable;
+import model.Predmet;
 import model.Profesor;
 import view.dialogs.ProfessorEditDialog;
+import view.dialogs.components.professoredit.ProfessorHasSubjectsTablePanel;
 import view.table.TablePanel;
 
 public class ProfessorController {
@@ -166,5 +168,18 @@ public class ProfessorController {
 			AbstractProfessorTable.getInstance().removeRow(row);
 			TablePanel.getInstance().refreshView("profesor");
 		}
+	}
+	
+	public void dodajPredmetProfesoru(int selectedSubjectRow) {
+		String subjectID = SubjectNotTeachedController.getInstance().getSelectedSubjectID(selectedSubjectRow);
+		Predmet subject = SubjectController.getInstance().nabaviPredmetSaSifrom(subjectID);
+		ArrayList<Profesor> professors = (ArrayList<Profesor>) AbstractProfessorTable.getInstance().getProfessors();
+		for(Profesor professor : professors) {
+			if(professor.getBrojLicneKarte() == ProfessorEditDialog.entityID) {
+				professor.getListaPredmeta().add(subject);
+				break;
+			}
+		}
+		ProfessorHasSubjectsTablePanel.getInstance().refreshView();
 	}
 }

@@ -159,4 +159,18 @@ public class SubjectController {
 		
 		return false;
 	}
+    
+    public List<Predmet> nabaviSvePostojecePredmete() {
+		return AbstractSubjectTable.getInstance().getSubjects();
+	}
+
+	public Predmet nabaviPredmetSaSifrom(String subjectID) {
+		ArrayList<Predmet> list = (ArrayList<Predmet>) AbstractSubjectTable.getInstance().getSubjects();
+		for(Predmet predmet : list) {
+			if(predmet.getSifraPredmeta() == subjectID) {
+				return predmet;
+			}
+		}
+		return null;
+	}
 }

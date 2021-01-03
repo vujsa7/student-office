@@ -125,7 +125,7 @@ if(buttonType.equals("New")) {
 						ProfessorEditDialog professorEditDialog = ProfessorEditDialog.getInstance();
 						professorEditDialog.setProperValues();
 						professorEditDialog.setDefaultView();
-						ProfessorHasSubjectsController.nabaviIPostaviPredmeteOdProfesora(ProfessorEditDialog.entityID);
+						ProfessorHasSubjectsController.getInstance().nabaviIPostaviPredmeteOdProfesora();
 						professorEditDialog.setVisible(true);
 					} else {
 						JOptionPane.showMessageDialog(null, "Prvo izaberite profesora kojeg želite da izmenite", "Napomena", JOptionPane.INFORMATION_MESSAGE);
