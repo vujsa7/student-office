@@ -4,6 +4,8 @@ import javax.swing.*;
 
 import controller.ProfessorHasSubjectsController;
 import controller.SubjectController;
+import view.dialogs.PredmetDialog;
+import view.dialogs.PredmetEditDialog;
 import view.dialogs.ProfessorDialog;
 import view.dialogs.ProfessorEditDialog;
 import view.dialogs.StudentDialog;
@@ -103,7 +105,9 @@ if(buttonType.equals("New")) {
 		        	professorDialog.setDefaultValues();
 		        	professorDialog.setVisible(true);
 		        } else {
-		        	 // ako se dodaje predmet
+		        	PredmetDialog predmetDialog = PredmetDialog.getInstance();
+		        	predmetDialog.setDefaultValues();
+		        	predmetDialog.setVisible(true);
 		        }
 				
 			} else if(buttonType.equals("Edit")) {
@@ -131,7 +135,15 @@ if(buttonType.equals("New")) {
 						JOptionPane.showMessageDialog(null, "Prvo izaberite profesora kojeg želite da izmenite", "Napomena", JOptionPane.INFORMATION_MESSAGE);
 					}
 				} else {
-					// ako se menja predmet
+					String selectedEntityID = TablePanel.getInstance().getSelectedEntityID();
+					if(selectedEntityID != "NO_SELECTION") {
+						PredmetEditDialog.staraSifra = selectedEntityID;
+						PredmetEditDialog predmetEditDialog = PredmetEditDialog.getInstance();
+						predmetEditDialog.setProperValues();
+						predmetEditDialog.setVisible(true);
+					} else {
+						JOptionPane.showMessageDialog(null, "Prvo izaberite predmet koji želite da izmenite", "Napomena", JOptionPane.INFORMATION_MESSAGE);
+					}
 				}
 				
 			} else {

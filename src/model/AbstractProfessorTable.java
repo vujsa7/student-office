@@ -40,7 +40,7 @@ public class AbstractProfessorTable extends AbstractTableModel{
 		predmeti.add(new Predmet("E212", "Matematicka analiza", Predmet.TipSemestra.ZIMSKI, 1, null, 9, null, null));
 		predmeti.add(new Predmet("E213", "Algebra", Predmet.TipSemestra.ZIMSKI, 1, null, 9, null, null));
 		ArrayList<Predmet> predmeti2 = new ArrayList<Predmet>();
-		predmeti2.add(new Predmet("E213", "Algebra", Predmet.TipSemestra.ZIMSKI, 1, null, 9, null, null));
+		predmeti2.add(new Predmet("E214", "Fizika", Predmet.TipSemestra.LETNJI, 1, null, 9, null, null));
 		professors.add(new Profesor("Mile", "Mitić", LocalDate.of(1973, 10, 13), "Novi Sad, Stevana Musića 18", "+381 618289304", "mile.mitic@gmail.com", "FTN-park 18", "129392932", "Prof. dr.", "Redovni profesor", predmeti));
 		professors.add(new Profesor("Rade", "Milenković", LocalDate.of(1963, 7, 11), "Novi Sad, Stevana Musića 10", "+381 6284853501", "rade.milenkovic@yahoo.com", "FTN-park 1", "129392921", "Dr.", "Naučni-saradnik", predmeti2));
 		professors.add(new Profesor("Mika", "Mikic", LocalDate.of(1969, 1, 29), "Novi Sad, Radnička 8", "+381 617444036", "mikamikic@gmail.rs", "FTN-park 33", "129392944", "Prof. dr", "Vanredni profesor", new ArrayList<Predmet>()));
