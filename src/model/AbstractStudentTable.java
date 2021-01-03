@@ -109,6 +109,10 @@ public class AbstractStudentTable extends AbstractTableModel{
 	public Student getRow(int rowIndex) {
 		return this.studenti.get(rowIndex);
 	}
+	
+	public void removeRow(int rowIndex) {
+		this.studenti.remove(rowIndex);
+	}
 
 	public void dodajStudenta(String ime, String prezime, LocalDate datumRodjenja, String adresaStanovanja,
 			String kontaktTelefon, String emailAdresa, String brojIndeksa, String godUpisa, String trenutnaGodStudija,

@@ -16,6 +16,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
+import controller.StudentController;
+import controller.SubjectController;
 import view.dialogs.PredmetDialog;
 import view.dialogs.PredmetEditDialog;
 import view.dialogs.ProfessorDialog;
@@ -142,6 +144,50 @@ public class MenuBar extends JMenuBar{
                 ImageIcon deleteIcon = getResizedIcon(new ImageIcon("assets" + File.separator + "icons" + File.separator + "delete.png", "Delete"));
                 delete.setIcon(deleteIcon);
                 delete.setMnemonic(KeyEvent.VK_D);
+                delete.addActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						if(TabBarButton.getActiveButton() == "Studenti") {
+							String selectedIndex = TablePanel.getInstance().getSelectedEntityID();
+							String[] opcije = new String[2];
+							opcije[0] = new String("Poništi");
+							opcije[1] = new String("Obriši");
+							if(selectedIndex != "NO_SELECTION") {
+								int brisanje = JOptionPane.showOptionDialog(null, "Da li ste sigurni da želite da obrišete studenta?", "Brisanje studenta", 0, 
+										JOptionPane.INFORMATION_MESSAGE, null, opcije, null);
+								
+								if(brisanje == 1) {
+									StudentController.getInstance().obrisiStudenta(selectedIndex);
+									TablePanel.getInstance().setSelectedEntityID(-1);
+								}
+							} else {
+								JOptionPane.showMessageDialog(null, "Označite studenta kojeg želite da obrišete", "Napomena", JOptionPane.INFORMATION_MESSAGE);
+							}
+						} else if(TabBarButton.getActiveButton() == "Profesori") {
+							
+							
+						} else {
+							String selectedSifra = TablePanel.getInstance().getSelectedEntityID();
+							String[] opcije = new String[2];
+							opcije[0] = new String("Poništi");
+							opcije[1] = new String("Obriši");
+							if(selectedSifra != "NO_SELECTION") {
+								int brisanje = JOptionPane.showOptionDialog(null, "Da li ste sigurni da želite da obrišete predmet?", "Brisanje predmeta", 0, 
+										JOptionPane.INFORMATION_MESSAGE, null, opcije, null);
+								
+								if(brisanje == 1) {
+									SubjectController.getInstance().obrisiPredmet(selectedSifra);
+									TablePanel.getInstance().setSelectedEntityID(-1);
+								}
+							} else {
+								JOptionPane.showMessageDialog(null, "Označite predmet koji želite da obrišete", "Napomena", JOptionPane.INFORMATION_MESSAGE);
+							}
+							
+						}
+					}
+                	
+                });
                
                 edit.add(miedit);
                 edit.addSeparator();

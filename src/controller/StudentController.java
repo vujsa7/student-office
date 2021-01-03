@@ -130,4 +130,21 @@ private static StudentController instance = null;
 		
 		return false;
 	}
+	
+	public void obrisiStudenta(String selectedIndex) {
+		List<Student> studenti = AbstractStudentTable.getInstance().getStudenti();
+		
+		if(!studenti.isEmpty()) {
+			int row = 0;
+			for(Student student : studenti) {
+				if(student.getBrojIndeksa().equals(selectedIndex))
+					break;
+				
+				row++;
+			}
+			
+			AbstractStudentTable.getInstance().removeRow(row);
+			TablePanel.getInstance().refreshView("student");
+		}
+	}
 }
