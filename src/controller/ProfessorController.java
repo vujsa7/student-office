@@ -2,6 +2,7 @@ package controller;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import model.AbstractProfessorTable;
 import model.Profesor;
@@ -149,5 +150,21 @@ public class ProfessorController {
 			}
 		}
 		return null;
+	}
+	
+	public void obrisiProfesora(String profa) {
+		List<Profesor> profesori = AbstractProfessorTable.getInstance().getProfessors();
+		if(!profesori.isEmpty()) {
+			int row = 0;
+			for(Profesor profesor : profesori) {
+				if(profesor.getBrojLicneKarte().equals(profa))
+					break;
+				
+				row++;
+			}
+			
+			AbstractProfessorTable.getInstance().removeRow(row);
+			TablePanel.getInstance().refreshView("profesor");
+		}
 	}
 }

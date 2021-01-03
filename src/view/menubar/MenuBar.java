@@ -16,6 +16,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
+import controller.ProfessorController;
 import controller.StudentController;
 import controller.SubjectController;
 import view.dialogs.PredmetDialog;
@@ -156,7 +157,7 @@ public class MenuBar extends JMenuBar{
 							if(selectedIndex != "NO_SELECTION") {
 								int brisanje = JOptionPane.showOptionDialog(null, "Da li ste sigurni da želite da obrišete studenta?", "Brisanje studenta", 0, 
 										JOptionPane.INFORMATION_MESSAGE, null, opcije, null);
-								
+								//jer vraca broj u zavisnosti od toga koja je opcija birana
 								if(brisanje == 1) {
 									StudentController.getInstance().obrisiStudenta(selectedIndex);
 									TablePanel.getInstance().setSelectedEntityID(-1);
@@ -165,8 +166,21 @@ public class MenuBar extends JMenuBar{
 								JOptionPane.showMessageDialog(null, "Označite studenta kojeg želite da obrišete", "Napomena", JOptionPane.INFORMATION_MESSAGE);
 							}
 						} else if(TabBarButton.getActiveButton() == "Profesori") {
-							
-							
+							String selectedProf = TablePanel.getInstance().getSelectedEntityID();
+							String[] opcije = new String[2];
+							opcije[0] = new String("Poništi");
+							opcije[1] = new String("Obriši");
+							if(selectedProf != "NO_SELECTION") {
+								int brisanje = JOptionPane.showOptionDialog(null, "Da li ste sigurni da želite da obrišete studenta?", "Brisanje profesora", 0, 
+										JOptionPane.INFORMATION_MESSAGE, null, opcije, null);
+								
+								if(brisanje == 1) {
+									ProfessorController.getInstance().obrisiProfesora(selectedProf);
+									TablePanel.getInstance().setSelectedEntityID(-1);
+								}
+							} else {
+								JOptionPane.showMessageDialog(null, "Označite profesora kojeg želite da obrišete", "Napomena", JOptionPane.INFORMATION_MESSAGE);
+							}
 						} else {
 							String selectedSifra = TablePanel.getInstance().getSelectedEntityID();
 							String[] opcije = new String[2];

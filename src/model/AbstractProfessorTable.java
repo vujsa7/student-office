@@ -115,5 +115,9 @@ public class AbstractProfessorTable extends AbstractTableModel{
 	public void setDefaultProfessors() {
 		professors = professorsBackup;
 	}
+	
+	public void removeRow(int row) {
+		this.professors.remove(row);
+	}
 
 }
