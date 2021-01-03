@@ -109,5 +109,12 @@ public class AbstractStudentoviPolozeniIspitiTable extends AbstractTableModel{
 		return this.kolone.get(index);
 	}
 	
+	public void removeRow(int index) {
+		this.polozeniIspiti.remove(index);
+	}
+	
+	public PolozenIspit getRow(int row) {
+		return this.polozeniIspiti.get(row);
+	}
 	
 }

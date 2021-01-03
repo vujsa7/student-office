@@ -3,6 +3,8 @@ package view.dialogs.components.studentedit;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -13,6 +15,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 
+import controller.PolozeniStudentiController;
 import model.AbstractStudentoviPolozeniIspitiTable;
 import view.dialogs.tables.StudentoviPolozeniIspitiTable;
 
@@ -22,6 +25,7 @@ public class StudentoviPolozeniIspitiTablePanel extends JPanel{
 	 * 
 	 */
 	private static final long serialVersionUID = 9182571236503153102L;
+	private static int selectedIspit = -1;
 	
 	private static StudentoviPolozeniIspitiTablePanel instance = null;
 	
@@ -57,6 +61,7 @@ public class StudentoviPolozeniIspitiTablePanel extends JPanel{
 		polozeniIspitiButtonPanel.add(ponistiButton);
 		
 		polozeniIspiti = new StudentoviPolozeniIspitiTable();
+		polozeniIspiti.addMouseListener(new MyMouseListener());
 		
 		JScrollPane polozeniIspitiScrollPane = new JScrollPane(polozeniIspiti);
 		polozeniIspitiScrollPane.setBorder(BorderFactory.createEmptyBorder());
@@ -103,5 +108,28 @@ public class StudentoviPolozeniIspitiTablePanel extends JPanel{
 		AbstractStudentoviPolozeniIspitiTable model = (AbstractStudentoviPolozeniIspitiTable) polozeniIspiti.getModel();
 		model.fireTableDataChanged();
 		validate();
+	}
+	
+	public String getSelectedIspit() {
+		if(selectedIspit != -1) {
+			return PolozeniStudentiController.getInstance().getSelectedIspit(selectedIspit);
+		} else
+			return "NO_SELECTION";
+		
+	}
+	
+	public void setSelectedIspit() {
+		selectedIspit = -1;
+	}
+	
+	class MyMouseListener extends MouseAdapter{
+		
+		public void mouseClicked(MouseEvent mouseEvent) {
+			if(!polozeniIspiti.getSelectionModel().isSelectionEmpty())
+				selectedIspit = polozeniIspiti.rowAtPoint(mouseEvent.getPoint());
+			else
+				selectedIspit = -1;
+		}
+		
 	}
 }

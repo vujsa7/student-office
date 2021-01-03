@@ -12,7 +12,10 @@ import java.io.File;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
+
+import controller.SubjectController;
 
 public class PonistiOcenuButton extends JButton{
 
@@ -119,6 +122,24 @@ public class PonistiOcenuButton extends JButton{
 								}
 							}
 						}).start();
+					
+				String selectedIndex = StudentoviPolozeniIspitiTablePanel.getInstance().getSelectedIspit();
+				String[] opcije = new String[2];
+				opcije[0] = new String("Da");
+				opcije[1] = new String("Ne");
+				if(selectedIndex != "NO_SELECTION") {
+					int ponistavanje = JOptionPane.showOptionDialog(null, "Da li ste sigurni da želite da poništite ocenu?", "Poništavanje ocene", 0, 
+							JOptionPane.INFORMATION_MESSAGE, null, opcije, null);
+					//jer vraca broj u zavisnosti od toga koja je opcija birana
+					if(ponistavanje == 0) {
+						SubjectController.getInstance().ponistiOcenu(selectedIndex);
+						StudentoviPolozeniIspitiTablePanel.getInstance().setSelectedIspit();
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "Označite ocenu koju želite da poništite", "Napomena", JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
+		
+			
 	}
 }

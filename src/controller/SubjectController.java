@@ -3,10 +3,13 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.AbstractStudentoviPolozeniIspitiTable;
 import model.AbstractSubjectTable;
+import model.PolozenIspit;
 import model.Predmet;
 import model.Profesor;
 import view.dialogs.PredmetEditDialog;
+import view.dialogs.components.studentedit.StudentoviPolozeniIspitiTablePanel;
 import view.table.TablePanel;
 
 
@@ -172,5 +175,21 @@ public class SubjectController {
 			}
 		}
 		return null;
+	}
+	
+	public void ponistiOcenu(String selectedIndex) {
+		List<PolozenIspit> polozeniIspiti = AbstractStudentoviPolozeniIspitiTable.getInstance().getPolozeniIspiti();
+		if(!polozeniIspiti.isEmpty()) {
+			int row = 0;
+			for(PolozenIspit polozenIspit : polozeniIspiti) {
+				if(polozenIspit.getSifraPredmeta().equals(selectedIndex))
+					break;
+				
+				row++;
+			}
+			
+			AbstractStudentoviPolozeniIspitiTable.getInstance().removeRow(row);
+			StudentoviPolozeniIspitiTablePanel.getInstance().refreshView();
+		}
 	}
 }
