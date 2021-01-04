@@ -137,7 +137,7 @@ public class TablePanel extends JPanel{
 				}
 			} else if (currentlyOpenedTable == STUDENT_PANEL) {
 				if(!studentTable.getSelectionModel().isSelectionEmpty()) {
-					selectedStudentRow = studentTable.rowAtPoint(mouseEvent.getPoint());
+					selectedStudentRow = studentTable.convertRowIndexToModel(studentTable.getSelectedRow());
 				} else {
 					selectedStudentRow = -1;
 				}
