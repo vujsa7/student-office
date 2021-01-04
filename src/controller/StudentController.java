@@ -1,6 +1,7 @@
 package controller;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import model.AbstractStudentTable;
@@ -146,5 +147,36 @@ private static StudentController instance = null;
 			AbstractStudentTable.getInstance().removeRow(row);
 			TablePanel.getInstance().refreshView("student");
 		}
+	}
+	
+	public void pronadjiStudente(String prezime, String ime, String brojIndeksa) { //prvo se unosi prezime, pa ime, pa broj indeksa
+		List<Student> trazeniStudenti = new ArrayList<Student>();
+		List<Student> studenti = AbstractStudentTable.getInstance().getStudenti();
+			
+		if(ime == "-1") {
+			for(Student student : studenti) {
+				if(student.getPrezime().toUpperCase().contains(prezime.toUpperCase()))
+					trazeniStudenti.add(student);
+			}
+		} else if(brojIndeksa == "-1") {
+			for(Student student : studenti) {
+				if(student.getPrezime().toUpperCase().contains(prezime.toUpperCase()) && student.getIme().toUpperCase().contains(ime.toUpperCase()))
+					trazeniStudenti.add(student);
+			}
+		} else {
+			for(Student student : studenti) {
+				if(student.getPrezime().toUpperCase().contains(prezime.toUpperCase()) && student.getIme().toUpperCase().contains(ime.toUpperCase()) 
+						&& student.getBrojIndeksa().toUpperCase().contains(brojIndeksa.toUpperCase()))
+					trazeniStudenti.add(student);
+			}
+		}
+		
+		AbstractStudentTable.getInstance().setTrazeniStudenti(trazeniStudenti);
+		TablePanel.getInstance().refreshView("student");
+	}
+	
+	public void postaviDefaultStudente() {
+		AbstractStudentTable.getInstance().setDefaultStudente();
+		TablePanel.getInstance().refreshView("student");
 	}
 }

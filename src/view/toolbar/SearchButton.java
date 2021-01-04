@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 
 import controller.ProfessorController;
+import controller.StudentController;
 import controller.SubjectController;
 import view.table.TablePanel;
 
@@ -123,6 +124,16 @@ public class SearchButton extends JButton {
 						}).start();
 			}
 			if(TablePanel.currentlyOpenedTable == TablePanel.STUDENT_PANEL) {
+				
+				StudentController.getInstance().postaviDefaultStudente();
+				String[] trazeniStudenti = textField.getText().split(" ");
+				if(trazeniStudenti.length == 1) {
+					StudentController.getInstance().pronadjiStudente(trazeniStudenti[0], "-1", "-1");
+				} else if(trazeniStudenti.length == 2) {
+					StudentController.getInstance().pronadjiStudente(trazeniStudenti[0], trazeniStudenti[1], "-1");
+				} else {
+					StudentController.getInstance().pronadjiStudente(trazeniStudenti[0], trazeniStudenti[1], trazeniStudenti[2]);
+				}
 				
 			} else if(TablePanel.currentlyOpenedTable == TablePanel.PROFESSOR_PANEL) {
 				

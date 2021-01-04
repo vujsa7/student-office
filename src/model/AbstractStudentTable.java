@@ -24,6 +24,7 @@ public class AbstractStudentTable extends AbstractTableModel{
 	
 	private List<Student> studenti;
 	private List<String> kolone;
+	private List<Student> defaultStudenti;
 	
 	private AbstractStudentTable() {
 		
@@ -47,6 +48,7 @@ public class AbstractStudentTable extends AbstractTableModel{
 		studenti.add(new Student("Pera", "Peric", LocalDate.of(1973, 10, 15), "Bulevar oslobodjenja 2", "060111222", "peraperic@gmail.com",
 				"RA3/2019", "2019", "druga", "Budzet", "9.2", null, null));
 		
+		defaultStudenti = studenti;
 	}
 	
 	public List<Student> getStudenti() {
@@ -122,4 +124,16 @@ public class AbstractStudentTable extends AbstractTableModel{
 				emailAdresa, brojIndeksa, godUpisa, trenutnaGodStudija, status, null, null, null));
 	}
 
+	public List<Student> getDefaultStudenti() {
+		return defaultStudenti;
+	}
+
+	public void setTrazeniStudenti(List<Student> trazeniStudenti) {
+		this.defaultStudenti = studenti;
+		this.studenti = trazeniStudenti;
+	}
+	
+	public void setDefaultStudente() {
+		this.studenti = defaultStudenti;
+	}
 }
