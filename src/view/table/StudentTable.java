@@ -33,6 +33,8 @@ public class StudentTable extends JTable{
 		cellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 		setDefaultRenderer(String.class, cellRenderer);
 		
+		setAutoCreateRowSorter(true);
+		
 		JTableHeader header = this.getTableHeader();
 		UIManager.put("TableHeader.cellBorder", BorderFactory.createMatteBorder(1, 1, 1, 1, new Color(58, 39, 93)));
 		header.setBorder(null);
