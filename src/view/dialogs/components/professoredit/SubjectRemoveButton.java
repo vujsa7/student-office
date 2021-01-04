@@ -12,6 +12,9 @@ import java.io.File;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
+
+import controller.ProfessorController;
 
 public class SubjectRemoveButton extends JButton {
 	
@@ -119,6 +122,22 @@ public class SubjectRemoveButton extends JButton {
 								}
 							}
 						}).start();
+				
+				String selectedSubject = ProfessorHasSubjectsTablePanel.getInstance().getSelectedSubject();
+				String[] opcije = new String[2];
+				opcije[0] = new String("Da");
+				opcije[1] = new String("Ne");
+				if(selectedSubject != "-1") {
+					int brisanje = JOptionPane.showOptionDialog(null, "Da li ste sigurni", "Ukloni predmet", 0, 
+							JOptionPane.INFORMATION_MESSAGE, null, opcije, null);
+					
+					if(brisanje == 0) {
+						ProfessorController.getInstance().obrisiPredmetSaProfesora(selectedSubject);
+						ProfessorHasSubjectsTablePanel.getInstance().setSelectedProf();
+					}
+				} else {
+					JOptionPane.showMessageDialog(null,  "Označite predmet koji želite da uklonite", "Napomena", JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
 	}
 

@@ -1,6 +1,7 @@
 package controller;
 
 import model.AbstractProfessorHasSubjectsTable;
+import model.Predmet;
 import model.Profesor;
 import view.dialogs.ProfessorEditDialog;
 import view.dialogs.components.professoredit.ProfessorHasSubjectsTablePanel;
@@ -23,5 +24,9 @@ public class ProfessorHasSubjectsController {
 		AbstractProfessorHasSubjectsTable.getInstance().setProfessorSubjects(profesor.getListaPredmeta());
 		ProfessorHasSubjectsTablePanel.getInstance().refreshView();
 	}
-
+	
+	public String getSelectedPredmet(int index) {
+		Predmet predmet = AbstractProfessorHasSubjectsTable.getInstance().getRow(index);
+		return predmet.getSifraPredmeta();
+	}
 }

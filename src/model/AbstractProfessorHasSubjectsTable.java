@@ -96,4 +96,7 @@ public class AbstractProfessorHasSubjectsTable extends AbstractTableModel{
 		this.professorSubjects = professorSubjects;
 	}
 
+	public void ukloniPredmet(int index) {
+		this.professorSubjects.remove(index);
+	}
 }

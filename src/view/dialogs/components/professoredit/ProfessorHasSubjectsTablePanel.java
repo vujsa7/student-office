@@ -3,6 +3,8 @@ package view.dialogs.components.professoredit;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -12,6 +14,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 
+import controller.ProfessorHasSubjectsController;
 import model.AbstractProfessorHasSubjectsTable;
 import view.dialogs.tables.ProfessorHasSubjectsTable;
 
@@ -31,6 +34,7 @@ public class ProfessorHasSubjectsTablePanel extends JPanel {
 	 */
 	private static final long serialVersionUID = 3085780295579350465L;
 	private JTable professorHasSubjectsTable;
+	private static int selectedSubject = -1;
 	
 	public ProfessorHasSubjectsTablePanel() {
 		setLayout(new GridLayout(0,1));
@@ -56,6 +60,7 @@ public class ProfessorHasSubjectsTablePanel extends JPanel {
 		subjectButtonPanel.add(removeSubjectButton);
 		
 		professorHasSubjectsTable = new ProfessorHasSubjectsTable();
+		professorHasSubjectsTable.addMouseListener(new MyMouseListener());
 		
 		JScrollPane subjectForProfessorScrollPane = new JScrollPane(professorHasSubjectsTable);
 		subjectForProfessorScrollPane.setBorder(BorderFactory.createEmptyBorder());
@@ -73,6 +78,29 @@ public class ProfessorHasSubjectsTablePanel extends JPanel {
 	}
 	
 	
+	public String getSelectedSubject() {
+		//System.out.println("Selektovan:" + selectedSubject);
+		if(selectedSubject != -1) {
+			
+			return ProfessorHasSubjectsController.getInstance().getSelectedPredmet(selectedSubject);
+		} else
+			return "-1";
+		
+	}
 	
+	public void setSelectedProf() {
+		selectedSubject = -1;
+	}
+	
+	class MyMouseListener extends MouseAdapter{
+		
+		public void mouseClicked(MouseEvent mouseEvent) {
+			if(!professorHasSubjectsTable.getSelectionModel().isSelectionEmpty())
+				selectedSubject = professorHasSubjectsTable.rowAtPoint(mouseEvent.getPoint());
+			else
+				selectedSubject = -1;
+		}
+		
+	}
 	
 }
