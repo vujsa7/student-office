@@ -18,7 +18,7 @@ import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 import controller.ProfessorController;
-import controller.SubjectNotTeachedController;
+import controller.SubjectController;
 import model.AbstractSubjectNotTeachedTable;
 import view.dialogs.components.DialogConfirmButton;
 import view.dialogs.components.DialogDeclineButton;
@@ -151,7 +151,7 @@ public class AddSubjectToProfessorDialog extends JDialog{
 			JButton thisButton = (JButton) mouseEvent.getComponent();
 			if(thisButton.isEnabled()) {
 				ProfessorController.getInstance().dodajPredmetProfesoru(selectedSubjectRow);
-				SubjectNotTeachedController.getInstance().postaviPredmeteKojeProfesorNePredaje();
+				SubjectController.getInstance().dodajProfesoraPredmetu(selectedSubjectRow);
 				dispose();
 			}		
 		}

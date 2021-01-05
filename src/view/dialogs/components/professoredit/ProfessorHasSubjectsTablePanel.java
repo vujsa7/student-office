@@ -36,7 +36,7 @@ public class ProfessorHasSubjectsTablePanel extends JPanel {
 	private JTable professorHasSubjectsTable;
 	private static int selectedSubject = -1;
 	
-	public ProfessorHasSubjectsTablePanel() {
+	private ProfessorHasSubjectsTablePanel() {
 		setLayout(new GridLayout(0,1));
 		
 		JPanel basePanel = new JPanel();
@@ -79,7 +79,6 @@ public class ProfessorHasSubjectsTablePanel extends JPanel {
 	
 	
 	public String getSelectedSubject() {
-		//System.out.println("Selektovan:" + selectedSubject);
 		if(selectedSubject != -1) {
 			
 			return ProfessorHasSubjectsController.getInstance().getSelectedPredmet(selectedSubject);

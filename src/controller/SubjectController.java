@@ -9,6 +9,7 @@ import model.PolozenIspit;
 import model.Predmet;
 import model.Profesor;
 import view.dialogs.PredmetEditDialog;
+import view.dialogs.ProfessorEditDialog;
 import view.dialogs.components.studentedit.StudentoviPolozeniIspitiTablePanel;
 import view.table.TablePanel;
 
@@ -192,4 +193,12 @@ public class SubjectController {
 			StudentoviPolozeniIspitiTablePanel.getInstance().refreshView();
 		}
 	}
+
+	public void dodajProfesoraPredmetu(int selectedSubjectRow) {
+		String subjectID = SubjectNotTeachedController.getInstance().getSelectedSubjectID(selectedSubjectRow);
+		Predmet subject = SubjectController.getInstance().nabaviPredmetSaSifrom(subjectID);
+		Profesor professor = ProfessorController.getInstance().nabaviProfesoraSaLicnomKartom(ProfessorEditDialog.entityID);
+		subject.setPredmetniProfesor(professor);
+	}
+
 }

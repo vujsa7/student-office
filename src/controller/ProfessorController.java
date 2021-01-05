@@ -174,13 +174,8 @@ public class ProfessorController {
 	public void dodajPredmetProfesoru(int selectedSubjectRow) {
 		String subjectID = SubjectNotTeachedController.getInstance().getSelectedSubjectID(selectedSubjectRow);
 		Predmet subject = SubjectController.getInstance().nabaviPredmetSaSifrom(subjectID);
-		ArrayList<Profesor> professors = (ArrayList<Profesor>) AbstractProfessorTable.getInstance().getProfessors();
-		for(Profesor professor : professors) {
-			if(professor.getBrojLicneKarte() == ProfessorEditDialog.entityID) {
-				professor.getListaPredmeta().add(subject);
-				break;
-			}
-		}
+		Profesor professor = nabaviProfesoraSaLicnomKartom(ProfessorEditDialog.entityID);
+		professor.getListaPredmeta().add(subject);
 		ProfessorHasSubjectsTablePanel.getInstance().refreshView();
 	}
 	

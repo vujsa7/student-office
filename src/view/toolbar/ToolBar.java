@@ -184,6 +184,7 @@ public class ToolBar extends JToolBar{
 									JOptionPane.INFORMATION_MESSAGE, null, options, null);
 							if(reply == 1) {
 								SubjectController.getInstance().obrisiPredmet(selectedEntityID);
+								ProfessorController.getInstance().obrisiPredmetSaProfesora(selectedEntityID);
 								TablePanel.getInstance().setSelectedEntityID(-1);
 							}
 							

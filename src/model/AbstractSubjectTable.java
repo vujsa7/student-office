@@ -47,6 +47,7 @@ public class AbstractSubjectTable extends AbstractTableModel{
 		subjects.add(new Predmet("E212", "Matematicka analiza", Predmet.TipSemestra.ZIMSKI, 1, null, 9, null, null));
 		subjects.add(new Predmet("E213", "Algebra", Predmet.TipSemestra.ZIMSKI, 1, null, 9, null, null));
 		subjects.add(new Predmet("E214", "Fizika", Predmet.TipSemestra.LETNJI, 1, null, 9, null, null));	
+		subjects.add(new Predmet("E215", "OISISI", Predmet.TipSemestra.ZIMSKI, 3, null, 6, null, null));
 		subjectsBackup = subjects;
 	}
 

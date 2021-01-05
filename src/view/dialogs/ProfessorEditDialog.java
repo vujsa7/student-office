@@ -263,7 +263,7 @@ public class ProfessorEditDialog extends JDialog{
 		
 		
 		cards.add(basePanel, INFO_PANEL);
-		ProfessorHasSubjectsTablePanel subjectForProfessorPanel = new ProfessorHasSubjectsTablePanel();
+		ProfessorHasSubjectsTablePanel subjectForProfessorPanel = ProfessorHasSubjectsTablePanel.getInstance();
 		
 		cards.add(subjectForProfessorPanel, SUBJECT_PANEL);
 		

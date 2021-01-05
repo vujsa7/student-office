@@ -22,23 +22,18 @@ public class SubjectNotTeachedController {
 	private SubjectNotTeachedController() {}
 	
 	public void postaviPredmeteKojeProfesorNePredaje() {
-		Profesor profesor = ProfessorController.getInstance().nabaviProfesoraSaLicnomKartom(ProfessorEditDialog.entityID);
-		ArrayList<Predmet> subjectsOfProfessor = (ArrayList<Predmet>) profesor.getListaPredmeta();
+		Profesor professor = ProfessorController.getInstance().nabaviProfesoraSaLicnomKartom(ProfessorEditDialog.entityID);
+		ArrayList<Predmet> subjectsOfProfessor = (ArrayList<Predmet>) professor.getListaPredmeta();
 		ArrayList<Predmet> allSubjects = (ArrayList<Predmet>) SubjectController.getInstance().nabaviSvePostojecePredmete();
 		
 		ArrayList<Predmet> notTeachedSubjects = new ArrayList<Predmet>();
 		
 		for(Predmet subject : allSubjects) {
-			boolean shouldAdd = true;
-			for(Predmet subjectOfProfessor : subjectsOfProfessor) {
-				if(subjectOfProfessor.getSifraPredmeta() == subject.getSifraPredmeta()) {
-					shouldAdd = false;
-				}
-			}
-			if(shouldAdd) {
+			if(!subjectsOfProfessor.contains(subject) && subject.getPredmetniProfesor()==null) {
 				notTeachedSubjects.add(subject);
 			}
 		}
+		
 		AbstractSubjectNotTeachedTable.getInstance().setSubjectsNotTeachedByProfessor(notTeachedSubjects);
 		AddSubjectToProfessorDialog.getInstance().refreshView();
 	}

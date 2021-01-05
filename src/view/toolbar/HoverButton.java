@@ -2,6 +2,7 @@ package view.toolbar;
 
 import javax.swing.*;
 
+import controller.ProfessorController;
 import controller.ProfessorHasSubjectsController;
 import controller.SubjectController;
 import view.dialogs.PredmetDialog;
@@ -157,12 +158,13 @@ if(buttonType.equals("New")) {
 					String selectedEntityID = TablePanel.getInstance().getSelectedEntityID();
 					if(selectedEntityID != "NO_SELECTION") {
 						String[] options = new String[2];
-						options[0] = new String("Poništi");
-						options[1] = new String("Obriši");
+						options[0] = new String("Obriši");
+						options[1] = new String("Poništi");
 						int reply = JOptionPane.showOptionDialog(null, "Da li ste sigurni da želite da obrišete predmet?", "Brisanje predmeta", 0,
 								JOptionPane.INFORMATION_MESSAGE, null, options, null);
-						if(reply == 1) {
+						if(reply == 0) {
 							SubjectController.getInstance().obrisiPredmet(selectedEntityID);
+							ProfessorController.getInstance().obrisiPredmetSaProfesora(selectedEntityID);
 							TablePanel.getInstance().setSelectedEntityID(-1);
 						}
 						

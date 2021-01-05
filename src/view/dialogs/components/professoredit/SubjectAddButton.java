@@ -109,10 +109,6 @@ public class SubjectAddButton extends JButton {
 							}
 						}).start();
 				SubjectNotTeachedController.getInstance().postaviPredmeteKojeProfesorNePredaje();
-				
-				//for(Predmet predmet : AbstractSubjectNotTeachedTable.getInstance().subjectsNotTeachedByProfessor) {
-				//	System.out.println(predmet.getNazivPredmeta());
-				//}
 				AddSubjectToProfessorDialog.getInstance().setVisible(true);
 			}
 	}
