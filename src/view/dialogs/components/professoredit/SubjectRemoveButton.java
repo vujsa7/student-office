@@ -128,7 +128,7 @@ public class SubjectRemoveButton extends JButton {
 				opcije[0] = new String("Da");
 				opcije[1] = new String("Ne");
 				if(selectedSubject != "-1") {
-					int brisanje = JOptionPane.showOptionDialog(null, "Da li ste sigurni", "Ukloni predmet", 0, 
+					int brisanje = JOptionPane.showOptionDialog(null, "Da li ste sigurni?", "Ukloni predmet", 0, 
 							JOptionPane.INFORMATION_MESSAGE, null, opcije, null);
 					
 					if(brisanje == 0) {

@@ -17,6 +17,7 @@ public class Profesor {
 	private String zvanje;
 	private List<Predmet> listaPredmeta;
 	
+	public Profesor() {}
 	
 	public Profesor(String ime, String prezime, LocalDate localDate, String adresaStanovanja, String kontaktTelefon,
 			String emailAdresa, String adresaKancelarije, String brojLicneKarte, String titula, String zvanje,

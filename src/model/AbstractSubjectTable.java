@@ -89,7 +89,7 @@ public class AbstractSubjectTable extends AbstractTableModel{
 	}
 	
 	public Predmet getRow(int rowIndex) {
-		return this.getSubjects().get(rowIndex);
+		return this.subjects.get(rowIndex);
 	}
 	
 	@Override
@@ -121,7 +121,7 @@ public class AbstractSubjectTable extends AbstractTableModel{
 		subjects = searchedSubjects;
 	}
 	
-	public void dodajPredmet(String sifra, String naziv, int godina, Predmet.TipSemestra semestar, int espb, Profesor profesor) {
-		this.subjects.add(new Predmet(sifra, naziv, semestar, godina, profesor, espb, null, null));
+	public void dodajPredmet(String sifra, String naziv, int godina, Predmet.TipSemestra semestar, int espb) {
+		this.subjects.add(new Predmet(sifra, naziv, semestar, godina, null, espb, null, null));
 	}
 }
