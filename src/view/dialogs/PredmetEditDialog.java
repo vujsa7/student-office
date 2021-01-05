@@ -21,9 +21,12 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import controller.AddProfesorToSubjectController;
 import controller.SubjectController;
 import main.MainFrame;
+import model.AbstractProfessorTable;
 import model.Predmet;
+import model.Profesor;
 import view.dialogs.components.ButtonHolderPanel;
 import view.dialogs.components.DialogConfirmButton;
 import view.dialogs.components.ErrorPanel;
@@ -59,7 +62,8 @@ public class PredmetEditDialog extends JDialog{
 	public static ArrayList<SubjectCustomComboBox> customComboBoxes = new ArrayList<SubjectCustomComboBox>();
 	public static ArrayList<JTextField> textFieldList = new ArrayList<JTextField>();
 	private static DialogConfirmButton dialogConfirmButton;
-	
+	public static JTextField textFieldForProfesorNameAndSurname;
+	public static ButtonsPlusMinus plusBtn;
 	
 	public static final String[] fieldText = {"Šifra", "Naziv", "Semestar", "Godina", "ESPB", "Profesor"};
 	public String[] textFieldName = {"0","1","4"};
@@ -145,11 +149,13 @@ public class PredmetEditDialog extends JDialog{
 				BoxLayout boxProfesor = new BoxLayout(profesorPanel, BoxLayout.X_AXIS);
 				profesorPanel.setLayout(boxProfesor);
 				
-				JTextField textField = new JTextField();
-				textField.setEditable(false);
-				SubjectCustomTextField customTextField = new SubjectCustomTextField(textField, "3", true);
-				ButtonsPlusMinus plusBtn = new ButtonsPlusMinus("assets"+ File.separator +"icons"+ File.separator +"plus.png");
+				textFieldForProfesorNameAndSurname = new JTextField();
+				textFieldForProfesorNameAndSurname.setEditable(false);
+				SubjectCustomTextField customTextField = new SubjectCustomTextField(textFieldForProfesorNameAndSurname, "3", true);
+				plusBtn = new ButtonsPlusMinus("assets"+ File.separator +"icons"+ File.separator +"plus.png");
 				ButtonsPlusMinus minusBtn = new ButtonsPlusMinus("assets"+ File.separator +"icons"+ File.separator +"minus.png");
+				
+				plusBtn.addMouseListener(new MouseAddListener());
 				
 				plusBtn.setMaximumSize(new Dimension(36,36));
 				minusBtn.setMaximumSize(new Dimension(36,36));
@@ -285,6 +291,14 @@ public class PredmetEditDialog extends JDialog{
 			String value = SubjectController.getInstance().getSelectedPredmetValue(i++);
 			customComboBox.setValue(value);
 		}
+	
+		
+		if(SubjectController.getInstance().getSelectedPredmetValue(5) != "")
+			textFieldForProfesorNameAndSurname.setText(SubjectController.getInstance().getSelectedPredmetValue(5));
+		else
+			textFieldForProfesorNameAndSurname.setText("");
+		
+		
 	}
 	
 	public static void showSifraErrorPanel() {
@@ -389,16 +403,51 @@ public class PredmetEditDialog extends JDialog{
 				
 				if(dialogConfirmButton.validated) {
 					 if(comboAnswers.get(0) == "LETNJI") {
+						Profesor trazeniProfesor = new Profesor();
+						//System.out.println(PredmetEditDialog.textFieldForProfesorNameAndSurname.getText());
+						for(Profesor profesor : AbstractProfessorTable.getInstance().getProfessors()) {
+							if((profesor.getIme() + " " + profesor.getPrezime()).equals(PredmetEditDialog.textFieldForProfesorNameAndSurname.getText())) {
+								trazeniProfesor = profesor;
+								break;
+							}
+						}
+						
 						SubjectController.getInstance().izmeniPredmet(staraSifra, textFieldList.get(0).getText(), textFieldList.get(1).getText(),
-					 			Integer.parseInt(comboAnswers.get(1)), Predmet.TipSemestra.LETNJI, Integer.parseInt(textFieldList.get(2).getText()), null);
+					 			Integer.parseInt(comboAnswers.get(1)), Predmet.TipSemestra.LETNJI, Integer.parseInt(textFieldList.get(2).getText()), trazeniProfesor);
 						dispose();
 					 } else {
+						 Profesor trazeniProfesor = new Profesor();
+						 for(Profesor profesor : AbstractProfessorTable.getInstance().getProfessors()) {
+							if((profesor.getIme() + " " + profesor.getPrezime()).equals(PredmetEditDialog.textFieldForProfesorNameAndSurname.getText())) {
+								trazeniProfesor = profesor;
+								break;
+							}
+			   			 }
+						 
 						 SubjectController.getInstance().izmeniPredmet(staraSifra, textFieldList.get(0).getText(), textFieldList.get(1).getText(),
-								 Integer.parseInt(comboAnswers.get(1)), Predmet.TipSemestra.ZIMSKI, Integer.parseInt(textFieldList.get(2).getText()), null);
+								 Integer.parseInt(comboAnswers.get(1)), Predmet.TipSemestra.ZIMSKI, Integer.parseInt(textFieldList.get(2).getText()), trazeniProfesor);
 						dispose();
 					 }
 				}
 			}		
 		}
 	}
+	
+	private class MouseAddListener extends MouseAdapter {
+		
+		public void mousePressed(MouseEvent mouseEvent) {
+			AddProfesorToSubjectController.getInstance().dobaviSveProfesore();
+			AddProfesorToSubjectEditDialog.getInstance().setVisible(true);
+		}
+	}
+
+	public static JTextField getTextFieldForProfesorNameAndSurname() {
+		return textFieldForProfesorNameAndSurname;
+	}
+
+	public static void setTextFieldForProfesorNameAndSurname(JTextField textFieldForProfesorNameAndSurname) {
+		PredmetEditDialog.textFieldForProfesorNameAndSurname = textFieldForProfesorNameAndSurname;
+	}
+	
+	
 }

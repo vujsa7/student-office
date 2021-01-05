@@ -85,9 +85,9 @@ public class SubjectController {
 		TablePanel.getInstance().refreshView("predmet");
 	}
 
-	public void dodajPredmet(String sifra, String naziv, int godina, Predmet.TipSemestra semestar, int espb, Profesor profesor){
+	public void dodajPredmet(String sifra, String naziv, int godina, Predmet.TipSemestra semestar, int espb){
 		
-		AbstractSubjectTable.getInstance().dodajPredmet(sifra, naziv, godina, semestar, espb, profesor);
+		AbstractSubjectTable.getInstance().dodajPredmet(sifra, naziv, godina, semestar, espb);
 		TablePanel.getInstance().refreshView("predmet");
 	} 
 	
@@ -142,7 +142,11 @@ public class SubjectController {
 					return String.valueOf(predmet.getBrojESPB());
 					
 				case 5:
-					return null;
+					if(predmet.getPredmetniProfesor() != null) 
+						return (predmet.getPredmetniProfesor().getIme() + " " + predmet.getPredmetniProfesor().getPrezime());
+						
+					return "";
+					
 					
 				default:
 					return null;
@@ -199,6 +203,29 @@ public class SubjectController {
 		Predmet subject = SubjectController.getInstance().nabaviPredmetSaSifrom(subjectID);
 		Profesor professor = ProfessorController.getInstance().nabaviProfesoraSaLicnomKartom(ProfessorEditDialog.entityID);
 		subject.setPredmetniProfesor(professor);
+	}
+	
+	public void izmeniProfesora(int selectedProf) {
+		String profesorLicnaKarta = AddProfesorToSubjectController.getInstance().getProfesor(selectedProf);
+		Profesor profesor = ProfessorController.getInstance().nabaviProfesoraSaLicnomKartom(profesorLicnaKarta);
+		List<Predmet> predmeti = AbstractSubjectTable.getInstance().getSubjects();
+		
+		for(Predmet predmet : predmeti) {
+			
+			if(predmet.getSifraPredmeta().equals(PredmetEditDialog.staraSifra)) {
+				predmet.setPredmetniProfesor(profesor);
+				break;
+			}	
+		}
+		
+		StudentoviPolozeniIspitiTablePanel.getInstance().refreshView();
+	}
+	
+	public String vratiImeIPrezimeProfesora(int selectedProf) {
+		String profesorLicnaKarta = AddProfesorToSubjectController.getInstance().getProfesor(selectedProf);
+		Profesor profesor = ProfessorController.getInstance().nabaviProfesoraSaLicnomKartom(profesorLicnaKarta);
+		
+		return (profesor.getIme() + " " + profesor.getPrezime());
 	}
 
 }

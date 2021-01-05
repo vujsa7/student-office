@@ -6,7 +6,6 @@ import java.awt.FontFormatException;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -28,7 +27,6 @@ import view.dialogs.components.ButtonHolderPanel;
 import view.dialogs.components.DialogConfirmButton;
 import view.dialogs.components.ErrorPanel;
 import view.dialogs.components.FieldName;
-import view.dialogs.components.addingsubject.ButtonsPlusMinus;
 import view.dialogs.components.addingsubject.SubjectCustomComboBox;
 import view.dialogs.components.addingsubject.SubjectCustomTextField;
 import view.listeners.PredmetListener;
@@ -57,7 +55,6 @@ public class PredmetDialog extends JDialog{
 	public static ArrayList<SubjectCustomComboBox> customComboBoxes = new ArrayList<SubjectCustomComboBox>();
 	public static ArrayList<JTextField> textFieldList = new ArrayList<JTextField>();
 	private static DialogConfirmButton dialogConfirmButton;
-	
 	
 	public static final String[] fieldText = {"Šifra", "Naziv", "Semestar", "Godina", "ESPB", "Profesor"};
 	public String[] textFieldName = {"0","1","2"};
@@ -112,7 +109,7 @@ public class PredmetDialog extends JDialog{
 		int textFieldCounter = 0;
 		int errorTextCounter = 0;
 		
-		for(int i = 1; i <= 6; i++) {
+		for(int i = 1; i <= 5; i++) {
 			JPanel holderPanel = new JPanel();
 			holderPanel.setPreferredSize(new Dimension(458, 49));
 			holderPanel.setOpaque(false);
@@ -131,37 +128,8 @@ public class PredmetDialog extends JDialog{
 				SubjectCustomComboBox customComboBox = new SubjectCustomComboBox(predmetLista.get(i-3));
 				customComboBoxes.add(customComboBox);
 				holderPanel.add(customComboBox);
-			
-			} else if (i == 6) {
 				
-				JPanel profesorPanel = new JPanel();
-				
-				profesorPanel.setPreferredSize(new Dimension(265, 36));
-				profesorPanel.setMaximumSize(new Dimension(265, 36));
-				profesorPanel.setMinimumSize(new Dimension(265, 36));
-				profesorPanel.setOpaque(false);
-				BoxLayout boxProfesor = new BoxLayout(profesorPanel, BoxLayout.X_AXIS);
-				profesorPanel.setLayout(boxProfesor);
-				
-				JTextField textField = new JTextField();
-				textField.setEditable(false);
-				SubjectCustomTextField customTextField = new SubjectCustomTextField(textField, "3", true);
-				ButtonsPlusMinus plusBtn = new ButtonsPlusMinus("assets"+ File.separator +"icons"+ File.separator +"plus.png");
-				ButtonsPlusMinus minusBtn = new ButtonsPlusMinus("assets"+ File.separator +"icons"+ File.separator +"minus.png");
-				
-				plusBtn.setMaximumSize(new Dimension(36,36));
-				minusBtn.setMaximumSize(new Dimension(36,36));
-				plusBtn.setPreferredSize(new Dimension(36,36));
-				minusBtn.setPreferredSize(new Dimension(36,36));
-				
-				profesorPanel.add(customTextField);
-				profesorPanel.add(Box.createHorizontalStrut(10));
-				profesorPanel.add(plusBtn);
-				profesorPanel.add(Box.createHorizontalStrut(10));
-				profesorPanel.add(minusBtn);
-				holderPanel.add(profesorPanel);
-				
-			}else {
+			} else {
 				JPanel textAndErrorPanel = new JPanel();
 				textAndErrorPanel.setPreferredSize(new Dimension(265, 49));
 				textAndErrorPanel.setMaximumSize(new Dimension(265, 49));
@@ -213,7 +181,7 @@ public class PredmetDialog extends JDialog{
 		
 		add(basePanel);
 	}
-	
+
 	DocumentListener listener = new DocumentListener() {
 	    @Override
 	    public void removeUpdate(DocumentEvent e) {
@@ -276,6 +244,7 @@ public class PredmetDialog extends JDialog{
 		for(SubjectCustomComboBox customComboBox : customComboBoxes) {
 			customComboBox.setDefaultValue();
 		}
+		
 	}
 	
 	public static void showSifraErrorPanel() {
@@ -380,17 +349,20 @@ public class PredmetDialog extends JDialog{
 				
 				if(dialogConfirmButton.validated) {
 					 if(comboAnswers.get(0) == "LETNJI") {
+						
 						SubjectController.getInstance().dodajPredmet(textFieldList.get(0).getText(), textFieldList.get(1).getText(),
-					 			Integer.parseInt(comboAnswers.get(1)), Predmet.TipSemestra.LETNJI, Integer.parseInt(textFieldList.get(2).getText()), null);
+					 			Integer.parseInt(comboAnswers.get(1)), Predmet.TipSemestra.LETNJI, Integer.parseInt(textFieldList.get(2).getText()));
 						dispose();
 					 } else {
+						 
 						 SubjectController.getInstance().dodajPredmet(textFieldList.get(0).getText(), textFieldList.get(1).getText(),
-								 Integer.parseInt(comboAnswers.get(1)), Predmet.TipSemestra.ZIMSKI, Integer.parseInt(textFieldList.get(2).getText()), null);
+								 Integer.parseInt(comboAnswers.get(1)), Predmet.TipSemestra.ZIMSKI, Integer.parseInt(textFieldList.get(2).getText()));
 						dispose();
 					 }
 				}
 			}		
 		}
 	}
+	
 }
 
