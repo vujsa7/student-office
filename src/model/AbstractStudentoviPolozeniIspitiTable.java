@@ -1,6 +1,5 @@
 package model;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,9 +41,6 @@ public class AbstractStudentoviPolozeniIspitiTable extends AbstractTableModel{
 	
 	public void initIspite() {
 		this.polozeniIspiti = new ArrayList<PolozenIspit>();
-		polozeniIspiti.add(new PolozenIspit("E143", "Matematicka analiza", "9", "9", LocalDate.of(2019, 6, 26)));
-		polozeniIspiti.add(new PolozenIspit("E144", "Fizika", "9", "10", LocalDate.of(2019, 7, 15)));
-		polozeniIspiti.add(new PolozenIspit("E145", "OET", "9", "8", LocalDate.of(2019, 2, 11)));
 	}
 	
 	public List<PolozenIspit> getPolozeniIspiti() {
@@ -117,4 +113,29 @@ public class AbstractStudentoviPolozeniIspitiTable extends AbstractTableModel{
 		return this.polozeniIspiti.get(row);
 	}
 	
+	public double racunajProsek() {
+		double prosek;
+		int ukupno = 0;
+		int delilac = 0;
+		
+		for(int i = 0; i<getRowCount(); i++) {
+			ukupno += Integer.parseInt((String) getValueAt(i, 3));
+			delilac++;
+		}
+		
+		prosek = ukupno/delilac;
+		
+		return prosek;
+	}
+	
+	public int racunajESPB() {
+		int ukupnoESPB = 0;
+		
+		for(int i = 0; i<getRowCount(); i++) {
+			ukupnoESPB += Integer.parseInt((String) getValueAt(i, 2));
+			
+		}
+		
+		return ukupnoESPB;
+	}
 }

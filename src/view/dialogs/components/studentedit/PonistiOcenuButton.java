@@ -133,6 +133,11 @@ public class PonistiOcenuButton extends JButton{
 					//jer vraca broj u zavisnosti od toga koja je opcija birana
 					if(ponistavanje == 0) {
 						SubjectController.getInstance().ponistiOcenu(selectedIndex);
+						
+						StudentoviPolozeniIspitiTablePanel.getInstance();
+						StudentoviPolozeniIspitiTablePanel.prosekLabel.setText("Prosečna ocena: " + SubjectController.getInstance().izracunajProsek());
+						StudentoviPolozeniIspitiTablePanel.espbLabel.setText("Ukupno ESPB: " + SubjectController.getInstance().izracunajESPB());
+						
 						StudentoviPolozeniIspitiTablePanel.getInstance().setSelectedIspit();
 					}
 				} else {

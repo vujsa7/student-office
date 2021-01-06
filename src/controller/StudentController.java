@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.AbstractStudentTable;
+import model.PolozenIspit;
 import model.Student;
 import view.dialogs.StudentEditDialog;
 import view.table.TablePanel;
@@ -178,5 +179,21 @@ private static StudentController instance = null;
 	public void postaviDefaultStudente() {
 		AbstractStudentTable.getInstance().setDefaultStudente();
 		TablePanel.getInstance().refreshView("student");
+	}
+	
+	public List<PolozenIspit> pronadjiStudentovePolozeneIspite(String selectedIndex) {
+		
+		List<Student> studenti = AbstractStudentTable.getInstance().getStudenti();
+		List<PolozenIspit> ret = new ArrayList<PolozenIspit>();
+		
+		if(!studenti.isEmpty()) {
+			for(Student student : studenti) {
+				if(student.getBrojIndeksa().equals(selectedIndex)) {
+					return student.getPolozeniIspiti();
+				}
+			}
+		} 
+			
+		return ret;
 	}
 }

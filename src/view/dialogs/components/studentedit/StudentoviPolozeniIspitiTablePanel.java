@@ -16,8 +16,11 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 
 import controller.PolozeniStudentiController;
+import controller.StudentController;
+import controller.SubjectController;
 import model.AbstractStudentoviPolozeniIspitiTable;
 import view.dialogs.tables.StudentoviPolozeniIspitiTable;
+import view.table.TablePanel;
 
 public class StudentoviPolozeniIspitiTablePanel extends JPanel{
 
@@ -37,6 +40,8 @@ public class StudentoviPolozeniIspitiTablePanel extends JPanel{
 	}
 	
 	private JTable polozeniIspiti;
+	public static JLabel prosekLabel;
+	public static JLabel espbLabel;
 	
 	public StudentoviPolozeniIspitiTablePanel() {
 		setLayout(new GridLayout(0,1));
@@ -72,7 +77,10 @@ public class StudentoviPolozeniIspitiTablePanel extends JPanel{
 		prosek.setOpaque(false);
 		BoxLayout layoutProsek = new BoxLayout(prosek, BoxLayout.X_AXIS);
 		prosek.setLayout(layoutProsek);
-		JLabel prosekLabel = new JLabel("Prosečna ocena: ");
+		if(!StudentController.getInstance().pronadjiStudentovePolozeneIspite(TablePanel.getInstance().getSelectedEntityID()).isEmpty())
+			prosekLabel = new JLabel("Prosečna ocena: " + SubjectController.getInstance().izracunajProsek());
+		else
+			prosekLabel = new JLabel();
 		
 		prosek.add(Box.createHorizontalStrut(550));
 		prosek.add(prosekLabel);
@@ -84,7 +92,10 @@ public class StudentoviPolozeniIspitiTablePanel extends JPanel{
 		ukupnoespb.setOpaque(false);
 		BoxLayout layoutESPB = new BoxLayout(ukupnoespb, BoxLayout.X_AXIS);
 		ukupnoespb.setLayout(layoutESPB);
-		JLabel espbLabel = new JLabel("Ukupno ESPB: ");
+		if(!StudentController.getInstance().pronadjiStudentovePolozeneIspite(TablePanel.getInstance().getSelectedEntityID()).isEmpty())
+			espbLabel = new JLabel("Ukupno ESPB: " + SubjectController.getInstance().izracunajESPB());
+		else
+			espbLabel = new JLabel();
 		
 		ukupnoespb.add(Box.createHorizontalStrut(550));
 		ukupnoespb.add(espbLabel);
