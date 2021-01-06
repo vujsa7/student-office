@@ -15,11 +15,17 @@ import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 import controller.AddProfesorToSubjectController;
+
+import controller.ProfessorController;
+
 import controller.SubjectController;
 import model.AbstractAddProfesorToSubjectTable;
 import view.dialogs.components.DialogConfirmButton;
 import view.dialogs.components.DialogDeclineButton;
 import view.dialogs.tables.AddProfesorToSubjectTable;
+
+import view.table.TablePanel;
+
 
 public class AddProfesorToSubjectEditDialog extends JDialog{
 
@@ -89,6 +95,21 @@ public class AddProfesorToSubjectEditDialog extends JDialog{
 		
 	}
 	
+
+	
+	
+	public int getSelectedProf() {
+		return selectedProf;
+	}
+
+
+
+	public void setSelectedProf(int selectedProf) {
+		this.selectedProf = selectedProf;
+	}
+
+
+
 	public void refreshView() {
 		AbstractAddProfesorToSubjectTable model = (AbstractAddProfesorToSubjectTable) profesoriUSistemu.getModel();
 		model.fireTableDataChanged();
@@ -143,6 +164,11 @@ public class AddProfesorToSubjectEditDialog extends JDialog{
 				AddProfesorToSubjectController.getInstance().dobaviSveProfesore();
 				PredmetEditDialog.textFieldForProfesorNameAndSurname.setText(SubjectController.getInstance().vratiImeIPrezimeProfesora(selectedProf));
 				PredmetEditDialog.plusBtn.setEnabled(false);
+
+				String selectedPredmet = TablePanel.getInstance().getSelectedEntityID();
+				ProfessorController.getInstance().obrisiPredmetSaProfesora(selectedPredmet);
+				ProfessorController.getInstance().dodajProfesoruPredmet(selectedProf);
+				
 				dispose();
 			}		
 		}

@@ -32,8 +32,10 @@ public class StudentEditDialogTabButtonPanel extends JPanel{
 		
 		StudentEditDialogTabButton button1 = new StudentEditDialogTabButton(StudentEditDialog.INFO_PANEL);
 		StudentEditDialogTabButton button2 = new StudentEditDialogTabButton(StudentEditDialog.POLOZENI_PANEL);
+		StudentEditDialogTabButton button3 = new StudentEditDialogTabButton(StudentEditDialog.NEPOLOZENI_PANEL);
 		label.add(button1);
 		label.add(button2);
+		label.add(button3);
 		add(label);
 	}
 	

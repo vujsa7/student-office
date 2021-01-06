@@ -3,11 +3,13 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.AbstractStudentTable;
 import model.AbstractStudentoviPolozeniIspitiTable;
 import model.AbstractSubjectTable;
 import model.PolozenIspit;
 import model.Predmet;
 import model.Profesor;
+import model.Student;
 import view.dialogs.PredmetEditDialog;
 import view.dialogs.ProfessorEditDialog;
 import view.dialogs.components.studentedit.StudentoviPolozeniIspitiTablePanel;
@@ -183,19 +185,32 @@ public class SubjectController {
 	}
 	
 	public void ponistiOcenu(String selectedIndex) {
-		List<PolozenIspit> polozeniIspiti = AbstractStudentoviPolozeniIspitiTable.getInstance().getPolozeniIspiti();
-		if(!polozeniIspiti.isEmpty()) {
-			int row = 0;
-			for(PolozenIspit polozenIspit : polozeniIspiti) {
-				if(polozenIspit.getSifraPredmeta().equals(selectedIndex))
-					break;
-				
-				row++;
+		String selektovanStudent = TablePanel.getInstance().getSelectedEntityID();
+		List<PolozenIspit> polozeniIspiti = StudentController.getInstance().pronadjiStudentovePolozeneIspite(selektovanStudent);
+		List<Student> studenti = AbstractStudentTable.getInstance().getStudenti();
+		
+		
+		if(!studenti.isEmpty()) {
+			for(Student student : studenti) {
+				if(student.getBrojIndeksa().equals(selektovanStudent)) {
+					if(!polozeniIspiti.isEmpty()) {
+						int row = 0;
+						for(PolozenIspit polozenIspit : polozeniIspiti) {
+							if(polozenIspit.getSifraPredmeta().equals(selectedIndex))
+								break;
+							
+							row++;
+							
+						}
+					
+						AbstractStudentoviPolozeniIspitiTable.getInstance().removeRow(row);
+						StudentoviPolozeniIspitiTablePanel.getInstance().refreshView();
+					}
+				}
 			}
-			
-			AbstractStudentoviPolozeniIspitiTable.getInstance().removeRow(row);
-			StudentoviPolozeniIspitiTablePanel.getInstance().refreshView();
 		}
+		
+		
 	}
 
 	public void dodajProfesoraPredmetu(int selectedSubjectRow) {
@@ -228,4 +243,17 @@ public class SubjectController {
 		return (profesor.getIme() + " " + profesor.getPrezime());
 	}
 
-}
+	
+	public String izracunajProsek() {
+		
+		String prosek = String.valueOf(AbstractStudentoviPolozeniIspitiTable.getInstance().racunajProsek());
+		
+		return prosek;
+	}
+	
+	public String izracunajESPB() {
+		String espb = String.valueOf(AbstractStudentoviPolozeniIspitiTable.getInstance().racunajESPB());
+		
+		return espb;
+	}
+

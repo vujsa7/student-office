@@ -29,4 +29,5 @@ public class ProfessorHasSubjectsController {
 		Predmet predmet = AbstractProfessorHasSubjectsTable.getInstance().getRow(index);
 		return predmet.getSifraPredmeta();
 	}
+
 }

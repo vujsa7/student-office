@@ -35,6 +35,7 @@ import view.dialogs.components.ErrorPanel;
 import view.dialogs.components.FieldName;
 import view.dialogs.components.studentedit.StudentEditDialogTabButton;
 import view.dialogs.components.studentedit.StudentEditDialogTabButtonPanel;
+import view.dialogs.components.studentedit.StudentUnsettledSubjectsTablePanel;
 import view.dialogs.components.studentedit.StudentoviPolozeniIspitiTablePanel;
 import view.listeners.StudentEditListener;
 
@@ -62,6 +63,7 @@ public class StudentEditDialog extends JDialog{
 	
 	public static final String INFO_PANEL = "Informacije";
 	public static final String POLOZENI_PANEL = "Položeni";
+	public static final String NEPOLOZENI_PANEL = "Nepoloženi";
 	private CardLayout cardLayout = new CardLayout();	//za prikaz vise tabova u dijalogu za izmenu
 	private JPanel cards = new JPanel(cardLayout);
 	
@@ -249,6 +251,8 @@ public class StudentEditDialog extends JDialog{
 		cards.add(basePanel, INFO_PANEL);
 		StudentoviPolozeniIspitiTablePanel polozeniIspitiPanel = new StudentoviPolozeniIspitiTablePanel();
 		cards.add(polozeniIspitiPanel, POLOZENI_PANEL);
+		StudentUnsettledSubjectsTablePanel studentUnsettledSubjectsTablePanel = StudentUnsettledSubjectsTablePanel.getInstance();
+		cards.add(studentUnsettledSubjectsTablePanel, NEPOLOZENI_PANEL);
 		
 		baseHolderPanel.add(cards, BorderLayout.CENTER);
 		

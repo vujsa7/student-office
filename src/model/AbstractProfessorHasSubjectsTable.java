@@ -31,7 +31,7 @@ public class AbstractProfessorHasSubjectsTable extends AbstractTableModel{
 	
 	private void initialize() {
 		this.columns = new ArrayList<String>();
-		this.columns.add("Sifra");
+		this.columns.add("Šifra");
 		this.columns.add("Naziv");
 		this.columns.add("Godina studija");
 		this.columns.add("Semestar");
@@ -99,4 +99,5 @@ public class AbstractProfessorHasSubjectsTable extends AbstractTableModel{
 	public void ukloniPredmet(int index) {
 		this.professorSubjects.remove(index);
 	}
+	
 }

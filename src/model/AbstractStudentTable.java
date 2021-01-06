@@ -42,11 +42,11 @@ public class AbstractStudentTable extends AbstractTableModel{
 	private void initStudente() {
 		this.studenti = new ArrayList<Student>();
 		studenti.add(new Student("Pera", "Peric", LocalDate.of(1973, 10, 13), "Bulevar oslobodjenja 2", "060111222", "peraperic@gmail.com",
-				"RA2/2020", "2019", "I(prva)", "Budzet", "9.2", null, null));
+				"RA2/2020", "2019", "I(prva)", "Budzet", "9.2", new ArrayList<PolozenIspit>(), new ArrayList<Predmet>()));
 		studenti.add(new Student("Mika", "Mikic", LocalDate.of(1973, 10, 14), "Bulevar oslobodjenja 2", "060111222", "peraperic@gmail.com",
-				"RA1/2019", "2019", "II(druga)", "Budzet", "8.9", null, null));
+				"RA1/2019", "2019", "II(druga)", "Budzet", "8.9", new ArrayList<PolozenIspit>(), new ArrayList<Predmet>()));
 		studenti.add(new Student("Ivan", "Ivanovic", LocalDate.of(1973, 10, 15), "Bulevar oslobodjenja 2", "060111222", "peraperic@gmail.com",
-				"RA3/2018", "2019", "III(treca)", "Samofinansiranje", "9.1", null, null));
+				"RA3/2018", "2019", "III(treca)", "Samofinansiranje", "9.1", new ArrayList<PolozenIspit>(), new ArrayList<Predmet>() ));
 		
 		defaultStudenti = studenti;
 	}
@@ -121,7 +121,7 @@ public class AbstractStudentTable extends AbstractTableModel{
 			String status) {
 		
 		this.studenti.add(new Student(ime, prezime, datumRodjenja, adresaStanovanja, kontaktTelefon,
-				emailAdresa, brojIndeksa, godUpisa, trenutnaGodStudija, status, null, null, null));
+				emailAdresa, brojIndeksa, godUpisa, trenutnaGodStudija, status, null, new ArrayList<PolozenIspit>(), new ArrayList<Predmet>()));
 	}
 
 	public List<Student> getDefaultStudenti() {

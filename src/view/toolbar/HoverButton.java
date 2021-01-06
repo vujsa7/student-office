@@ -4,6 +4,7 @@ import javax.swing.*;
 
 import controller.ProfessorController;
 import controller.ProfessorHasSubjectsController;
+import controller.StudentUnsettledSubjectsController;
 import controller.SubjectController;
 import view.dialogs.PredmetDialog;
 import view.dialogs.PredmetEditDialog;
@@ -118,6 +119,7 @@ if(buttonType.equals("New")) {
 						if(selectedEntityID != "NO_SELECTION") {
 							StudentEditDialog.stariIndeks = selectedEntityID;
 							StudentEditDialog studentEditDialog = StudentEditDialog.getInstance();
+							StudentUnsettledSubjectsController.getInstance().postaviNepolozenePredmeteStudentu();
 							studentEditDialog.setProperValues();
 							studentEditDialog.setVisible(true);
 						} else {
