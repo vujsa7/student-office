@@ -6,6 +6,7 @@ import java.util.List;
 
 import model.AbstractStudentTable;
 import model.PolozenIspit;
+import model.Predmet;
 import model.Student;
 import view.dialogs.StudentEditDialog;
 import view.table.TablePanel;
@@ -195,5 +196,9 @@ private static StudentController instance = null;
 		} 
 			
 		return ret;
+	}
+
+	public ArrayList<Predmet> nabaviNepolozenePredmeteStudenta(String brIndex) {
+		return AbstractStudentTable.getInstance().nabaviNepolozenePredmeteStudenta(brIndex);
 	}
 }
