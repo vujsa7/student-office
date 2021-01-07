@@ -134,7 +134,7 @@ public class StudentoviPolozeniIspitiTablePanel extends JPanel{
 		
 		public void mouseClicked(MouseEvent mouseEvent) {
 			if(!polozeniIspiti.getSelectionModel().isSelectionEmpty())
-				selectedIspit = polozeniIspiti.rowAtPoint(mouseEvent.getPoint());
+				selectedIspit = polozeniIspiti.convertRowIndexToModel(polozeniIspiti.getSelectedRow());
 			else
 				selectedIspit = -1;
 		}
