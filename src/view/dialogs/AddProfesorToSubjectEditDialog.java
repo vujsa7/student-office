@@ -24,8 +24,6 @@ import view.dialogs.components.DialogConfirmButton;
 import view.dialogs.components.DialogDeclineButton;
 import view.dialogs.tables.AddProfesorToSubjectTable;
 
-import view.table.TablePanel;
-
 
 public class AddProfesorToSubjectEditDialog extends JDialog{
 
@@ -165,8 +163,6 @@ public class AddProfesorToSubjectEditDialog extends JDialog{
 				PredmetEditDialog.textFieldForProfesorNameAndSurname.setText(SubjectController.getInstance().vratiImeIPrezimeProfesora(selectedProf));
 				PredmetEditDialog.plusBtn.setEnabled(false);
 
-				String selectedPredmet = TablePanel.getInstance().getSelectedEntityID();
-				ProfessorController.getInstance().obrisiPredmetSaProfesora(selectedPredmet);
 				ProfessorController.getInstance().dodajProfesoruPredmet(selectedProf);
 				
 				dispose();
