@@ -256,5 +256,10 @@ public class SubjectController {
 		
 		return espb;
 	}
+	
+	public void obrisiProfesoraSaPredmeta(String selectedSubject) {
+		Predmet predmet = nabaviPredmetSaSifrom(selectedSubject);
+		predmet.setPredmetniProfesor(null);
+	}
 
 }

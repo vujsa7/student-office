@@ -87,15 +87,13 @@ public class ProfessorHasSubjectsTablePanel extends JPanel {
 		
 	}
 	
-	public void setSelectedProf() {
-		selectedSubject = -1;
-	}
+	
 	
 	class MyMouseListener extends MouseAdapter{
 		
 		public void mouseClicked(MouseEvent mouseEvent) {
 			if(!professorHasSubjectsTable.getSelectionModel().isSelectionEmpty())
-				selectedSubject = professorHasSubjectsTable.rowAtPoint(mouseEvent.getPoint());
+				selectedSubject = professorHasSubjectsTable.convertRowIndexToModel(professorHasSubjectsTable.getSelectedRow());
 			else
 				selectedSubject = -1;
 		}

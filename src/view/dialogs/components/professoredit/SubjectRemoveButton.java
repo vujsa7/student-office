@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 import controller.ProfessorController;
+import controller.SubjectController;
 
 public class SubjectRemoveButton extends JButton {
 	
@@ -133,7 +134,8 @@ public class SubjectRemoveButton extends JButton {
 					
 					if(brisanje == 0) {
 						ProfessorController.getInstance().obrisiPredmetSaProfesora(selectedSubject);
-						ProfessorHasSubjectsTablePanel.getInstance().setSelectedProf();
+//						ProfessorHasSubjectsTablePanel.getInstance().setSelectedProf();
+						SubjectController.getInstance().obrisiProfesoraSaPredmeta(selectedSubject);
 					}
 				} else {
 					JOptionPane.showMessageDialog(null,  "Označite predmet koji želite da uklonite", "Napomena", JOptionPane.INFORMATION_MESSAGE);

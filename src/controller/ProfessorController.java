@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.AbstractProfessorHasSubjectsTable;
 import model.AbstractProfessorTable;
 import model.AbstractSubjectTable;
 import model.Predmet;
@@ -181,19 +180,11 @@ public class ProfessorController {
 	}
 	
 	public void obrisiPredmetSaProfesora(String sifra) {
-		List<Predmet> predmeti = AbstractProfessorHasSubjectsTable.getInstance().getProfessorSubjects();
-		if(!predmeti.isEmpty()) {
-			int row = 0;
-			for(Predmet predmet : predmeti) {
-				if(predmet.getSifraPredmeta().equals(sifra)) {
-					break;
-				}
-				row++;
-			}
-			
-			AbstractProfessorHasSubjectsTable.getInstance().ukloniPredmet(row);
+			Profesor profesor = nabaviProfesoraSaLicnomKartom(ProfessorEditDialog.entityID);
+			Predmet predmet = SubjectController.getInstance().nabaviPredmetSaSifrom(sifra);
+			profesor.getListaPredmeta().remove(predmet);
 			ProfessorHasSubjectsTablePanel.getInstance().refreshView();
-		}
+		
 	}
 	
 	public void dodajProfesoruPredmet(int selectedProfesor) {
