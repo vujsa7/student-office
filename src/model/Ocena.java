@@ -1,45 +1,60 @@
 package model;
 
-public class Ocena {
+import java.time.LocalDate;
+
+public class PolozenIspit {
 	
-	private Student studentKojiJePolozio;
-	private Predmet predmet;
-	private String ocenaNaIspitu;
-	private String datumPolaganja;
+	private String sifraPredmeta;
+	private String nazivPredmeta;
+	private String ESPB;
+	private String ocenaIzPredmeta;
+	private LocalDate datumPolaganja;
 	
+	public PolozenIspit() {}
 	
-	public Ocena(Student studentKojiJePolozio, Predmet predmet, String ocenaNaIspitu, String datumPolaganja) {
+	public PolozenIspit(String sifraPredmeta, String nazivPredmeta, String ESPB, String ocenaIzPredmeta,
+			LocalDate datumPolaganja) {
 		super();
-		this.studentKojiJePolozio = studentKojiJePolozio;
-		this.predmet = predmet;
-		this.ocenaNaIspitu = ocenaNaIspitu;
+		this.sifraPredmeta = sifraPredmeta;
+		this.nazivPredmeta = nazivPredmeta;
+		this.ESPB = ESPB;
+		this.ocenaIzPredmeta = ocenaIzPredmeta;
 		this.datumPolaganja = datumPolaganja;
 	}
-	
-	public Student getStudent() {
-		return studentKojiJePolozio;
+
+
+
+	public String getSifraPredmeta() {
+		return sifraPredmeta;
 	}
-	public void setStudent(Student studentKojiJePolozio) {
-		this.studentKojiJePolozio = studentKojiJePolozio;
+	public void setSifraPredmeta(String sifraPredmeta) {
+		this.sifraPredmeta = sifraPredmeta;
 	}
-	public Predmet getPredmet() {
-		return predmet;
+	public String getNazivPredmeta() {
+		return nazivPredmeta;
 	}
-	public void setPredmet(Predmet predmet) {
-		this.predmet = predmet;
+	public void setNazivPredmeta(String nazivPredmeta) {
+		this.nazivPredmeta = nazivPredmeta;
 	}
-	public String getOcenaNaIspitu() {
-		return ocenaNaIspitu;
+	public String getESPB() {
+		return ESPB;
 	}
-	public void setOcenaNaIspitu(String ocenaNaIspitu) {
-		this.ocenaNaIspitu = ocenaNaIspitu;
+	public void setESPB(String ESPB) {
+		this.ESPB = ESPB;
 	}
-	public String getDatumPolaganja() {
+	public String getOcenaIzPredmeta() {
+		return ocenaIzPredmeta;
+	}
+	public void setOcenaIzPredmeta(String ocenaIzPredmeta) {
+		this.ocenaIzPredmeta = ocenaIzPredmeta;
+	}
+	public LocalDate getDatumPolaganja() {
 		return datumPolaganja;
 	}
-	public void setDatumPolaganja(String datumPolaganja) {
+	public void setDatumPolaganja(LocalDate datumPolaganja) {
 		this.datumPolaganja = datumPolaganja;
 	}
 	
 	
+
 }
