@@ -201,4 +201,12 @@ private static StudentController instance = null;
 	public ArrayList<Predmet> nabaviNepolozenePredmeteStudenta(String brIndex) {
 		return AbstractStudentTable.getInstance().nabaviNepolozenePredmeteStudenta(brIndex);
 	}
+
+	public boolean nekiStudentImaPolozenIspit(String sifraPredmeta) {
+		return AbstractStudentTable.getInstance().nekiStudentImaPolozenIspit(sifraPredmeta);
+	}
+
+	public boolean nekiStudentImaNepolozenIspit(String sifraPredmeta) {
+		return AbstractStudentTable.getInstance().nekiStudentImaNepolozenIspit(sifraPredmeta);
+	}
 }

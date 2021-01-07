@@ -4,6 +4,7 @@ import javax.swing.*;
 
 import controller.ProfessorController;
 import controller.ProfessorHasSubjectsController;
+import controller.StudentController;
 import controller.StudentUnsettledSubjectsController;
 import controller.SubjectController;
 import view.dialogs.PredmetDialog;
@@ -165,9 +166,21 @@ if(buttonType.equals("New")) {
 						int reply = JOptionPane.showOptionDialog(null, "Da li ste sigurni da želite da obrišete predmet?", "Brisanje predmeta", 0,
 								JOptionPane.INFORMATION_MESSAGE, null, options, null);
 						if(reply == 0) {
-							SubjectController.getInstance().obrisiPredmet(selectedEntityID);
-							ProfessorController.getInstance().obrisiPredmetSaProfesora(selectedEntityID);
-							TablePanel.getInstance().setSelectedEntityID(-1);
+							if(!ProfessorController.getInstance().nekiProfesorImaPredmet(selectedEntityID)) {
+								if(!StudentController.getInstance().nekiStudentImaPolozenIspit(selectedEntityID)) {
+									if(!StudentController.getInstance().nekiStudentImaNepolozenIspit(selectedEntityID)) {
+										SubjectController.getInstance().obrisiPredmet(selectedEntityID);
+										ProfessorController.getInstance().obrisiPredmetSaProfesora(selectedEntityID);
+										TablePanel.getInstance().setSelectedEntityID(-1);
+									} else {
+										JOptionPane.showMessageDialog(null, "Nemoguće obrisati predmet jer postoji student koji nije položio taj predmet!", "Neuspešna radnja", JOptionPane.INFORMATION_MESSAGE);
+									}
+								} else {
+									JOptionPane.showMessageDialog(null, "Nemoguće obrisati predmet jer postoji student koji je položio taj predmet!", "Neuspešna radnja", JOptionPane.INFORMATION_MESSAGE);
+								}
+							} else {
+								JOptionPane.showMessageDialog(null, "Nemoguće obrisati predmet jer postoji profesor koji predaje na njemu!", "Neuspešna radnja", JOptionPane.INFORMATION_MESSAGE);
+							}
 						}
 						
 					} else {

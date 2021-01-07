@@ -23,6 +23,8 @@ import javax.swing.text.AbstractDocument;
 
 import controller.ProfessorController;
 import controller.ProfessorHasSubjectsController;
+import controller.StudentController;
+import controller.StudentUnsettledSubjectsController;
 import controller.SubjectController;
 import view.dialogs.PredmetDialog;
 import view.dialogs.PredmetEditDialog;
@@ -113,6 +115,7 @@ public class ToolBar extends JToolBar{
 					if(selectedEntityID != "NO_SELECTION") {
 						StudentEditDialog.stariIndeks = selectedEntityID;
 						StudentEditDialog studentEditDialog = StudentEditDialog.getInstance();
+						StudentUnsettledSubjectsController.getInstance().postaviNepolozenePredmeteStudentu();
 						studentEditDialog.setProperValues();
 						studentEditDialog.setVisible(true);
 					} else {
@@ -183,9 +186,21 @@ public class ToolBar extends JToolBar{
 							int reply = JOptionPane.showOptionDialog(null, "Da li ste sigurni da želite da obrišete predmet?", "Brisanje predmeta", 0,
 									JOptionPane.INFORMATION_MESSAGE, null, options, null);
 							if(reply == 1) {
-								SubjectController.getInstance().obrisiPredmet(selectedEntityID);
-								ProfessorController.getInstance().obrisiPredmetSaProfesora(selectedEntityID);
-								TablePanel.getInstance().setSelectedEntityID(-1);
+								if(!ProfessorController.getInstance().nekiProfesorImaPredmet(selectedEntityID)) {
+									if(!StudentController.getInstance().nekiStudentImaPolozenIspit(selectedEntityID)) {
+										if(!StudentController.getInstance().nekiStudentImaNepolozenIspit(selectedEntityID)) {
+											SubjectController.getInstance().obrisiPredmet(selectedEntityID);
+											ProfessorController.getInstance().obrisiPredmetSaProfesora(selectedEntityID);
+											TablePanel.getInstance().setSelectedEntityID(-1);
+										} else {
+											JOptionPane.showMessageDialog(null, "Nemoguće obrisati predmet jer postoji student koji nije položio taj predmet!", "Neuspešna radnja", JOptionPane.INFORMATION_MESSAGE);
+										}
+									} else {
+										JOptionPane.showMessageDialog(null, "Nemoguće obrisati predmet jer postoji student koji je položio taj predmet!", "Neuspešna radnja", JOptionPane.INFORMATION_MESSAGE);
+									}
+								} else {
+									JOptionPane.showMessageDialog(null, "Nemoguće obrisati predmet jer postoji profesor koji predaje na njemu!", "Neuspešna radnja", JOptionPane.INFORMATION_MESSAGE);
+								}
 							}
 							
 						} else {

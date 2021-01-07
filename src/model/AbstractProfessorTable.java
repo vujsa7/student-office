@@ -115,4 +115,15 @@ public class AbstractProfessorTable extends AbstractTableModel{
 		this.professors.remove(row);
 	}
 
+	public boolean nekiProfesorImaPredmet(String sifraPredmeta) {
+		for(Profesor p : professors) {
+			for(Predmet predmet : p.getListaPredmeta()) {
+				if(predmet.getSifraPredmeta() == sifraPredmeta) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 }

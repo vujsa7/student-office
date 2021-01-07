@@ -215,4 +215,8 @@ public class ProfessorController {
 		}
 		ProfessorHasSubjectsTablePanel.getInstance().refreshView();
 	}
+	
+	public boolean nekiProfesorImaPredmet(String sifraPredmeta) {
+		return AbstractProfessorTable.getInstance().nekiProfesorImaPredmet(sifraPredmeta);
+	}
 }

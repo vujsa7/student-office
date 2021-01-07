@@ -145,4 +145,26 @@ public class AbstractStudentTable extends AbstractTableModel{
 		}
 		return null;
 	}
+
+	public boolean nekiStudentImaPolozenIspit(String sifraPredmeta) {
+		for(Student s : studenti) {
+			for(PolozenIspit p : s.getPolozeniIspiti()) {
+				if(p.getSifraPredmeta() == sifraPredmeta) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public boolean nekiStudentImaNepolozenIspit(String sifraPredmeta) {
+		for(Student s : studenti) {
+			for(Predmet p : s.getNepolozeniIspiti()) {
+				if(p.getSifraPredmeta() == sifraPredmeta) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 }
