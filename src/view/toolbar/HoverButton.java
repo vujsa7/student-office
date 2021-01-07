@@ -97,7 +97,7 @@ public class HoverButton extends JButton{
 		
 		public void mousePressed(MouseEvent mouseEvent) {
 			
-if(buttonType.equals("New")) {
+			if(buttonType.equals("New")) {
 				
 				if(TabBarButton.getActiveButton() == "Studenti") {
 					StudentDialog studentDialog = StudentDialog.getInstance();
@@ -144,6 +144,7 @@ if(buttonType.equals("New")) {
 						PredmetEditDialog.staraSifra = selectedEntityID;
 						PredmetEditDialog predmetEditDialog = PredmetEditDialog.getInstance();
 						predmetEditDialog.setProperValues();
+						predmetEditDialog.canPlusBeVisible();
 						predmetEditDialog.setVisible(true);
 					} else {
 						JOptionPane.showMessageDialog(null, "Prvo izaberite predmet koji želite da izmenite", "Napomena", JOptionPane.INFORMATION_MESSAGE);

@@ -16,6 +16,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
@@ -436,8 +437,13 @@ public class PredmetEditDialog extends JDialog{
 	private class MouseAddListener extends MouseAdapter {
 		
 		public void mousePressed(MouseEvent mouseEvent) {
-			AddProfesorToSubjectController.getInstance().dobaviSveProfesore();
-			AddProfesorToSubjectEditDialog.getInstance().setVisible(true);
+			
+			if(plusBtn.isEnabled()) {
+				AddProfesorToSubjectController.getInstance().dobaviSveProfesore();
+				AddProfesorToSubjectEditDialog.getInstance().setVisible(true);
+				plusBtn.setEnabled(false);
+			} else
+				JOptionPane.showMessageDialog(null, "Morate prvo da obrišete profesora", "Napomena", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 
@@ -449,5 +455,11 @@ public class PredmetEditDialog extends JDialog{
 		PredmetEditDialog.textFieldForProfesorNameAndSurname = textFieldForProfesorNameAndSurname;
 	}
 	
+	public void canPlusBeVisible() {
+		if(PredmetEditDialog.textFieldForProfesorNameAndSurname.getText().isEmpty())
+			plusBtn.setEnabled(true);
+		else
+			plusBtn.setEnabled(false);
+	}
 	
 }

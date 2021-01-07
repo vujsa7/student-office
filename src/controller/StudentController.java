@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.AbstractStudentTable;
-import model.PolozenIspit;
 import model.Predmet;
 import model.Student;
 import view.dialogs.StudentEditDialog;
+import view.dialogs.components.studentedit.StudentUnsettledSubjectsTablePanel;
 import view.table.TablePanel;
 
 public class StudentController {
@@ -182,10 +182,10 @@ private static StudentController instance = null;
 		TablePanel.getInstance().refreshView("student");
 	}
 	
-	public List<PolozenIspit> pronadjiStudentovePolozeneIspite(String selectedIndex) {
+	public List<Predmet> pronadjiStudentovePolozeneIspite(String selectedIndex) {
 		
 		List<Student> studenti = AbstractStudentTable.getInstance().getStudenti();
-		List<PolozenIspit> ret = new ArrayList<PolozenIspit>();
+		List<Predmet> ret = new ArrayList<Predmet>();
 		
 		if(!studenti.isEmpty()) {
 			for(Student student : studenti) {
@@ -208,5 +208,21 @@ private static StudentController instance = null;
 
 	public boolean nekiStudentImaNepolozenIspit(String sifraPredmeta) {
 		return AbstractStudentTable.getInstance().nekiStudentImaNepolozenIspit(sifraPredmeta);
+	}
+	
+	public Student pronadjiStudentaPrekoIndeksa(String brojIndeksa) {
+		for(Student student : AbstractStudentTable.getInstance().getStudenti()) {
+			if(student.getBrojIndeksa().equals(brojIndeksa))
+				return student;
+		}
+		
+		return null;
+	}
+	
+	public void dodajPredmetUNepolozene(Predmet predmet) {
+		Student student = pronadjiStudentaPrekoIndeksa(StudentEditDialog.stariIndeks);
+		student.getNepolozeniIspiti().add(predmet);
+		
+		StudentUnsettledSubjectsTablePanel.getInstance().refreshView();
 	}
 }

@@ -6,7 +6,6 @@ import java.util.List;
 import model.AbstractStudentTable;
 import model.AbstractStudentoviPolozeniIspitiTable;
 import model.AbstractSubjectTable;
-import model.PolozenIspit;
 import model.Predmet;
 import model.Profesor;
 import model.Student;
@@ -186,7 +185,7 @@ public class SubjectController {
 	
 	public void ponistiOcenu(String selectedIndex) {
 		String selektovanStudent = TablePanel.getInstance().getSelectedEntityID();
-		List<PolozenIspit> polozeniIspiti = StudentController.getInstance().pronadjiStudentovePolozeneIspite(selektovanStudent);
+		List<Predmet> polozeniIspiti = StudentController.getInstance().pronadjiStudentovePolozeneIspite(selektovanStudent);
 		List<Student> studenti = AbstractStudentTable.getInstance().getStudenti();
 		
 		
@@ -195,7 +194,7 @@ public class SubjectController {
 				if(student.getBrojIndeksa().equals(selektovanStudent)) {
 					if(!polozeniIspiti.isEmpty()) {
 						int row = 0;
-						for(PolozenIspit polozenIspit : polozeniIspiti) {
+						for(Predmet polozenIspit : polozeniIspiti) {
 							if(polozenIspit.getSifraPredmeta().equals(selectedIndex))
 								break;
 							

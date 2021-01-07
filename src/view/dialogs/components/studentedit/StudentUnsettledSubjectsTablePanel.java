@@ -14,11 +14,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 
-import model.AbstractProfessorHasSubjectsTable;
 import model.AbstractStudentUnsettledSubjectsTable;
-import view.dialogs.components.professoredit.SubjectAddButton;
-import view.dialogs.components.professoredit.SubjectRemoveButton;
-import view.dialogs.tables.ProfessorHasSubjectsTable;
 import view.dialogs.tables.StudentUnsettledSubjectsTable;
 
 public class StudentUnsettledSubjectsTablePanel extends JPanel {
@@ -80,6 +76,20 @@ public class StudentUnsettledSubjectsTablePanel extends JPanel {
 		add(basePanel);
 	}
 	
+	
+	
+	public static int getSelectedSubject() {
+		return selectedSubject;
+	}
+
+
+
+	public static void setSelectedSubject(int selectedSubject) {
+		StudentUnsettledSubjectsTablePanel.selectedSubject = selectedSubject;
+	}
+
+
+
 	public void refreshView() {
 		AbstractStudentUnsettledSubjectsTable model = (AbstractStudentUnsettledSubjectsTable) studentUnsettledSubjectsTable.getModel();
 		model.fireTableDataChanged();

@@ -16,14 +16,14 @@ public class Student {
 	private String trenutnaGodStudija;
 	private String status;
 	private String prosek;
-	private List<PolozenIspit> polozeniIspiti;
+	private List<Predmet> polozeniIspiti;
 	private List<Predmet> nepolozeniIspiti;
 	
 	Student() {}
 	
 	public Student(String ime, String prezime, LocalDate datumRodjenja, String adresaStanovanja, String brojTelefona,
 			String email, String brojIndeksa, String godUpisa, String trenutnaGodStudija, String status, String prosek,
-			List<PolozenIspit> polozeniIspiti, List<Predmet> nepolozeniIspiti) {
+			List<Predmet> polozeniIspiti, List<Predmet> nepolozeniIspiti) {
 		super();
 		this.ime = ime;
 		this.prezime = prezime;
@@ -108,11 +108,11 @@ public class Student {
 		this.status = status;
 	}
 
-	public List<PolozenIspit> getPolozeniIspiti() {
+	public List<Predmet> getPolozeniIspiti() {
 		return polozeniIspiti;
 	}
 
-	public void setPolozeniIspiti(List<PolozenIspit> polozeniIspiti) {
+	public void setPolozeniIspiti(List<Predmet> polozeniIspiti) {
 		this.polozeniIspiti = polozeniIspiti;
 	}
 

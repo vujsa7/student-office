@@ -14,37 +14,36 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
-import controller.AddProfesorToSubjectController;
-
-import controller.ProfessorController;
-
+import controller.AddNepolozenIspitController;
+import controller.StudentController;
 import controller.SubjectController;
-import model.AbstractAddProfesorToSubjectTable;
+import model.AbstractAddNepolozeniIspitiTable;
+import model.Predmet;
 import view.dialogs.components.DialogConfirmButton;
 import view.dialogs.components.DialogDeclineButton;
-import view.dialogs.tables.AddProfesorToSubjectTable;
+import view.dialogs.tables.AddNepolozenIspitTable;
 
-
-public class AddProfesorToSubjectEditDialog extends JDialog{
+public class AddNepolozenIspitDialog extends JDialog{
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1497365723049935614L;
-	private static AddProfesorToSubjectEditDialog instance = null;
+	private static final long serialVersionUID = -360701514509775453L;
 	
-	public static AddProfesorToSubjectEditDialog getInstance() {
-			instance = new AddProfesorToSubjectEditDialog(PredmetEditDialog.getInstance());
+	private static AddNepolozenIspitDialog instance = null;
+	
+	public static AddNepolozenIspitDialog getInstance() {
+			instance = new AddNepolozenIspitDialog(StudentEditDialog.getInstance());
 		
 		return instance;
 	}
 	
-	private AddProfesorToSubjectTable profesoriUSistemu;
+	private AddNepolozenIspitTable nepolozeniIspiti;
 	private DialogConfirmButton dialogConfirmButton;
-	private int selectedProf = -1;
+	private int selectedPredmet = -1;
 	
-	public AddProfesorToSubjectEditDialog(JDialog parent) {
-		super(parent, "Odaberi profesora", true);
+	private AddNepolozenIspitDialog(JDialog parent) {
+		super(parent, "Dodavanje predmeta", true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setPreferredSize(new Dimension(580, 420));
 		setResizable(false);
@@ -57,10 +56,10 @@ public class AddProfesorToSubjectEditDialog extends JDialog{
 		
 		basePanel.setBorder(new EmptyBorder(20, 20, 20, 20));
 		
-		profesoriUSistemu = new AddProfesorToSubjectTable();
-		profesoriUSistemu.addMouseListener(new TableMouseListener());
+		nepolozeniIspiti = new AddNepolozenIspitTable();
+		nepolozeniIspiti.addMouseListener(new TableMouseListener());
 		basePanel.add(Box.createVerticalStrut(10));
-		JScrollPane scrollPane = new JScrollPane(profesoriUSistemu);
+		JScrollPane scrollPane = new JScrollPane(nepolozeniIspiti);
 		basePanel.add(scrollPane);
 		basePanel.add(Box.createVerticalStrut(10));
 		
@@ -89,26 +88,20 @@ public class AddProfesorToSubjectEditDialog extends JDialog{
 		basePanel.add(buttonHolderPanel);
 		basePanel.add(Box.createVerticalStrut(10));
 		add(basePanel);
-		
 	}
 	
-
-	
-	
-	public int getSelectedProf() {
-		return selectedProf;
+	public int getSelectedIspit() {
+		return selectedPredmet;
 	}
 
 
-
-	public void setSelectedProf(int selectedProf) {
-		this.selectedProf = selectedProf;
+	public void setSelectedIspit(int selectedPredmet) {
+		this.selectedPredmet = selectedPredmet;
 	}
-
-
+	
 
 	public void refreshView() {
-		AbstractAddProfesorToSubjectTable model = (AbstractAddProfesorToSubjectTable) profesoriUSistemu.getModel();
+		AbstractAddNepolozeniIspitiTable model = (AbstractAddNepolozeniIspitiTable) nepolozeniIspiti.getModel();
 		model.fireTableDataChanged();
 		validate();
 	}
@@ -157,14 +150,11 @@ public class AddProfesorToSubjectEditDialog extends JDialog{
 		public void mousePressed(MouseEvent mouseEvent) {
 			JButton thisButton = (JButton) mouseEvent.getComponent();
 			if(thisButton.isEnabled()) {
-				SubjectController.getInstance().izmeniProfesora(selectedProf);
-				AddProfesorToSubjectController.getInstance().dobaviSveProfesore();
-				PredmetEditDialog.textFieldForProfesorNameAndSurname.setText(SubjectController.getInstance().vratiImeIPrezimeProfesora(selectedProf));
-				
-				
-				ProfessorController.getInstance().dodajProfesoruPredmet(selectedProf);
-				
+				String sifraPredmeta = AddNepolozenIspitController.getInstance().getSifraPredmeta(selectedPredmet);
+				Predmet predmet = SubjectController.getInstance().nabaviPredmetSaSifrom(sifraPredmeta);
+				StudentController.getInstance().dodajPredmetUNepolozene(predmet);
 				dispose();
+				
 			}		
 		}
 	}
@@ -172,11 +162,11 @@ public class AddProfesorToSubjectEditDialog extends JDialog{
 	class TableMouseListener extends MouseAdapter{
 		
 		public void mouseClicked(MouseEvent mouseEvent) {
-			if(!profesoriUSistemu.getSelectionModel().isSelectionEmpty()) {
-				selectedProf = profesoriUSistemu.convertRowIndexToModel(profesoriUSistemu.getSelectedRow());
+			if(!nepolozeniIspiti.getSelectionModel().isSelectionEmpty()) {
+				selectedPredmet = nepolozeniIspiti.convertRowIndexToModel(nepolozeniIspiti.getSelectedRow());
 				dialogConfirmButton.setEnabled(true);
 			} else {
-				selectedProf = -1;
+				selectedPredmet = -1;
 				dialogConfirmButton.setEnabled(false);
 			}
 		}

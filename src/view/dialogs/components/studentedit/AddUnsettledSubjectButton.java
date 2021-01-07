@@ -14,6 +14,9 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+import controller.AddNepolozenIspitController;
+import view.dialogs.AddNepolozenIspitDialog;
+
 public class AddUnsettledSubjectButton extends JButton{
 
 	/**
@@ -111,6 +114,8 @@ public class AddUnsettledSubjectButton extends JButton{
 							}
 						}).start();
 				
+				AddNepolozenIspitController.getInstance().dobaviNepolozeneIspite();
+				AddNepolozenIspitDialog.getInstance().setVisible(true);
 			}
 	}
 

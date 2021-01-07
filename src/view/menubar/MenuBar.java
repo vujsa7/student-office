@@ -130,7 +130,9 @@ public class MenuBar extends JMenuBar{
 								PredmetEditDialog.staraSifra = selectedEntityID;
 								PredmetEditDialog predmetEditDialog = PredmetEditDialog.getInstance();
 								predmetEditDialog.setProperValues();
+								predmetEditDialog.canPlusBeVisible();
 								predmetEditDialog.setVisible(true);
+								
 							} else {
 								JOptionPane.showMessageDialog(null, "Prvo izaberite predmet koji želite da izmenite", "Napomena", JOptionPane.INFORMATION_MESSAGE);
 							}
