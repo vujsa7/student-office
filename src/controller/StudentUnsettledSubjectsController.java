@@ -25,5 +25,10 @@ public class StudentUnsettledSubjectsController {
 		AbstractStudentUnsettledSubjectsTable.getInstance().setUnsettledSubjects(unsettledSubjects);
 		StudentUnsettledSubjectsTablePanel.getInstance().refreshView();
 	}
+	
+	public String getSelectedIspit(int selectedIspit) {
+		Predmet ispit = AbstractStudentUnsettledSubjectsTable.getInstance().getRow(selectedIspit);
+		return ispit.getSifraPredmeta();
+	}
 
 }

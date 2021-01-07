@@ -14,6 +14,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 
+import controller.StudentUnsettledSubjectsController;
 import model.AbstractStudentUnsettledSubjectsTable;
 import view.dialogs.tables.StudentUnsettledSubjectsTable;
 
@@ -105,6 +106,14 @@ public class StudentUnsettledSubjectsTablePanel extends JPanel {
 			else
 				selectedSubject = -1;
 		}
+		
+	}
+	
+	public String getSelectedPredmet() {
+		if(selectedSubject != -1) {
+			return StudentUnsettledSubjectsController.getInstance().getSelectedIspit(selectedSubject);
+		} else
+			return "NO_SELECTION";
 		
 	}
 }

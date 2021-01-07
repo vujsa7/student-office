@@ -225,4 +225,13 @@ private static StudentController instance = null;
 		
 		StudentUnsettledSubjectsTablePanel.getInstance().refreshView();
 	}
+	
+	public void obrisiNepolozenIspit(String selectedPredmet) {
+		String selectedStudent = TablePanel.getInstance().getSelectedEntityID();
+		Student student = pronadjiStudentaPrekoIndeksa(selectedStudent);
+		Predmet predmet = SubjectController.getInstance().nabaviPredmetSaSifrom(selectedPredmet);
+		student.getNepolozeniIspiti().remove(predmet);
+		
+		StudentUnsettledSubjectsTablePanel.getInstance().refreshView();
+	}
 }

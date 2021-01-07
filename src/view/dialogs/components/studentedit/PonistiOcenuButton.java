@@ -134,11 +134,9 @@ public class PonistiOcenuButton extends JButton{
 					if(ponistavanje == 0) {
 						SubjectController.getInstance().ponistiOcenu(selectedIndex);
 						
-						StudentoviPolozeniIspitiTablePanel.getInstance();
 						StudentoviPolozeniIspitiTablePanel.prosekLabel.setText("Prosečna ocena: " + SubjectController.getInstance().izracunajProsek());
 						StudentoviPolozeniIspitiTablePanel.espbLabel.setText("Ukupno ESPB: " + SubjectController.getInstance().izracunajESPB());
 						
-						StudentoviPolozeniIspitiTablePanel.getInstance().setSelectedIspit();
 					}
 				} else {
 					JOptionPane.showMessageDialog(null, "Označite ocenu koju želite da poništite", "Napomena", JOptionPane.INFORMATION_MESSAGE);

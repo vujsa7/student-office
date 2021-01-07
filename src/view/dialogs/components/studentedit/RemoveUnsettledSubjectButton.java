@@ -12,6 +12,9 @@ import java.io.File;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
+
+import controller.StudentController;
 
 public class RemoveUnsettledSubjectButton extends JButton{
 
@@ -109,6 +112,21 @@ public class RemoveUnsettledSubjectButton extends JButton{
 								}
 							}).start();
 					
+					String selectedPredmet = StudentUnsettledSubjectsTablePanel.getInstance().getSelectedPredmet();
+					String[] opcije = new String[2];
+					opcije[0] = new String("Da");
+					opcije[1] = new String("Ne");
+					if(selectedPredmet != "NO_SELECTION") {
+						int ponistavanje = JOptionPane.showOptionDialog(null, "Da li ste sigurni da želite da uklonite predmet?", "Uklanjanje predmeta", 0, 
+								JOptionPane.INFORMATION_MESSAGE, null, opcije, null);
+						
+						if(ponistavanje == 0) {
+							StudentController.getInstance().obrisiNepolozenIspit(selectedPredmet);
+							
+						}
+					} else {
+						JOptionPane.showMessageDialog(null, "Označite ocenu koju želite da poništite", "Napomena", JOptionPane.INFORMATION_MESSAGE);
+					}
 				}
 		}
 

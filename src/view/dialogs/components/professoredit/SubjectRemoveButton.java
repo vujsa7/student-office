@@ -134,7 +134,7 @@ public class SubjectRemoveButton extends JButton {
 					
 					if(brisanje == 0) {
 						ProfessorController.getInstance().obrisiPredmetSaProfesora(selectedSubject);
-//						ProfessorHasSubjectsTablePanel.getInstance().setSelectedProf();
+
 						SubjectController.getInstance().obrisiProfesoraSaPredmeta(selectedSubject);
 					}
 				} else {

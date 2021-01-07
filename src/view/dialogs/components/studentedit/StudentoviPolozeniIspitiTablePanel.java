@@ -129,9 +129,6 @@ public class StudentoviPolozeniIspitiTablePanel extends JPanel{
 		
 	}
 	
-	public void setSelectedIspit() {
-		selectedIspit = -1;
-	}
 	
 	class MyMouseListener extends MouseAdapter{
 		
