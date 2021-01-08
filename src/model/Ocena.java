@@ -2,59 +2,53 @@ package model;
 
 import java.time.LocalDate;
 
-public class PolozenIspit {
+public class Ocena {
 	
-	private String sifraPredmeta;
-	private String nazivPredmeta;
-	private String ESPB;
-	private String ocenaIzPredmeta;
+	private Student student;
+	private Predmet predmet;
+	private int ocena;
 	private LocalDate datumPolaganja;
 	
-	public PolozenIspit() {}
-	
-	public PolozenIspit(String sifraPredmeta, String nazivPredmeta, String ESPB, String ocenaIzPredmeta,
-			LocalDate datumPolaganja) {
+	public Ocena() {}
+
+	public Ocena(model.Student student, Predmet predmet, int ocena, LocalDate datumPolaganja) {
 		super();
-		this.sifraPredmeta = sifraPredmeta;
-		this.nazivPredmeta = nazivPredmeta;
-		this.ESPB = ESPB;
-		this.ocenaIzPredmeta = ocenaIzPredmeta;
+		this.student = student;
+		this.predmet = predmet;
+		this.ocena = ocena;
 		this.datumPolaganja = datumPolaganja;
 	}
 
+	public Student getStudent() {
+		return this.student;
+	}
 
+	public void setStudent(Student student) {
+		this.student = student;
+	}
 
-	public String getSifraPredmeta() {
-		return sifraPredmeta;
+	public Predmet getPredmet() {
+		return predmet;
 	}
-	public void setSifraPredmeta(String sifraPredmeta) {
-		this.sifraPredmeta = sifraPredmeta;
+
+	public void setPredmet(Predmet predmet) {
+		this.predmet = predmet;
 	}
-	public String getNazivPredmeta() {
-		return nazivPredmeta;
+
+	public int getOcena() {
+		return ocena;
 	}
-	public void setNazivPredmeta(String nazivPredmeta) {
-		this.nazivPredmeta = nazivPredmeta;
+
+	public void setOcena(int ocena) {
+		this.ocena = ocena;
 	}
-	public String getESPB() {
-		return ESPB;
-	}
-	public void setESPB(String ESPB) {
-		this.ESPB = ESPB;
-	}
-	public String getOcenaIzPredmeta() {
-		return ocenaIzPredmeta;
-	}
-	public void setOcenaIzPredmeta(String ocenaIzPredmeta) {
-		this.ocenaIzPredmeta = ocenaIzPredmeta;
-	}
+
 	public LocalDate getDatumPolaganja() {
 		return datumPolaganja;
 	}
+
 	public void setDatumPolaganja(LocalDate datumPolaganja) {
 		this.datumPolaganja = datumPolaganja;
 	}
 	
-	
-
 }

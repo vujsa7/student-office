@@ -1,7 +1,7 @@
 package controller;
 
 import model.AbstractStudentoviPolozeniIspitiTable;
-import model.PolozenIspit;
+import model.Ocena;
 
 public class PolozeniStudentiController {
 	
@@ -17,7 +17,7 @@ public class PolozeniStudentiController {
 	private PolozeniStudentiController() {}
 	
 	public String getSelectedIspit(int selectedIspit) {
-		PolozenIspit ispit = AbstractStudentoviPolozeniIspitiTable.getInstance().getRow(selectedIspit);
-		return ispit.getSifraPredmeta();
+		Ocena ispit = AbstractStudentoviPolozeniIspitiTable.getInstance().getRow(selectedIspit);
+		return ispit.getPredmet().getSifraPredmeta();
 	}
 }

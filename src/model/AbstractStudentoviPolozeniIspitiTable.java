@@ -22,7 +22,7 @@ public class AbstractStudentoviPolozeniIspitiTable extends AbstractTableModel{
 		return instance;
 	}
 	
-	private List<PolozenIspit> polozeniIspiti;
+	private List<Ocena> oceneStudenta;
 	private List<String> kolone;
 	
 	private AbstractStudentoviPolozeniIspitiTable() {
@@ -40,15 +40,15 @@ public class AbstractStudentoviPolozeniIspitiTable extends AbstractTableModel{
 	}
 	
 	public void initIspite() {
-		this.polozeniIspiti = new ArrayList<PolozenIspit>();
+		this.oceneStudenta = new ArrayList<Ocena>();
 	}
 	
-	public List<PolozenIspit> getPolozeniIspiti() {
-		return polozeniIspiti;
+	public List<Ocena> getPolozeniIspiti() {
+		return oceneStudenta;
 	}
 
-	public void setPolozeniIspiti(List<PolozenIspit> polozeniIspiti) {
-		this.polozeniIspiti = polozeniIspiti;
+	public void setPolozeniIspiti(List<Ocena> polozeniIspiti) {
+		this.oceneStudenta = polozeniIspiti;
 	}
 
 	public List<String> getKolone() {
@@ -61,7 +61,7 @@ public class AbstractStudentoviPolozeniIspitiTable extends AbstractTableModel{
 
 	@Override
 	public int getRowCount() {
-		return polozeniIspiti.size();
+		return oceneStudenta.size();
 	}
 
 	@Override
@@ -71,22 +71,22 @@ public class AbstractStudentoviPolozeniIspitiTable extends AbstractTableModel{
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		PolozenIspit polozenIspit = this.polozeniIspiti.get(rowIndex);
+		Ocena ocena = this.oceneStudenta.get(rowIndex);
 		switch(columnIndex) {
 			case 0:
-				return polozenIspit.getSifraPredmeta();
+				return ocena.getPredmet().getSifraPredmeta();
 			
 			case 1:
-				return polozenIspit.getNazivPredmeta();
+				return ocena.getPredmet().getNazivPredmeta();
 				
 			case 2:
-				return polozenIspit.getESPB();
+				return ocena.getPredmet().getBrojESPB();
 			
 			case 3:
-				return polozenIspit.getOcenaIzPredmeta();
+				return ocena.getOcena();
 			
 			case 4:
-				return String.valueOf(polozenIspit.getDatumPolaganja());
+				return String.valueOf(ocena.getDatumPolaganja());
 			
 			default:
 				return null;
@@ -106,11 +106,11 @@ public class AbstractStudentoviPolozeniIspitiTable extends AbstractTableModel{
 	}
 	
 	public void removeRow(int index) {
-		this.polozeniIspiti.remove(index);
+		this.oceneStudenta.remove(index);
 	}
 	
-	public PolozenIspit getRow(int row) {
-		return this.polozeniIspiti.get(row);
+	public Ocena getRow(int row) {
+		return this.oceneStudenta.get(row);
 	}
 	
 	public double racunajProsek() {

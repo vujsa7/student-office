@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.AbstractStudentTable;
-import model.PolozenIspit;
+import model.Ocena;
 import model.Predmet;
 import model.Student;
 import view.dialogs.StudentEditDialog;
@@ -183,10 +183,10 @@ private static StudentController instance = null;
 		TablePanel.getInstance().refreshView("student");
 	}
 	
-	public List<PolozenIspit> pronadjiStudentovePolozeneIspite(String selectedIndex) {
+	public List<Ocena> pronadjiStudentovePolozeneIspite(String selectedIndex) {
 		
 		List<Student> studenti = AbstractStudentTable.getInstance().getStudenti();
-		List<PolozenIspit> ret = new ArrayList<PolozenIspit>();
+		List<Ocena> ret = new ArrayList<Ocena>();
 		
 		if(!studenti.isEmpty()) {
 			for(Student student : studenti) {

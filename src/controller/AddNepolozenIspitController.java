@@ -6,7 +6,7 @@ import java.util.List;
 import model.AbstractAddNepolozeniIspitiTable;
 import model.AbstractStudentTable;
 import model.AbstractSubjectTable;
-import model.PolozenIspit;
+import model.Ocena;
 import model.Predmet;
 import model.Student;
 import view.dialogs.AddNepolozenIspitDialog;
@@ -29,16 +29,16 @@ public class AddNepolozenIspitController {
 		Student student = StudentController.getInstance().pronadjiStudentaPrekoIndeksa(StudentEditDialog.stariIndeks);
 		List<Predmet> sviPredmeti = AbstractSubjectTable.getInstance().getSubjects();
 		List<Predmet> nepolozeniStudentoviPredmeti = student.getNepolozeniIspiti();
-		List<PolozenIspit> polozeniStudentoviPredmeti = student.getPolozeniIspiti();		
+		List<Ocena> polozeniStudentoviPredmeti = student.getPolozeniIspiti();		
 		
 		List<Predmet> predmetiKojiSeNeNalaze = new ArrayList<Predmet>();
 		
 		for(Predmet predmet : sviPredmeti) {
 			if(!nepolozeniStudentoviPredmeti.contains(predmet)) {
 				if(!polozeniStudentoviPredmeti.isEmpty()) {
-					for(PolozenIspit polozenIspit : polozeniStudentoviPredmeti) {
+					for(Ocena polozenIspit : polozeniStudentoviPredmeti) {
 						int godinaStudenta = AbstractStudentTable.getInstance().vratiGodinuStudenta(student.getTrenutnaGodStudija());
-						if(!polozenIspit.getSifraPredmeta().equals(predmet.getSifraPredmeta()) && predmet.getGodinaStudija() <= godinaStudenta) {
+						if(!polozenIspit.getPredmet().getSifraPredmeta().equals(predmet.getSifraPredmeta()) && predmet.getGodinaStudija() <= godinaStudenta) {
 							predmetiKojiSeNeNalaze.add(predmet);
 						}
 					}
