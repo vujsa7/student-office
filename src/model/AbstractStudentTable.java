@@ -180,4 +180,14 @@ public class AbstractStudentTable extends AbstractTableModel{
 		
 		
 	}
+	
+	public List<Ocena> nabaviPolozenePredmeteStudenta(String indeks) {
+		List<Ocena> ret = new ArrayList<Ocena>();
+		for(Student student : studenti) {
+			if(student.getBrojIndeksa().equals(indeks))
+				return student.getPolozeniIspiti();
+		}
+		
+		return ret;
+	}
 }

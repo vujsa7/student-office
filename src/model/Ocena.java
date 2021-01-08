@@ -11,7 +11,7 @@ public class Ocena {
 	
 	public Ocena() {}
 
-	public Ocena(model.Student student, Predmet predmet, int ocena, LocalDate datumPolaganja) {
+	public Ocena(Student student, Predmet predmet, int ocena, LocalDate datumPolaganja) {
 		super();
 		this.student = student;
 		this.predmet = predmet;

@@ -1,5 +1,6 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +42,9 @@ public class AbstractStudentoviPolozeniIspitiTable extends AbstractTableModel{
 	
 	public void initIspite() {
 		this.oceneStudenta = new ArrayList<Ocena>();
+		Student student = AbstractStudentTable.getInstance().getStudenti().get(0);
+		Predmet predmet = AbstractSubjectTable.getInstance().getSubjects().get(0);
+		this.oceneStudenta.add(new Ocena(student, predmet, 7, LocalDate.of(2018, 6, 26)));
 	}
 	
 	public List<Ocena> getPolozeniIspiti() {
@@ -123,7 +127,10 @@ public class AbstractStudentoviPolozeniIspitiTable extends AbstractTableModel{
 			delilac++;
 		}
 		
-		prosek = ukupno/delilac;
+		if(delilac != 0)
+			prosek = ukupno/delilac;
+		else
+			return 0;
 		
 		return prosek;
 	}
@@ -137,5 +144,9 @@ public class AbstractStudentoviPolozeniIspitiTable extends AbstractTableModel{
 		}
 		
 		return ukupnoESPB;
+	}
+	
+	public void postaviStudentuPolozeneIspite(List<Ocena> ocene) {
+		oceneStudenta = ocene;
 	}
 }

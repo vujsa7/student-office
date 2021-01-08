@@ -16,8 +16,10 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
+import controller.PolozeniStudentiController;
 import controller.ProfessorController;
 import controller.StudentController;
+import controller.StudentUnsettledSubjectsController;
 import controller.SubjectController;
 import view.dialogs.PredmetDialog;
 import view.dialogs.PredmetEditDialog;
@@ -107,6 +109,8 @@ public class MenuBar extends JMenuBar{
 							if(selectedIndex != "NO_SELECTION") {
 								StudentEditDialog.stariIndeks = selectedIndex;
 								StudentEditDialog studentEditDialog = StudentEditDialog.getInstance();
+								PolozeniStudentiController.getInstance().postaviPolozenePredmeteStudentu();
+								StudentUnsettledSubjectsController.getInstance().postaviNepolozenePredmeteStudentu();
 								studentEditDialog.setProperValues();
 								studentEditDialog.setVisible(true);
 							} else {
