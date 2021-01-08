@@ -2,6 +2,7 @@ package view.toolbar;
 
 import javax.swing.*;
 
+import controller.PolozeniStudentiController;
 import controller.ProfessorController;
 import controller.ProfessorHasSubjectsController;
 import controller.StudentController;
@@ -121,6 +122,7 @@ public class HoverButton extends JButton{
 							StudentEditDialog.stariIndeks = selectedEntityID;
 							StudentEditDialog studentEditDialog = StudentEditDialog.getInstance();
 							StudentUnsettledSubjectsController.getInstance().postaviNepolozenePredmeteStudentu();
+							PolozeniStudentiController.getInstance().postaviPolozenePredmeteStudentu();
 							studentEditDialog.setProperValues();
 							studentEditDialog.setVisible(true);
 						} else {

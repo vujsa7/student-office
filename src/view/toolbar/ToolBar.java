@@ -21,6 +21,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.AbstractDocument;
 
+import controller.PolozeniStudentiController;
 import controller.ProfessorController;
 import controller.ProfessorHasSubjectsController;
 import controller.StudentController;
@@ -116,6 +117,7 @@ public class ToolBar extends JToolBar{
 						StudentEditDialog.stariIndeks = selectedEntityID;
 						StudentEditDialog studentEditDialog = StudentEditDialog.getInstance();
 						StudentUnsettledSubjectsController.getInstance().postaviNepolozenePredmeteStudentu();
+						PolozeniStudentiController.getInstance().postaviPolozenePredmeteStudentu();
 						studentEditDialog.setProperValues();
 						studentEditDialog.setVisible(true);
 					} else {
@@ -138,6 +140,7 @@ public class ToolBar extends JToolBar{
 					if(selectedEntityID != "NO_SELECTION") {
 						PredmetEditDialog.staraSifra = selectedEntityID;
 						PredmetEditDialog predmetEditDialog = PredmetEditDialog.getInstance();
+						predmetEditDialog.canPlusBeVisible();
 						predmetEditDialog.setProperValues();
 						predmetEditDialog.setVisible(true);
 					} else {

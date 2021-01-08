@@ -190,4 +190,22 @@ public class AbstractStudentTable extends AbstractTableModel{
 		
 		return ret;
 	}
+	
+	public void izbrisiPredmetIzListeNepolozenih(String stariIndeks, int index) {
+		for(Student s : studenti) {
+			if(s.getBrojIndeksa() == stariIndeks) {
+				s.getNepolozeniIspiti().remove(index);
+			}
+		}
+		
+	}
+	
+	public void dodajPredmetUListuPolozenih(String stariIndeks, Predmet p, int ocena, LocalDate localDate) {
+		for(Student s : studenti) {
+			if(s.getBrojIndeksa() == stariIndeks) {
+				Ocena o = new Ocena(s, p, ocena, localDate);
+				s.getPolozeniIspiti().add(o);
+			}
+		}
+	}
 }

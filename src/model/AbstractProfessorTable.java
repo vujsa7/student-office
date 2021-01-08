@@ -86,7 +86,7 @@ public class AbstractProfessorTable extends AbstractTableModel{
 	}
 
 	public void dodajProfesora(String ime, String prezime, LocalDate datumRodjenja, String adresaStanovanja, String kontaktTelefon, String emailAdresa, String adresaKancelarije, String brojLicneKarte, String titula, String zvanje) {
-		professors.add(new Profesor(ime, prezime, datumRodjenja, adresaStanovanja, kontaktTelefon, emailAdresa, adresaKancelarije, brojLicneKarte, titula, zvanje, null));
+		professors.add(new Profesor(ime, prezime, datumRodjenja, adresaStanovanja, kontaktTelefon, emailAdresa, adresaKancelarije, brojLicneKarte, titula, zvanje, new ArrayList<Predmet>()));
 	}
 
 	@Override

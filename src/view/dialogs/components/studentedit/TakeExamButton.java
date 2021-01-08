@@ -13,6 +13,9 @@ import java.io.File;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
+
+import view.dialogs.GradeEntryDialog;
 
 public class TakeExamButton extends JButton{
 
@@ -97,21 +100,32 @@ public class TakeExamButton extends JButton{
 					}).start();
 		}
 		public void mousePressed(MouseEvent mouseEvent) {
-				new Thread(
-						new Runnable() {
-							public void run() {
-								for (float i = 1f; i >= 0.7f; i -= 0.1f) {
-									setAlpha(i);
-									try {
-										Thread.sleep(1);
-									} catch (Exception e) {
-										
-									}
+			new Thread(
+					new Runnable() {
+						public void run() {
+							for (float i = 1f; i >= 0.7f; i -= 0.1f) {
+								setAlpha(i);
+								try {
+									Thread.sleep(1);
+								} catch (Exception e) {
+									
 								}
 							}
-						}).start();
-				
+						}
+					}).start();
+			
+			String selectedEntityID = StudentUnsettledSubjectsTablePanel.getInstance().getSelectedPredmet();
+			if(selectedEntityID != "NO_SELECTION") {
+				GradeEntryDialog.entityID = selectedEntityID;
+				GradeEntryDialog gradeEntryDialog = GradeEntryDialog.getInstance();
+				gradeEntryDialog.setProperFields();
+				gradeEntryDialog.setVisible(true);
+			} else {
+				JOptionPane.showMessageDialog(null, "Prvo izaberite predmet koji student polaže", "Napomena", JOptionPane.INFORMATION_MESSAGE);
 			}
+			
+		}
+		
 	}
 
 }

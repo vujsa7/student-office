@@ -126,7 +126,11 @@ public class StudentoviPolozeniIspitiTablePanel extends JPanel{
 			return PolozeniStudentiController.getInstance().getSelectedIspit(selectedIspit);
 		} else
 			return "NO_SELECTION";
-		
+	}
+	
+	public void updateProsekAndESPB(String prosek, String espb) {
+		espbLabel.setText(espb);
+		prosekLabel.setText(prosek);
 	}
 	
 	

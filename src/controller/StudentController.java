@@ -8,8 +8,10 @@ import model.AbstractStudentTable;
 import model.Ocena;
 import model.Predmet;
 import model.Student;
+import view.dialogs.GradeEntryDialog;
 import view.dialogs.StudentEditDialog;
 import view.dialogs.components.studentedit.StudentUnsettledSubjectsTablePanel;
+import view.dialogs.components.studentedit.StudentoviPolozeniIspitiTablePanel;
 import view.table.TablePanel;
 
 public class StudentController {
@@ -234,5 +236,16 @@ private static StudentController instance = null;
 		student.getNepolozeniIspiti().remove(predmet);
 		
 		StudentUnsettledSubjectsTablePanel.getInstance().refreshView();
+	}
+	
+	public void izbrisiPredmetIzListeNepolozenih() {
+		AbstractStudentTable.getInstance().izbrisiPredmetIzListeNepolozenih( StudentEditDialog.stariIndeks, StudentUnsettledSubjectsTablePanel.getSelectedSubject());
+		StudentUnsettledSubjectsTablePanel.getInstance().refreshView();
+	}
+
+	public void dodajStudentuPredmetUListuPolozenih(int ocena, LocalDate localDate) {
+		Predmet p = SubjectController.getInstance().nabaviPredmetSaSifrom(GradeEntryDialog.entityID);
+		AbstractStudentTable.getInstance().dodajPredmetUListuPolozenih(StudentEditDialog.stariIndeks, p, ocena, localDate);
+		StudentoviPolozeniIspitiTablePanel.getInstance().refreshView();
 	}
 }
