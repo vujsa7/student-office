@@ -118,28 +118,25 @@ public class AbstractStudentoviPolozeniIspitiTable extends AbstractTableModel{
 	}
 	
 	public double racunajProsek() {
-		double prosek;
-		int ukupno = 0;
-		int delilac = 0;
+		int brojPredmeta = oceneStudenta.size();
+		int zbir = 0;
 		
-		for(int i = 0; i<getRowCount(); i++) {
-			ukupno += Integer.parseInt((String) getValueAt(i, 3));
-			delilac++;
+		for(Ocena ocena : oceneStudenta) {
+			zbir += ocena.getOcena();
 		}
 		
-		if(delilac != 0)
-			prosek = ukupno/delilac;
-		else
+		if(brojPredmeta == 0)
 			return 0;
-		
-		return prosek;
+		else
+			return zbir/brojPredmeta;
+
 	}
 	
 	public int racunajESPB() {
 		int ukupnoESPB = 0;
 		
-		for(int i = 0; i<getRowCount(); i++) {
-			ukupnoESPB += Integer.parseInt((String) getValueAt(i, 2));
+		for(Ocena ocena : oceneStudenta) {
+			ukupnoESPB += ocena.getPredmet().getBrojESPB();
 			
 		}
 		
