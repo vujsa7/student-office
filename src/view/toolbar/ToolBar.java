@@ -119,6 +119,7 @@ public class ToolBar extends JToolBar{
 						StudentUnsettledSubjectsController.getInstance().postaviNepolozenePredmeteStudentu();
 						PolozeniStudentiController.getInstance().postaviPolozenePredmeteStudentu();
 						studentEditDialog.setProperValues();
+						studentEditDialog.setDefaultView();
 						studentEditDialog.setVisible(true);
 					} else {
 						JOptionPane.showMessageDialog(null, "Prvo izaberite studenta kojeg želite da izmenite", "Napomena", JOptionPane.INFORMATION_MESSAGE);
@@ -141,6 +142,7 @@ public class ToolBar extends JToolBar{
 						PredmetEditDialog.staraSifra = selectedEntityID;
 						PredmetEditDialog predmetEditDialog = PredmetEditDialog.getInstance();
 						predmetEditDialog.canPlusBeVisible();
+						predmetEditDialog.canMinusBeVisible();
 						predmetEditDialog.setProperValues();
 						predmetEditDialog.setVisible(true);
 					} else {
@@ -181,36 +183,35 @@ public class ToolBar extends JToolBar{
 		        	 
 		         } else {
 		        	// ako se brise predmet
-						String selectedEntityID = TablePanel.getInstance().getSelectedEntityID();
-						if(selectedEntityID != "NO_SELECTION") {
-							String[] options = new String[2];
-							options[0] = new String("Poništi");
-							options[1] = new String("Obriši");
-							int reply = JOptionPane.showOptionDialog(null, "Da li ste sigurni da želite da obrišete predmet?", "Brisanje predmeta", 0,
-									JOptionPane.INFORMATION_MESSAGE, null, options, null);
-							if(reply == 1) {
-								if(!ProfessorController.getInstance().nekiProfesorImaPredmet(selectedEntityID)) {
-									if(!StudentController.getInstance().nekiStudentImaPolozenIspit(selectedEntityID)) {
-										if(!StudentController.getInstance().nekiStudentImaNepolozenIspit(selectedEntityID)) {
-											SubjectController.getInstance().obrisiPredmet(selectedEntityID);
-											ProfessorController.getInstance().obrisiPredmetSaProfesora(selectedEntityID);
-											TablePanel.getInstance().setSelectedEntityID(-1);
-										} else {
-											JOptionPane.showMessageDialog(null, "Nemoguće obrisati predmet jer postoji student koji nije položio taj predmet!", "Neuspešna radnja", JOptionPane.INFORMATION_MESSAGE);
-										}
+					String selectedEntityID = TablePanel.getInstance().getSelectedEntityID();
+					if(selectedEntityID != "NO_SELECTION") {
+						String[] options = new String[2];
+						options[0] = new String("Poništi");
+						options[1] = new String("Obriši");
+						int reply = JOptionPane.showOptionDialog(null, "Da li ste sigurni da želite da obrišete predmet?", "Brisanje predmeta", 0,
+								JOptionPane.INFORMATION_MESSAGE, null, options, null);
+						if(reply == 1) {
+							if(!ProfessorController.getInstance().nekiProfesorImaPredmet(selectedEntityID)) {
+								if(!StudentController.getInstance().nekiStudentImaPolozenIspit(selectedEntityID)) {
+									if(!StudentController.getInstance().nekiStudentImaNepolozenIspit(selectedEntityID)) {
+										SubjectController.getInstance().obrisiPredmet(selectedEntityID);
+										ProfessorController.getInstance().obrisiPredmetSaProfesora(selectedEntityID);
+										TablePanel.getInstance().setSelectedEntityID(-1);
 									} else {
-										JOptionPane.showMessageDialog(null, "Nemoguće obrisati predmet jer postoji student koji je položio taj predmet!", "Neuspešna radnja", JOptionPane.INFORMATION_MESSAGE);
+										JOptionPane.showMessageDialog(null, "Nemoguće obrisati predmet jer postoji student koji nije položio taj predmet!", "Neuspešna radnja", JOptionPane.INFORMATION_MESSAGE);
 									}
 								} else {
-									JOptionPane.showMessageDialog(null, "Nemoguće obrisati predmet jer postoji profesor koji predaje na njemu!", "Neuspešna radnja", JOptionPane.INFORMATION_MESSAGE);
+									JOptionPane.showMessageDialog(null, "Nemoguće obrisati predmet jer postoji student koji je položio taj predmet!", "Neuspešna radnja", JOptionPane.INFORMATION_MESSAGE);
 								}
+							} else {
+								JOptionPane.showMessageDialog(null, "Nemoguće obrisati predmet jer postoji profesor koji predaje na njemu!", "Neuspešna radnja", JOptionPane.INFORMATION_MESSAGE);
 							}
-							
-						} else {
-							JOptionPane.showMessageDialog(null, "Prvo izaberite predmet koji želite da izbrišete", "Napomena", JOptionPane.INFORMATION_MESSAGE);
 						}
-		         }
-		         
+						
+					} else {
+						JOptionPane.showMessageDialog(null, "Prvo izaberite predmet koji želite da izbrišete", "Napomena", JOptionPane.INFORMATION_MESSAGE);
+					}
+		        }
 		    }
 		}; 
 		deleteBtn.getActionMap().put("performDelete", performDelete);
@@ -250,8 +251,10 @@ public class ToolBar extends JToolBar{
 					searchButton.resetIcon();
 					if(TablePanel.currentlyOpenedTable.equals(TablePanel.PROFESSOR_PANEL)) {
 						ProfessorController.getInstance().vratiDefaultProfesore();
+						TablePanel.selectedProfessorRow = -1;
 					} else if(TablePanel.currentlyOpenedTable.equals(TablePanel.SUBJECT_PANEL)) {
 						SubjectController.getInstance().vratiDefaultPredmete();
+						TablePanel.selectedSubjectRow = -1;
 					}
 					
 			     }

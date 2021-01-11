@@ -8,6 +8,7 @@ import model.AbstractProfessorTable;
 import model.AbstractSubjectTable;
 import model.Predmet;
 import model.Profesor;
+import view.dialogs.PredmetEditDialog;
 import view.dialogs.ProfessorEditDialog;
 import view.dialogs.components.professoredit.ProfessorHasSubjectsTablePanel;
 import view.table.TablePanel;
@@ -209,5 +210,15 @@ public class ProfessorController {
 	
 	public boolean nekiProfesorImaPredmet(String sifraPredmeta) {
 		return AbstractProfessorTable.getInstance().nekiProfesorImaPredmet(sifraPredmeta);
+	}
+	
+	public void obrisiPredmetSaProfesoraIzPredmetEditDialoga() {
+		String sifraProfesora = SubjectController.getInstance().nabaviSifruPredmetnogProfesora();
+		if( sifraProfesora != "ERROR") {
+			Profesor profesor = nabaviProfesoraSaLicnomKartom(sifraProfesora);
+			Predmet predmet = SubjectController.getInstance().nabaviPredmetSaSifrom(PredmetEditDialog.staraSifra);
+			profesor.getListaPredmeta().remove(predmet);
+		}
+		
 	}
 }

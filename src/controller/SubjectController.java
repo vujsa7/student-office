@@ -159,6 +159,7 @@ public class SubjectController {
 		return null;
 	}
     
+   
     public boolean postojiLiSifra(String sifra) {
 		List<Predmet> predmeti = AbstractSubjectTable.getInstance().getSubjects();
 		for(Predmet predmet : predmeti) {
@@ -229,6 +230,7 @@ public class SubjectController {
 			
 			if(predmet.getSifraPredmeta().equals(PredmetEditDialog.staraSifra)) {
 				predmet.setPredmetniProfesor(profesor);
+				System.out.println(predmet.getPredmetniProfesor().getIme() + "DODAT PREDMETU" + predmet.getNazivPredmeta());
 				break;
 			}	
 		}
@@ -261,5 +263,14 @@ public class SubjectController {
 		Predmet predmet = nabaviPredmetSaSifrom(selectedSubject);
 		predmet.setPredmetniProfesor(null);
 	}
+	
+	 public String nabaviSifruPredmetnogProfesora() {
+	    	Predmet predmet = SubjectController.getInstance().nabaviPredmetSaSifrom(PredmetEditDialog.staraSifra);
+	    	if(predmet.getPredmetniProfesor() != null) 
+				return predmet.getPredmetniProfesor().getBrojLicneKarte();
+	    	else 
+	    		return "ERROR";
+	 }
+	    
 
 }

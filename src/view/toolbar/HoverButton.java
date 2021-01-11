@@ -124,6 +124,7 @@ public class HoverButton extends JButton{
 							StudentUnsettledSubjectsController.getInstance().postaviNepolozenePredmeteStudentu();
 							PolozeniStudentiController.getInstance().postaviPolozenePredmeteStudentu();
 							studentEditDialog.setProperValues();
+							studentEditDialog.setDefaultView();
 							studentEditDialog.setVisible(true);
 						} else {
 							JOptionPane.showMessageDialog(null, "Prvo izaberite studenta kojeg želite da izmenite", "Napomena", JOptionPane.INFORMATION_MESSAGE);
@@ -147,6 +148,7 @@ public class HoverButton extends JButton{
 						PredmetEditDialog predmetEditDialog = PredmetEditDialog.getInstance();
 						predmetEditDialog.setProperValues();
 						predmetEditDialog.canPlusBeVisible();
+						predmetEditDialog.canMinusBeVisible();
 						predmetEditDialog.setVisible(true);
 					} else {
 						JOptionPane.showMessageDialog(null, "Prvo izaberite predmet koji želite da izmenite", "Napomena", JOptionPane.INFORMATION_MESSAGE);

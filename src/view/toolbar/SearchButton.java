@@ -146,7 +146,7 @@ public class SearchButton extends JButton {
 				} else if(parts.length == 3) {
 					ProfessorController.getInstance().pronadjiProfesore(parts[0], parts[1], parts[2]);
 				}
-				
+				TablePanel.selectedProfessorRow = -1;
 			} else {
 				
 				SubjectController.getInstance().vratiDefaultPredmete();
@@ -158,7 +158,10 @@ public class SearchButton extends JButton {
 				} else if(parts.length == 3) {
 					SubjectController.getInstance().pronadjiPredmete(parts[0], parts[1], parts[2]);
 				}
+				TablePanel.selectedSubjectRow = -1;
 			}
+			
+			
 		}
 	}
 

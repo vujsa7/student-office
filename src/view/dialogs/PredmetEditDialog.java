@@ -33,6 +33,7 @@ import view.dialogs.components.DialogConfirmButton;
 import view.dialogs.components.ErrorPanel;
 import view.dialogs.components.FieldName;
 import view.dialogs.components.addingsubject.ButtonsPlusMinus;
+import view.dialogs.components.addingsubject.MinusButton;
 import view.dialogs.components.addingsubject.SubjectCustomComboBox;
 import view.dialogs.components.addingsubject.SubjectCustomTextField;
 import view.listeners.PredmetEditListener;
@@ -154,14 +155,14 @@ public class PredmetEditDialog extends JDialog{
 				textFieldForProfesorNameAndSurname.setEditable(false);
 				SubjectCustomTextField customTextField = new SubjectCustomTextField(textFieldForProfesorNameAndSurname, "3", true);
 				plusBtn = new ButtonsPlusMinus("assets"+ File.separator +"icons"+ File.separator +"plus.png");
-				ButtonsPlusMinus minusBtn = new ButtonsPlusMinus("assets"+ File.separator +"icons"+ File.separator +"minus.png");
+				MinusButton minusBtn = MinusButton.getInstance();
 				
 				plusBtn.addMouseListener(new MouseAddListener());
 				
 				plusBtn.setMaximumSize(new Dimension(36,36));
-				minusBtn.setMaximumSize(new Dimension(36,36));
+				
 				plusBtn.setPreferredSize(new Dimension(36,36));
-				minusBtn.setPreferredSize(new Dimension(36,36));
+				
 				
 				profesorPanel.add(customTextField);
 				profesorPanel.add(Box.createHorizontalStrut(10));
@@ -462,4 +463,10 @@ public class PredmetEditDialog extends JDialog{
 			plusBtn.setEnabled(false);
 	}
 	
+	public void canMinusBeVisible() {
+		if(PredmetEditDialog.textFieldForProfesorNameAndSurname.getText().isEmpty())
+			MinusButton.getInstance().setEnabled(false);
+		else
+			MinusButton.getInstance().setEnabled(true);
+	}
 }

@@ -22,6 +22,7 @@ import controller.SubjectController;
 import model.AbstractAddProfesorToSubjectTable;
 import view.dialogs.components.DialogConfirmButton;
 import view.dialogs.components.DialogDeclineButton;
+import view.dialogs.components.addingsubject.MinusButton;
 import view.dialogs.tables.AddProfesorToSubjectTable;
 
 
@@ -161,9 +162,8 @@ public class AddProfesorToSubjectEditDialog extends JDialog{
 				AddProfesorToSubjectController.getInstance().dobaviSveProfesore();
 				PredmetEditDialog.textFieldForProfesorNameAndSurname.setText(SubjectController.getInstance().vratiImeIPrezimeProfesora(selectedProf));
 				
-				
 				ProfessorController.getInstance().dodajProfesoruPredmet(selectedProf);
-				
+				MinusButton.getInstance().setEnabled(true);
 				dispose();
 			}		
 		}
