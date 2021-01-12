@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.AbstractProfessorTable;
-import model.AbstractSubjectTable;
 import model.Predmet;
 import model.Profesor;
 import view.dialogs.PredmetEditDialog;
@@ -188,23 +187,11 @@ public class ProfessorController {
 		
 	}
 	
-	public void dodajProfesoruPredmet(int selectedProfesor) {
-		String idProfe = AddProfesorToSubjectController.getInstance().getProfesor(selectedProfesor);
-		List<Profesor> profesori = AbstractProfessorTable.getInstance().getProfessors();
-		List<Predmet> predmeti = AbstractSubjectTable.getInstance().getSubjects();
+	public void dodajProfesoruPredmet(Profesor profesor) {
 		
 		String predmetKojiSeDodaje = TablePanel.getInstance().getSelectedEntityID();
+		profesor.getListaPredmeta().add(SubjectController.getInstance().nabaviPredmetSaSifrom(predmetKojiSeDodaje));
 		
-		if(!profesori.isEmpty()) {
-			for(Profesor profesor : profesori) {
-				if(profesor.getBrojLicneKarte().equals(idProfe)) {
-					for(Predmet predmet : predmeti) {
-						if(predmet.getSifraPredmeta().equals(predmetKojiSeDodaje))
-							profesor.getListaPredmeta().add(predmet);
-					}
-				}
-			}
-		}
 		ProfessorHasSubjectsTablePanel.getInstance().refreshView();
 	}
 	

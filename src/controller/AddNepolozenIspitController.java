@@ -34,21 +34,21 @@ public class AddNepolozenIspitController {
 		List<Predmet> predmetiKojiSeNeNalaze = new ArrayList<Predmet>();
 		
 		for(Predmet predmet : sviPredmeti) {
-			if(!nepolozeniStudentoviPredmeti.contains(predmet)) {
-				if(!polozeniStudentoviPredmeti.isEmpty()) {
-					for(Ocena polozenIspit : polozeniStudentoviPredmeti) {
-						int godinaStudenta = AbstractStudentTable.getInstance().vratiGodinuStudenta(student.getTrenutnaGodStudija());
-						if(!polozenIspit.getPredmet().getSifraPredmeta().equals(predmet.getSifraPredmeta()) && predmet.getGodinaStudija() <= godinaStudenta) {
-							predmetiKojiSeNeNalaze.add(predmet);
-						}
-					}
-				} else {
-					int godinaStudenta = AbstractStudentTable.getInstance().vratiGodinuStudenta(student.getTrenutnaGodStudija());
-					if(predmet.getGodinaStudija() <= godinaStudenta) {
-						predmetiKojiSeNeNalaze.add(predmet);
-					}
-				}
-			}
+            int godinaStudenta = AbstractStudentTable.getInstance().vratiGodinuStudenta(student.getTrenutnaGodStudija());
+            if(predmet.getGodinaStudija() <= godinaStudenta) {
+                    if(!nepolozeniStudentoviPredmeti.contains(predmet)) {
+                            int flag = 0;
+                            for(Ocena o: polozeniStudentoviPredmeti) {
+                                    if(o.getPredmet().getSifraPredmeta() == predmet.getSifraPredmeta()) {
+                                            flag = 1;
+                                            break;
+                                    }
+                            }
+                            if(flag != 1) {
+                                    predmetiKojiSeNeNalaze.add(predmet);
+                            }
+                    }
+            }
 		}
 		
 		

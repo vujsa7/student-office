@@ -248,4 +248,20 @@ private static StudentController instance = null;
 		AbstractStudentTable.getInstance().dodajPredmetUListuPolozenih(StudentEditDialog.stariIndeks, p, ocena, localDate);
 		StudentoviPolozeniIspitiTablePanel.getInstance().refreshView();
 	}
+	
+	public void ponistiOcenu(String selectedIndex) {
+		Student student = pronadjiStudentaPrekoIndeksa(StudentEditDialog.stariIndeks);
+		List<Ocena> polozeniIspiti = student.getPolozeniIspiti();
+		Ocena ocena = new Ocena();
+		
+		for(Ocena polozenIspit : polozeniIspiti) {
+			if(polozenIspit.getPredmet().getSifraPredmeta().equals(selectedIndex)) {
+				ocena = polozenIspit;
+			}
+		}
+		polozeniIspiti.remove(ocena);	
+		
+		StudentoviPolozeniIspitiTablePanel.getInstance().refreshView();		
+	}
+	
 }

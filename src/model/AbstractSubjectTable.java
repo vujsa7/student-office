@@ -124,4 +124,16 @@ public class AbstractSubjectTable extends AbstractTableModel{
 	public void dodajPredmet(String sifra, String naziv, int godina, Predmet.TipSemestra semestar, int espb) {
 		this.subjects.add(new Predmet(sifra, naziv, semestar, godina, null, espb, null, null));
 	}
+	
+	public boolean predmetImaProfesora(String licnaKarta) {
+		for(Predmet predmet : subjects) {
+			//System.out.println(licnaKarta);
+			if(predmet.getPredmetniProfesor() != null) {
+				if(predmet.getPredmetniProfesor().getBrojLicneKarte().equals(licnaKarta))
+					return true;
+			}
+		}
+		
+		return false;
+	}
 }

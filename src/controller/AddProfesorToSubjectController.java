@@ -27,7 +27,10 @@ public class AddProfesorToSubjectController {
 	}
 	
 	public String getProfesor(int selectedRow) {
-		Profesor profesor = AbstractAddProfesorToSubjectTable.getInstance().getRow(selectedRow);
-		return profesor.getBrojLicneKarte();
+		if(selectedRow != -1) {
+			Profesor profesor = AbstractAddProfesorToSubjectTable.getInstance().getRow(selectedRow);
+			return profesor.getBrojLicneKarte();
+		} else
+			return "";
 	}
 }

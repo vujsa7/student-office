@@ -249,7 +249,7 @@ public class StudentEditDialog extends JDialog{
 		basePanel.add(Box.createVerticalStrut(16));
 		
 		cards.add(basePanel, INFO_PANEL);
-		StudentoviPolozeniIspitiTablePanel polozeniIspitiPanel = new StudentoviPolozeniIspitiTablePanel();
+		StudentoviPolozeniIspitiTablePanel polozeniIspitiPanel = StudentoviPolozeniIspitiTablePanel.getInstance();
 		cards.add(polozeniIspitiPanel, POLOZENI_PANEL);
 		StudentUnsettledSubjectsTablePanel studentUnsettledSubjectsTablePanel = StudentUnsettledSubjectsTablePanel.getInstance();
 		cards.add(studentUnsettledSubjectsTablePanel, NEPOLOZENI_PANEL);

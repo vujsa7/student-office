@@ -117,9 +117,9 @@ public class AbstractStudentoviPolozeniIspitiTable extends AbstractTableModel{
 		return this.oceneStudenta.get(row);
 	}
 	
-	public double racunajProsek() {
+	public float racunajProsek() {
 		int brojPredmeta = oceneStudenta.size();
-		int zbir = 0;
+		float zbir = 0;
 		
 		for(Ocena ocena : oceneStudenta) {
 			zbir += ocena.getOcena();
@@ -127,9 +127,10 @@ public class AbstractStudentoviPolozeniIspitiTable extends AbstractTableModel{
 		
 		if(brojPredmeta == 0)
 			return 0;
-		else
-			return zbir/brojPredmeta;
-
+		else {
+			float rez = zbir/brojPredmeta;
+			return rez;
+		}
 	}
 	
 	public int racunajESPB() {

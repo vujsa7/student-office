@@ -16,7 +16,6 @@ import javax.swing.border.EmptyBorder;
 
 import controller.AddProfesorToSubjectController;
 
-import controller.ProfessorController;
 
 import controller.SubjectController;
 import model.AbstractAddProfesorToSubjectTable;
@@ -35,8 +34,9 @@ public class AddProfesorToSubjectEditDialog extends JDialog{
 	private static AddProfesorToSubjectEditDialog instance = null;
 	
 	public static AddProfesorToSubjectEditDialog getInstance() {
+		if(instance == null) {
 			instance = new AddProfesorToSubjectEditDialog(PredmetEditDialog.getInstance());
-		
+		}
 		return instance;
 	}
 	
@@ -158,11 +158,11 @@ public class AddProfesorToSubjectEditDialog extends JDialog{
 		public void mousePressed(MouseEvent mouseEvent) {
 			JButton thisButton = (JButton) mouseEvent.getComponent();
 			if(thisButton.isEnabled()) {
-				SubjectController.getInstance().izmeniProfesora(selectedProf);
+				//SubjectController.getInstance().izmeniProfesora(selectedProf);
 				AddProfesorToSubjectController.getInstance().dobaviSveProfesore();
 				PredmetEditDialog.textFieldForProfesorNameAndSurname.setText(SubjectController.getInstance().vratiImeIPrezimeProfesora(selectedProf));
 				
-				ProfessorController.getInstance().dodajProfesoruPredmet(selectedProf);
+				PredmetEditDialog.plusBtn.setEnabled(false);
 				MinusButton.getInstance().setEnabled(true);
 				dispose();
 			}		

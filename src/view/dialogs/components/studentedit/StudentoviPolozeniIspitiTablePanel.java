@@ -19,6 +19,8 @@ import controller.PolozeniStudentiController;
 import controller.StudentController;
 import controller.SubjectController;
 import model.AbstractStudentoviPolozeniIspitiTable;
+import model.Student;
+import view.dialogs.StudentEditDialog;
 import view.dialogs.tables.StudentoviPolozeniIspitiTable;
 import view.table.TablePanel;
 
@@ -129,8 +131,10 @@ public class StudentoviPolozeniIspitiTablePanel extends JPanel{
 	}
 	
 	public void updateProsekAndESPB(String prosek, String espb) {
-		espbLabel.setText(espb);
-		prosekLabel.setText(prosek);
+		espbLabel.setText("Ukupno ESPB: " + espb);
+		prosekLabel.setText("Prosečna ocena: " + prosek);
+		Student student = StudentController.getInstance().pronadjiStudentaPrekoIndeksa(StudentEditDialog.stariIndeks);
+		student.setProsek(prosek);
 	}
 	
 	

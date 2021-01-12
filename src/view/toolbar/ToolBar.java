@@ -33,6 +33,7 @@ import view.dialogs.ProfessorDialog;
 import view.dialogs.ProfessorEditDialog;
 import view.dialogs.StudentDialog;
 import view.dialogs.StudentEditDialog;
+import view.dialogs.components.studentedit.StudentoviPolozeniIspitiTablePanel;
 import view.tab.TabBarButton;
 import view.table.TablePanel;
 
@@ -120,6 +121,9 @@ public class ToolBar extends JToolBar{
 						PolozeniStudentiController.getInstance().postaviPolozenePredmeteStudentu();
 						studentEditDialog.setProperValues();
 						studentEditDialog.setDefaultView();
+						String prosek = SubjectController.getInstance().izracunajProsek();
+						String espb = SubjectController.getInstance().izracunajESPB();
+						StudentoviPolozeniIspitiTablePanel.getInstance().updateProsekAndESPB(prosek, espb);
 						studentEditDialog.setVisible(true);
 					} else {
 						JOptionPane.showMessageDialog(null, "Prvo izaberite studenta kojeg želite da izmenite", "Napomena", JOptionPane.INFORMATION_MESSAGE);
@@ -178,9 +182,41 @@ public class ToolBar extends JToolBar{
 								}
 							}).start();
 		         if(TabBarButton.getActiveButton() == "Studenti") {
-		        	 
+		        	 String selectedIndex = TablePanel.getInstance().getSelectedEntityID();
+						String[] opcije = new String[2];
+						opcije[0] = new String("Obriši");
+						opcije[1] = new String("Poništi");
+						if(selectedIndex != "NO_SELECTION") {
+							int brisanje = JOptionPane.showOptionDialog(null, "Da li ste sigurni da želite da obrišete studenta?", "Brisanje studenta", 0, 
+									JOptionPane.INFORMATION_MESSAGE, null, opcije, null);
+							//jer vraca broj u zavisnosti od toga koja je opcija birana
+							if(brisanje == 0) {
+								
+								StudentController.getInstance().obrisiStudenta(selectedIndex);
+								TablePanel.getInstance().setSelectedEntityID(-1);
+							}
+						} else {
+							JOptionPane.showMessageDialog(null, "Označite studenta kojeg želite da obrišete", "Napomena", JOptionPane.INFORMATION_MESSAGE);
+						}
 		         } else if(TabBarButton.getActiveButton() == "Profesori") {
-		        	 
+		        	 String selectedProf = TablePanel.getInstance().getSelectedEntityID();
+						String[] opcije = new String[2];
+						opcije[0] = new String("Obriši");
+						opcije[1] = new String("Poništi");
+						if(selectedProf != "NO_SELECTION") {
+							int brisanje = JOptionPane.showOptionDialog(null, "Da li ste sigurni da želite da obrišete profesora?", "Brisanje profesora", 0, 
+									JOptionPane.INFORMATION_MESSAGE, null, opcije, null);
+							
+							if(brisanje == 0) {
+								if(!SubjectController.getInstance().predmetImaProfesora(selectedProf)) {
+									ProfessorController.getInstance().obrisiProfesora(selectedProf);
+									TablePanel.getInstance().setSelectedEntityID(-1);
+								} else
+									JOptionPane.showMessageDialog(null, "Nemoguće obrisati profesora jer postoji predmet na kom on predaje!", "Neuspešna radnja", JOptionPane.INFORMATION_MESSAGE);
+							}
+						} else {
+							JOptionPane.showMessageDialog(null, "Označite profesora kojeg želite da obrišete", "Napomena", JOptionPane.INFORMATION_MESSAGE);
+						}
 		         } else {
 		        	// ako se brise predmet
 					String selectedEntityID = TablePanel.getInstance().getSelectedEntityID();
@@ -255,6 +291,9 @@ public class ToolBar extends JToolBar{
 					} else if(TablePanel.currentlyOpenedTable.equals(TablePanel.SUBJECT_PANEL)) {
 						SubjectController.getInstance().vratiDefaultPredmete();
 						TablePanel.selectedSubjectRow = -1;
+					} else {
+						StudentController.getInstance().postaviDefaultStudente();
+						TablePanel.selectedStudentRow = -1;
 					}
 					
 			     }

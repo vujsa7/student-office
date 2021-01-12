@@ -134,7 +134,7 @@ public class SearchButton extends JButton {
 				} else {
 					StudentController.getInstance().pronadjiStudente(trazeniStudenti[0], trazeniStudenti[1], trazeniStudenti[2]);
 				}
-				
+				TablePanel.selectedStudentRow = -1;
 			} else if(TablePanel.currentlyOpenedTable == TablePanel.PROFESSOR_PANEL) {
 				
 				ProfessorController.getInstance().vratiDefaultProfesore();

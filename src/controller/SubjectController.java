@@ -3,16 +3,13 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.AbstractStudentTable;
 import model.AbstractStudentoviPolozeniIspitiTable;
 import model.AbstractSubjectTable;
-import model.Ocena;
 import model.Predmet;
 import model.Profesor;
-import model.Student;
+import view.dialogs.AddProfesorToSubjectEditDialog;
 import view.dialogs.PredmetEditDialog;
 import view.dialogs.ProfessorEditDialog;
-import view.dialogs.components.studentedit.StudentoviPolozeniIspitiTablePanel;
 import view.table.TablePanel;
 
 
@@ -93,19 +90,38 @@ public class SubjectController {
 		TablePanel.getInstance().refreshView("predmet");
 	} 
 	
-	public void izmeniPredmet(String staraSifra, String sifra, String naziv, int godina, Predmet.TipSemestra semestar, int espb, Profesor profesor){
+	public void izmeniPredmet(String staraSifra, String sifra, String naziv, int godina, Predmet.TipSemestra semestar, int espb, String licnaKarta){
+		
 		
 		List<Predmet> listaPredmeta = AbstractSubjectTable.getInstance().getSubjects();
-		for(Predmet predmet : listaPredmeta) {
-			if(predmet.getSifraPredmeta().equals(staraSifra)) {
-				predmet.setSifraPredmeta(sifra);
-				predmet.setNazivPredmeta(naziv);
-				predmet.setGodinaStudija(godina);
-				predmet.setSemestar(semestar);
-				predmet.setBrojESPB(espb);
-				predmet.setPredmetniProfesor(profesor);
+		if(licnaKarta != "") {
+			Profesor profesor = ProfessorController.getInstance().nabaviProfesoraSaLicnomKartom(licnaKarta);
+			
+			for(Predmet predmet : listaPredmeta) {
+				if(predmet.getSifraPredmeta().equals(staraSifra)) {
+					predmet.setSifraPredmeta(sifra);
+					predmet.setNazivPredmeta(naziv);
+					predmet.setGodinaStudija(godina);
+					predmet.setSemestar(semestar);
+					predmet.setBrojESPB(espb);
+					predmet.setPredmetniProfesor(profesor);
+					ProfessorController.getInstance().dodajProfesoruPredmet(profesor);
+					//System.out.println(predmet.getPredmetniProfesor().getIme());
+				}
+			}
+		} else {
+			for(Predmet predmet : listaPredmeta) {
+				if(predmet.getSifraPredmeta().equals(staraSifra)) {
+					predmet.setSifraPredmeta(sifra);
+					predmet.setNazivPredmeta(naziv);
+					predmet.setGodinaStudija(godina);
+					predmet.setSemestar(semestar);
+					predmet.setBrojESPB(espb);
+				}
 			}
 		}
+		
+		
 		
 		TablePanel.getInstance().refreshView("predmet");
 	} 
@@ -144,9 +160,11 @@ public class SubjectController {
 					return String.valueOf(predmet.getBrojESPB());
 					
 				case 5:
-					if(predmet.getPredmetniProfesor() != null) 
+					
+					if(predmet.getPredmetniProfesor() != null) {
+
 						return (predmet.getPredmetniProfesor().getIme() + " " + predmet.getPredmetniProfesor().getPrezime());
-						
+					}	
 					return "";
 					
 					
@@ -185,34 +203,6 @@ public class SubjectController {
 		return null;
 	}
 	
-	public void ponistiOcenu(String selectedIndex) {
-		String selektovanStudent = TablePanel.getInstance().getSelectedEntityID();
-		List<Ocena> polozeniIspiti = StudentController.getInstance().pronadjiStudentovePolozeneIspite(selektovanStudent);
-		List<Student> studenti = AbstractStudentTable.getInstance().getStudenti();
-		
-		
-		if(!studenti.isEmpty()) {
-			for(Student student : studenti) {
-				if(student.getBrojIndeksa().equals(selektovanStudent)) {
-					if(!polozeniIspiti.isEmpty()) {
-						int row = 0;
-						for(Ocena polozenIspit : polozeniIspiti) {
-							if(polozenIspit.getPredmet().getSifraPredmeta().equals(selectedIndex))
-								break;
-							
-							row++;
-							
-						}
-					
-						AbstractStudentoviPolozeniIspitiTable.getInstance().removeRow(row);
-						StudentoviPolozeniIspitiTablePanel.getInstance().refreshView();
-					}
-				}
-			}
-		}
-		
-		
-	}
 
 	public void dodajProfesoraPredmetu(int selectedSubjectRow) {
 		String subjectID = SubjectNotTeachedController.getInstance().getSelectedSubjectID(selectedSubjectRow);
@@ -221,21 +211,12 @@ public class SubjectController {
 		subject.setPredmetniProfesor(professor);
 	}
 	
-	public void izmeniProfesora(int selectedProf) {
-		String profesorLicnaKarta = AddProfesorToSubjectController.getInstance().getProfesor(selectedProf);
-		Profesor profesor = ProfessorController.getInstance().nabaviProfesoraSaLicnomKartom(profesorLicnaKarta);
-		List<Predmet> predmeti = AbstractSubjectTable.getInstance().getSubjects();
+	public void izmeniProfesora(Profesor profesor) {
 		
-		for(Predmet predmet : predmeti) {
-			
-			if(predmet.getSifraPredmeta().equals(PredmetEditDialog.staraSifra)) {
-				predmet.setPredmetniProfesor(profesor);
-				System.out.println(predmet.getPredmetniProfesor().getIme() + "DODAT PREDMETU" + predmet.getNazivPredmeta());
-				break;
-			}	
-		}
+		Predmet predmet = nabaviPredmetSaSifrom(PredmetEditDialog.staraSifra);
+		predmet.setPredmetniProfesor(profesor);
 		
-		StudentoviPolozeniIspitiTablePanel.getInstance().refreshView();
+		AddProfesorToSubjectEditDialog.getInstance().refreshView();
 	}
 	
 	public String vratiImeIPrezimeProfesora(int selectedProf) {
@@ -248,7 +229,7 @@ public class SubjectController {
 	
 	public String izracunajProsek() {
 		
-		String prosek = String.valueOf(AbstractStudentoviPolozeniIspitiTable.getInstance().racunajProsek());
+		String prosek = String.format("%.2f", AbstractStudentoviPolozeniIspitiTable.getInstance().racunajProsek());
 		
 		return prosek;
 	}
@@ -271,6 +252,8 @@ public class SubjectController {
 	    	else 
 	    		return "ERROR";
 	 }
-	    
-
+	 
+	 public boolean predmetImaProfesora(String licnaKarta) {
+		 return AbstractSubjectTable.getInstance().predmetImaProfesora(licnaKarta);
+	 }
 }
