@@ -15,12 +15,8 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 import controller.ProfessorController;
-import controller.StudentController;
 import controller.SubjectController;
-import model.Profesor;
-import view.dialogs.PredmetDialog;
 import view.dialogs.PredmetEditDialog;
-import view.table.TablePanel;
 
 public class MinusButton extends JButton{
 

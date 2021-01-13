@@ -1,5 +1,6 @@
 package model;
 
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +25,8 @@ public class AbstractSubjectTable extends AbstractTableModel{
 	private List<Predmet> subjects;
 	private List<Predmet> subjectsBackup;
 	private List<String> columns;
+
+	public static ObjectOutputStream os;
 	
 	private AbstractSubjectTable() {
 		initialize();
@@ -44,10 +47,6 @@ public class AbstractSubjectTable extends AbstractTableModel{
 
 	private void initSubjects() {
 		this.setSubjects(new ArrayList<Predmet>());
-		subjects.add(new Predmet("E212", "Matematicka analiza", Predmet.TipSemestra.ZIMSKI, 1, null, 9, null, null));
-		subjects.add(new Predmet("E213", "Algebra", Predmet.TipSemestra.ZIMSKI, 1, null, 9, null, null));
-		subjects.add(new Predmet("E214", "Fizika", Predmet.TipSemestra.LETNJI, 1, null, 9, null, null));	
-		subjects.add(new Predmet("E215", "OISISI", Predmet.TipSemestra.ZIMSKI, 3, null, 6, null, null));
 		subjectsBackup = subjects;
 	}
 
@@ -136,4 +135,5 @@ public class AbstractSubjectTable extends AbstractTableModel{
 		
 		return false;
 	}
+	
 }

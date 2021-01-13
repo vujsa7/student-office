@@ -7,6 +7,8 @@ import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 
@@ -16,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.UIManager;
 
+import service.FileService;
 import view.menubar.MenuBar;
 import view.statusbar.StatusBarPanel;
 import view.tab.TabPanel;
@@ -39,7 +42,6 @@ public class MainFrame extends JFrame {
 	
 	public MainFrame() throws FontFormatException, IOException {
 		
-		
 		File font_file = new File("assets"+ File.separator +"fonts"+ File.separator +"Montserrat-Regular.ttf");
 		Font font = Font.createFont(Font.TRUETYPE_FONT, font_file);
 		Font sizedFont = font.deriveFont(16f);
@@ -48,7 +50,7 @@ public class MainFrame extends JFrame {
 		ge.registerFont(sizedFont);
 		setAppFont(sizedFont, comboBoxFont);
 
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		setTitle("Studentska služba");
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		setSize(toolkit.getScreenSize().width*3/4, toolkit.getScreenSize().height*3/4);
@@ -66,8 +68,13 @@ public class MainFrame extends JFrame {
 	
 		add(rightRootPane, BorderLayout.CENTER);
 		add(tabPanel, BorderLayout.WEST);
-
-
+		addWindowListener(new WindowAdapter() {
+		    public void windowClosing(WindowEvent e) {
+		    	FileService.getInstance().saveToExtern();
+		    	dispose();
+		        System.exit(0);
+		    }
+		});
 	}
 	
 	private void setAppFont(Font myFont, Font comboBoxFont) {

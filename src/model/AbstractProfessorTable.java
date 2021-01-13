@@ -1,5 +1,15 @@
 package model;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.EOFException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +28,8 @@ public class AbstractProfessorTable extends AbstractTableModel{
 	private List<Profesor> professors;
 	private List<Profesor> professorsBackup;
 	private List<String> columns;
+
+	public static ObjectOutputStream os;
 	
 	private AbstractProfessorTable() {
 		initialize();
@@ -36,9 +48,6 @@ public class AbstractProfessorTable extends AbstractTableModel{
 	
 	private void initProfesore() {
 		this.professors = new ArrayList<Profesor>();
-		professors.add(new Profesor("Mile", "Mitić", LocalDate.of(1973, 10, 13), "Novi Sad, Stevana Musića 18", "+381 618289304", "mile.mitic@gmail.com", "FTN-park 18", "129392932", "Prof. dr.", "Redovni profesor", new ArrayList<Predmet>()));
-		professors.add(new Profesor("Rade", "Milenković", LocalDate.of(1963, 7, 11), "Novi Sad, Stevana Musića 10", "+381 6284853501", "rade.milenkovic@yahoo.com", "FTN-park 1", "129392921", "Dr.", "Naučni-saradnik", new ArrayList<Predmet>()));
-		professors.add(new Profesor("Mika", "Mikic", LocalDate.of(1969, 1, 29), "Novi Sad, Radnička 8", "+381 617444036", "mikamikic@gmail.rs", "FTN-park 33", "129392944", "Prof. dr", "Vanredni profesor", new ArrayList<Predmet>()));
 		professorsBackup = professors;
 	}
 	
@@ -125,5 +134,36 @@ public class AbstractProfessorTable extends AbstractTableModel{
 		}
 		return false;
 	}
+	
+	public void saveProfessorsToDisk() throws FileNotFoundException, IOException{
+		os = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("assets"+ File.separator +"databases" + File.separator + "databases.txt")));
+		for(Profesor p : professors) {
+			os.writeObject(p);
+			os.writeObject(1);
+		}
+	}
+	
+	public void getProfessorsFromDisk() throws ClassNotFoundException, IOException {
+		Object object = null;
+		File file = new File("assets"+ File.separator +"databases" + File.separator + "databases.txt");
+		if(file.exists()) {
+			ObjectInputStream is = new ObjectInputStream(new BufferedInputStream(new FileInputStream("assets"+ File.separator +"databases" + File.separator + "databases.txt")));
+	
+			try {
+				while(true) {
+					object = is.readObject();
+					if(object instanceof Profesor) {
+						professors.add((Profesor) object);
+					}
+				}
+			} catch(EOFException e) {
+				//e.printStackTrace();
+			} finally {
+				is.close();
+			}
+			
+		}
+	}
+
 
 }
