@@ -60,7 +60,7 @@ public class PredmetDialog extends JDialog{
 	public String[] textFieldName = {"0","1","2"};
 	
 	public String[] regex = {
-			"[A-Z][0-9]{1,20}",
+			"[a-z]{1,2}[0-9]{1,2}",
 			".+",
 			"[0-9]{1,2}"
 	};

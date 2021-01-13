@@ -75,6 +75,10 @@ public class FileService {
 				AbstractStudentTable.getInstance().setStudente(studenti);
 				AbstractProfessorTable.getInstance().setProfessors(profesori);
 				AbstractSubjectTable.getInstance().setSubjects(predmeti);
+				
+				AbstractStudentTable.getInstance().setBackupStudente(studenti);
+				AbstractProfessorTable.getInstance().setBackupProfessors(profesori);
+				AbstractSubjectTable.getInstance().setBackupSubjects(predmeti);
 			} catch(IOException | ClassNotFoundException e) {
 				e.printStackTrace();
 			}

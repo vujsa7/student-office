@@ -44,6 +44,7 @@ public class AbstractStudentTable extends AbstractTableModel{
 	
 	private void initStudente() {
 		this.studenti = new ArrayList<Student>();
+		
 		defaultStudenti = studenti;
 	}
 	
@@ -209,4 +210,7 @@ public class AbstractStudentTable extends AbstractTableModel{
 		}
 	}
 	
+	public void setBackupStudente(List<Student> studenti2) {
+		this.defaultStudenti = studenti2;
+	}
 }
