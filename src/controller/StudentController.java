@@ -196,13 +196,22 @@ private static StudentController instance = null;
 					return student.getPolozeniIspiti();
 				}
 			}
-		} 
-			
+		}
 		return ret;
 	}
 
-	public ArrayList<Predmet> nabaviNepolozenePredmeteStudenta(String brIndex) {
-		return AbstractStudentTable.getInstance().nabaviNepolozenePredmeteStudenta(brIndex);
+	public List<Predmet> nabaviNepolozenePredmeteStudenta(String brIndex) {
+		List<Student> studenti = AbstractStudentTable.getInstance().getStudenti();
+		List<Predmet> predmeti = new ArrayList<Predmet>();
+		
+		if(!studenti.isEmpty()) {
+			for(Student student : studenti) {
+				if(student.getBrojIndeksa().equals(brIndex)) {
+					return student.getNepolozeniIspiti();
+				}
+			}
+		} 
+		return predmeti;
 	}
 
 	public boolean nekiStudentImaPolozenIspit(String sifraPredmeta) {

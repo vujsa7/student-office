@@ -123,4 +123,14 @@ public class AbstractProfessorTable extends AbstractTableModel{
 		return false;
 	}
 
+	public List<Predmet> nabaviProfesorovePredmete(String entityID) {
+		List<Predmet> predmeti = new ArrayList<Predmet>();
+		for(Profesor p : professors) {
+			if(p.getBrojLicneKarte().equals(entityID)) {
+				return p.getListaPredmeta();
+			}
+		}
+		return predmeti;
+	}
+
 }

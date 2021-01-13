@@ -136,13 +136,14 @@ public class AbstractStudentTable extends AbstractTableModel{
 		this.studenti = defaultStudenti;
 	}
 
-	public ArrayList<Predmet> nabaviNepolozenePredmeteStudenta(String brIndex) {
+	public List<Predmet> nabaviNepolozenePredmeteStudenta(String brIndex) {
+		List<Predmet> predmeti = new ArrayList<Predmet>();
 		for(Student student : studenti) {
-			if(student.getBrojIndeksa() == brIndex) {
-				return (ArrayList<Predmet>) student.getNepolozeniIspiti();
+			if(student.getBrojIndeksa().contentEquals(brIndex)) {
+				return student.getNepolozeniIspiti();
 			}
 		}
-		return null;
+		return predmeti;
 	}
 
 	public boolean nekiStudentImaPolozenIspit(String sifraPredmeta) {

@@ -138,9 +138,9 @@ public class HoverButton extends JButton{
 					if(selectedEntityID != "NO_SELECTION") {
 						ProfessorEditDialog.entityID = selectedEntityID;
 						ProfessorEditDialog professorEditDialog = ProfessorEditDialog.getInstance();
+						ProfessorHasSubjectsController.getInstance().nabaviIPostaviPredmeteOdProfesora();
 						professorEditDialog.setProperValues();
 						professorEditDialog.setDefaultView();
-						ProfessorHasSubjectsController.getInstance().nabaviIPostaviPredmeteOdProfesora();
 						professorEditDialog.setVisible(true);
 					} else {
 						JOptionPane.showMessageDialog(null, "Prvo izaberite profesora kojeg želite da izmenite", "Napomena", JOptionPane.INFORMATION_MESSAGE);

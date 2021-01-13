@@ -1,8 +1,10 @@
 package controller;
 
+import java.util.List;
+
 import model.AbstractProfessorHasSubjectsTable;
+import model.AbstractProfessorTable;
 import model.Predmet;
-import model.Profesor;
 import view.dialogs.ProfessorEditDialog;
 import view.dialogs.components.professoredit.ProfessorHasSubjectsTablePanel;
 
@@ -20,8 +22,8 @@ public class ProfessorHasSubjectsController {
 	private ProfessorHasSubjectsController() {}
 
 	public void nabaviIPostaviPredmeteOdProfesora() {
-		Profesor profesor = ProfessorController.getInstance().nabaviProfesoraSaLicnomKartom(ProfessorEditDialog.entityID);	
-		AbstractProfessorHasSubjectsTable.getInstance().setProfessorSubjects(profesor.getListaPredmeta());
+		List<Predmet> predmeti = AbstractProfessorTable.getInstance().nabaviProfesorovePredmete(ProfessorEditDialog.entityID);
+		AbstractProfessorHasSubjectsTable.getInstance().setProfessorSubjects(predmeti);
 		ProfessorHasSubjectsTablePanel.getInstance().refreshView();
 	}
 	
