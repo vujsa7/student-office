@@ -69,7 +69,7 @@ public class ProfessorDialog extends JDialog{
 			"[A-Za-zćčšđž]{1,20}",
 			"[A-Za-zćčšđž]{1,20}",
 			".+",
-			"^(\\+381)?(\\s|-)?0?6(([0-6]|[8-9])\\d{7,8}){1}$",
+			"0[0-9]{2}\\/[0-9]{3,4}-?[0-9]{3,4}",
 			"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$",
 			".+",
 			"\\d{9}"
@@ -78,7 +78,7 @@ public class ProfessorDialog extends JDialog{
 			"Pogrešan format imena",
 			"Pogrešan format prezimena",
 			"Unesite grad, ulicu i broj",
-			"Format telefona: (+381) (0)6x xxxxxxx(x)",
+			"Format telefona: 0xx/xxx(x)-xxx(x)",
 			"Pogrešan format e-mail adrese",
 			"Unesite grad, ulicu i broj",
 			"Potrebno 9 brojeva"

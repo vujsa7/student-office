@@ -133,4 +133,8 @@ public class AbstractProfessorTable extends AbstractTableModel{
 		return predmeti;
 	}
 
+	public void setBackupProfessors(List<Profesor> profesori) {
+		this.professorsBackup = profesori;
+	}
+
 }

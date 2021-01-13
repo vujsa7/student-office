@@ -135,5 +135,9 @@ public class AbstractSubjectTable extends AbstractTableModel{
 		
 		return false;
 	}
+
+	public void setBackupSubjects(List<Predmet> predmeti) {
+		this.subjectsBackup = predmeti;
+	}
 	
 }

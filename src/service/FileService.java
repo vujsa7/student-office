@@ -34,6 +34,11 @@ public class FileService {
 	private ObjectOutputStream os;
 	
 	public void saveToExtern(){
+		
+		AbstractStudentTable.getInstance().setDefaultStudente();
+    	AbstractProfessorTable.getInstance().setDefaultProfessors();
+    	AbstractSubjectTable.getInstance().setDefaultSubjects();
+    	
 		try {
 			os = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("assets"+ File.separator +"databases" + File.separator + "databases.txt")));
 		} catch (IOException e1) {
