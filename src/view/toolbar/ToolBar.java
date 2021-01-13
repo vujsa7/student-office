@@ -231,7 +231,6 @@ public class ToolBar extends JToolBar{
 								if(!StudentController.getInstance().nekiStudentImaPolozenIspit(selectedEntityID)) {
 									if(!StudentController.getInstance().nekiStudentImaNepolozenIspit(selectedEntityID)) {
 										SubjectController.getInstance().obrisiPredmet(selectedEntityID);
-										ProfessorController.getInstance().obrisiPredmetSaProfesora(selectedEntityID);
 										TablePanel.getInstance().setSelectedEntityID(-1);
 									} else {
 										JOptionPane.showMessageDialog(null, "Nemoguće obrisati predmet jer postoji student koji nije položio taj predmet!", "Neuspešna radnja", JOptionPane.INFORMATION_MESSAGE);
