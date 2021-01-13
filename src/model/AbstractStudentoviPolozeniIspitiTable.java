@@ -1,6 +1,5 @@
 package model;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,9 +22,6 @@ public class AbstractStudentoviPolozeniIspitiTable extends AbstractTableModel{
 		return instance;
 	}
 	
-	private List<Ocena> oceneStudenta;
-	private List<String> kolone;
-	
 	private AbstractStudentoviPolozeniIspitiTable() {
 		
 		initIspite();
@@ -37,14 +33,13 @@ public class AbstractStudentoviPolozeniIspitiTable extends AbstractTableModel{
 		this.kolone.add("Ocena");
 		this.kolone.add("Datum");
 		
-	
 	}
+	
+	private List<Ocena> oceneStudenta;
+	private List<String> kolone;
 	
 	public void initIspite() {
 		this.oceneStudenta = new ArrayList<Ocena>();
-		Student student = AbstractStudentTable.getInstance().getStudenti().get(0);
-		Predmet predmet = AbstractSubjectTable.getInstance().getSubjects().get(0);
-		this.oceneStudenta.add(new Ocena(student, predmet, 7, LocalDate.of(2018, 6, 26)));
 	}
 	
 	public List<Ocena> getPolozeniIspiti() {
@@ -105,8 +100,9 @@ public class AbstractStudentoviPolozeniIspitiTable extends AbstractTableModel{
 	    return getValueAt(0, column).getClass();
 	}
 	
-	public String getColumName(int index) {
-		return this.kolone.get(index);
+	@Override
+	public String getColumnName(int column) {
+		return this.kolone.get(column);
 	}
 	
 	public void removeRow(int index) {

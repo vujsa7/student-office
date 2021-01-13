@@ -80,10 +80,10 @@ public class StudentEditDialog extends JDialog{
 	public String[] textFieldName = {"0","1","2","3","4","5","6"};
 	
 	public String[] regex = {
-			"[A-Z][a-z]{1,20}",
-			"[A-Z][a-z]{1,20}",
+			"[A-Za-zšđžčć]{1,20}",
+			"[A-Za-zšđžčć]{1,20}",
 			".+",
-			"^(\\+381)?(\\s|-)?(0)?6(([0-6]|[8-9])\\d{6,7}){1}$",
+			"[0-9]{3}\\/?[0-9]{3,4}\\-?[0-9]{3,4}",
 			"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$",
 			"[A-Z]{2}[0-9]{1,3}\\/[0-9]{4}",
 			"\\d{4}"
@@ -92,7 +92,7 @@ public class StudentEditDialog extends JDialog{
 			"Pogrešan format imena",
 			"Pogrešan format prezimena",
 			"Unesite grad, ulicu i broj",
-			"Format telefona: (+381) xx xxxxxxx(x)",
+			"Broj telefona mora da sadrži 9 ili 10 cifara",
 			"Pogrešan format e-mail adrese",
 			"Pogrešan format broja indeksa (SMERBROJ/GODINA UPISA)",
 			"Pogrešan format godine upisa (XXXX)"

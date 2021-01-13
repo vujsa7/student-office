@@ -120,7 +120,7 @@ public class AbstractStudentTable extends AbstractTableModel{
 			String status) {
 		
 		this.studenti.add(new Student(ime, prezime, datumRodjenja, adresaStanovanja, kontaktTelefon,
-				emailAdresa, brojIndeksa, godUpisa, trenutnaGodStudija, status, null, new ArrayList<Ocena>(), new ArrayList<Predmet>()));
+				emailAdresa, brojIndeksa, godUpisa, trenutnaGodStudija, status, "0", new ArrayList<Ocena>(), new ArrayList<Predmet>()));
 	}
 
 	public List<Student> getDefaultStudenti() {

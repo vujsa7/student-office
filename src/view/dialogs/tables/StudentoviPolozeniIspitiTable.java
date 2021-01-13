@@ -27,7 +27,6 @@ public class StudentoviPolozeniIspitiTable extends JTable{
 		this.setColumnSelectionAllowed(true);
 		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		this.setRowHeight(25);
-		this.setModel(AbstractStudentoviPolozeniIspitiTable.getInstance());
 		
 		
 		DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
@@ -45,7 +44,7 @@ public class StudentoviPolozeniIspitiTable extends JTable{
 	    setGridColor(new Color(196,190,206));
 		UIManager.put("Table.focusCellHighlightBorder", BorderFactory.createMatteBorder(1, 1, 1, 1, Color.white));
 		
-		
+		this.setModel(AbstractStudentoviPolozeniIspitiTable.getInstance());
 	}
 	
 	public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {

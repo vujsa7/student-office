@@ -42,6 +42,8 @@ public class MainFrame extends JFrame {
 	
 	public MainFrame() throws FontFormatException, IOException {
 		
+		FileService.getInstance().getFromExtern();
+		
 		File font_file = new File("assets"+ File.separator +"fonts"+ File.separator +"Montserrat-Regular.ttf");
 		Font font = Font.createFont(Font.TRUETYPE_FONT, font_file);
 		Font sizedFont = font.deriveFont(16f);

@@ -14,6 +14,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 
 import controller.PolozeniStudentiController;
@@ -251,32 +253,44 @@ public class MenuBar extends JMenuBar{
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
 						
-						String text = "<html> Aplikacija studentska služba služi referentu studentske službe i "
-								+ "omogućava skladištenje neophodnih podataka o fakultetu.<br/>Podaci o studentu podrazumevaju "
-								+ "osnovne podatke(ime, prezime, datum rođenja, adresa stanovanja, kontakt, e-mail adresa), <br/>"
-								+ "status, godinu upisa i trenutnu godinu studija, broj indeksa i prosek, spisak položenih i nepoloženih predmeta.<br/>"
-								+ "Takođe, moguće je postojeću tabelu modifikovati shodno potrebama.<br/>"
-								+ "Dodavanje novog studenta postiže se klikom miša na File, a zatim na New.<br/>"
+						String text = "Aplikacija studentska služba služi referentu studentske službe i "
+								+ "omogućava skladištenje neophodnih podataka o fakultetu i osoblju na njemu.\nPodaci o studentu podrazumevaju "
+								+ "osnovne podatke(ime, prezime, datum rođenja, adresa stanovanja, kontakt, e-mail adresa), \n"
+								+ "status, godinu upisa i trenutnu godinu studija, broj indeksa i prosek, spisak položenih i nepoloženih predmeta.\n"
+								+ "Takođe, moguće je postojeću tabelu modifikovati shodno potrebama.\n"
+								+ "Dodavanje novog studenta postiže se klikom miša na File, a zatim na New.\n"
 								+ "Isti postupak je moguće odraditi putem tastature, otvaranje menija File se postiže pritiskom Alt+F, "
-								+ "a komandom Alt+N/Shift+N se otvara prozor za dodavanje novog studenta.<br/>"
-								+ "Takođe, postojeći student se može izmeniti ili obrisati, putem miša Edit->Edit za izmenu(Edit->Delete za brisanje), <br/>"
-								+ "ili putem tastature Alt+T->Alt+E/Ctrl+E za izmenu(Alt+T->Alt+D/Ctrl+D za brisanje).<br/>"
-								+ "Aplikaciju je moguće zatvoriti pritiskom na X u gornjem desnom uglu, ili putem miša File->Close, odnosno Alt+F->Alt+C/Ctrl+W putem tastature.<br/>"
-								+ "Ukoliko vam zatreba pomoć, odlaskom na Help->Help, tj. Alt+P->Alt+H/Ctrl+H, otvoriće se prozor u kom pišu sve neophodne informacije o rukovanju aplikacijom.<br/>"
-								+ "Za više informacija o autorima ili realizaciji same aplikacije, možete pritisnuti mišem na Help->About, ili Alt+P->Alt+A/Ctrl+A putem tastature.<br/>"
-								+ "Pored svega opisanog, dodavanje, izmena i brisanje studenta je moguće postići pritiskom na dugmad toolbar-a, <br/>"
-								+ "odnosno na ikonice koje se nalaze ispod menu bara.<br/>"
-								+ "Informacije o nazivu aplikacije, kao i o trenutnom vremenu, mogu se naći na dnu aplikacije.<br/>"
-								+ "Takođe, u aplikaciji se nalaze informacije i o profesorima, predmetima i ocenama.<br/>"
-								+ "Za profesora su vezane osnovne informacije kao što su ime, prezime, datum rođenja, kontakt, broj telefona i e-mail adresa,<br/>"
-								+ "kao i broj lične karte, adresa kancelarije, titula, zvanje i spisak predmeta koje predaje.<br/>"
-								+ "Što se tiče predmeta, postoje informacije o šifri, nazivu, predmetnom profesoru, kom semestru pripada predmet,<br/>"
-								+ "godini studija u kojoj se izvodi predmet, broj ESP bodova, spisak studenata koji su položili i spisak studenata koji nisu položili predmet,<br/>"
-								+ "a što se tiče ocene na ispitu, tu su informacije o studentima koji su položili ispit, predmetu, visini ocene(6-10) i datumu polaganja ispita.<br/>"
-								+ "Takođe, i profesore je moguce dodavati, brisati ili modofikovati,prateći malopre opisan postupak.</html>";
+								+ "a komandom Alt+N/Shift+N se otvara prozor za dodavanje novog studenta.\n"
+								+ "Takođe, postojeći student se može izmeniti ili obrisati, putem miša Edit->Edit za izmenu(Edit->Delete za brisanje), \n"
+								+ "ili putem tastature Alt+T->Alt+E/Ctrl+E za izmenu(Alt+T->Alt+D/Ctrl+D za brisanje).\n"
+								+ "Aplikaciju je moguće zatvoriti pritiskom na 'X' u gornjem desnom uglu, ili putem miša File->Close, odnosno Alt+F->Alt+C/Ctrl+W putem tastature.\n"
+								+ "Ukoliko vam zatreba pomoć, odlaskom na Help->Help, tj. Alt+P->Alt+H/Ctrl+H, otvoriće se prozor u kom pišu sve neophodne informacije o rukovanju aplikacijom.\n"
+								+ "Za više informacija o autorima ili realizaciji same aplikacije, možete pritisnuti mišem na Help->About, ili Alt+P->Alt+A/Ctrl+A putem tastature.\n"
+								+ "Pored svega opisanog, dodavanje, izmena i brisanje studenta je moguće postići pritiskom na dugmad toolbar-a, \n"
+								+ "odnosno na ikonice koje se nalaze ispod menu bara.\n"
+								+ "Informacije o nazivu aplikacije, kao i o trenutnom vremenu, mogu se naći na dnu aplikacije.\n"
+								+ "Takođe, u aplikaciji se nalaze informacije i o profesorima, predmetima i ocenama.\n"
+								+ "Za profesora su vezane osnovne informacije kao što su ime, prezime, datum rođenja, kontakt, broj telefona i e-mail adresa,\n"
+								+ "kao i broj lične karte, adresa kancelarije, titula, zvanje i spisak predmeta koje predaje.\n"
+								+ "Što se tiče predmeta, postoje informacije o šifri, nazivu, predmetnom profesoru, kom semestru pripada predmet,\n"
+								+ "godini studija u kojoj se izvodi predmet, broj ESPB bodova, spisak studenata koji su položili i spisak studenata koji nisu položili predmet,\n"
+								+ "a što se tiče ocene na ispitu, tu su informacije o studentima koji su položili ispit, predmetu, visini ocene(6-10) i datumu polaganja ispita.\n"
+								+ "Takođe, i profesore je moguce dodavati, brisati ili modofikovati,prateći malopre opisan postupak."
+								+ "Ukoliko želite da dodate profesora na predmet neophodno je da prilikom izmene predmeta stisnete na dugme '+' i pojaviće se prozor sa svim profesorima u sistemu.\n"
+								+ "Takođe, ukoliko želite da obrišete profesora sa predmeta, to možete postići pritiskom na dugme '-' .\n"
+								+ "Isti cilj se može dostići ukoliko u izmeni profesora stisnete na tab predmeti, pritiskom na dugme 'dodaj' možete profesoru dodati predmet, a pritiskom na dugme 'obriši' se briše predmet profesoru.\n"
+								+ "U izmeni studenta, odlaskom na tab položeni, možete poništiti ocenu studentu, \n"
+								+ "dok odlaskom na tab nepoloženi, možete dodati studentu nepoložen ispit, obrisati ga, ili nakon što student položi ispit upisati mu ocenu i prebaciti ga u položene ispite.\n"
+								+ "U tool-baru se nalazi polje za pretragu radi lakše pretrage podataka. Za studenta se prvo unosi prezime, ime pa broj indeksa, \n"
+								+ "za profesora prezime, ime pa broj lične karte, a za predmet ime predmeta.\n"
+								+ "\nNapomena: Profesora nije moguće obrisati ukoliko postoji predmet na kom on predaje,\n "
+								+ "a predmet nije moguće obrisati ukoliko taj predmet postoji u evidenciji studentovih položenih ili nepoloženih ispita, kao i ukoliko neki profesor predaje na njemu.";
 						
+						JTextArea textArea = new JTextArea(text);
+						JScrollPane scrollPane = new JScrollPane(textArea);
+						scrollPane.setPreferredSize(new Dimension(770, 350));
 						
-						JOptionPane.showMessageDialog(null, text, "Help", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(null, scrollPane, "Help", JOptionPane.INFORMATION_MESSAGE);
 					}
                 });
                
@@ -293,12 +307,12 @@ public class MenuBar extends JMenuBar{
 						String text = "<html> STUDENTSKA SLUŽBA v1.0<br/><br/>"
 								+ "Aplikacija služi referentu studentske službe fakulteta tehničkih nauka<br/> "
 								+ "za unos svih podataka o studentima i zaposlenima na fakultetu.<br/>"
-								+ "Godina proizvodnje: 2020.<br/>"
+								+ "Godina pravljenja aplikacije: 2020.<br/>"
 								+ "Autori: <br/>"
-								+ "1. Vladimir Vrbica<br/>"
+								+ " Vladimir Vrbica<br/>"
 								+ "Student treće godine elektrotehnike, rođen u Subotici.<br/>"
-								+ "Živi studentski život punim plućima.<br/>"
-								+ "2. Aleksa Vujisić<br/>"
+								+ "Živi studentski život punim plućima.<br/><br/>"
+								+ " Aleksa Vujisić<br/>"
 								+ "Takođe student treće godine elektrotehnike, rođen u Kragujevcu.<br/>"
 								+ "Noćna radilica, pravi primer uzornog studenta.<br/>";
 								
